@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.android.coming.widgets.StateTextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:text="@string/music"
+                app:normalBackgroundColor="@color/gray_e3e3e3"
+                app:normalTextColor="#7b7b7b"
+                app:radius="20dp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_music"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_200"/>
+
+            <com.android.coming.widgets.StateTextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:text="@string/music"
+                app:normalBackgroundColor="@color/gray_e3e3e3"
+                app:normalTextColor="#7b7b7b"
+                app:radius="20dp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_nature"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_200"/>
+
+            <com.android.coming.widgets.StateTextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:text="@string/music"
+                app:normalBackgroundColor="@color/gray_e3e3e3"
+                app:normalTextColor="#7b7b7b"
+                app:radius="20dp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_200"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>
