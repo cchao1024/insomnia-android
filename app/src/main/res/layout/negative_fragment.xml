@@ -15,47 +15,50 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.android.coming.widgets.StateTextView
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center_vertical"
-                android:text="@string/music"
-                app:normalBackgroundColor="@color/gray_e3e3e3"
-                app:normalTextColor="#7b7b7b"
-                app:radius="20dp"/>
+                android:text="@string/sleep_nature"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_music"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_200"/>
+                android:layout_height="@dimen/dp_100"/>
 
-            <com.android.coming.widgets.StateTextView
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center_vertical"
-                android:text="@string/music"
-                app:normalBackgroundColor="@color/gray_e3e3e3"
-                app:normalTextColor="#7b7b7b"
-                app:radius="20dp"/>
+                android:text="@string/sleep_music"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_nature"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_200"/>
+                android:layout_height="@dimen/dp_100"/>
 
-            <com.android.coming.widgets.StateTextView
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center_vertical"
-                android:text="@string/music"
-                app:normalBackgroundColor="@color/gray_e3e3e3"
-                app:normalTextColor="#7b7b7b"
-                app:radius="20dp"/>
+                android:text="@string/sleep_image"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_image"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_200"/>
+                android:layout_height="@dimen/dp_100"/>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

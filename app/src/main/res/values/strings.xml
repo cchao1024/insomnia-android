@@ -4,5 +4,8 @@
     <string name="tab_name_1">不想睡</string>
     <string name="tab_name_2">侃侃</string>
     <string name="music">音乐</string>
+    <string name="sleep_image">催眠图</string>
+    <string name="sleep_music">催眠音乐</string>
+    <string name="sleep_nature">聆听自然</string>
 
 </resources>

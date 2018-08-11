@@ -10,7 +10,7 @@ import com.cchao.sleeping.global.Constants;
 public class RespBean<T> {
 
     private String code;
-    private T result;
+    private T data;
     private String extend;
     private String msg;
 
@@ -22,12 +22,12 @@ public class RespBean<T> {
         this.code = code;
     }
 
-    public T getResult() {
-        return result;
+    public T getData() {
+        return data;
     }
 
-    public void setResult(T result) {
-        this.result = result;
+    public void setData(T data) {
+        this.data = data;
     }
 
     public String getExtend() {

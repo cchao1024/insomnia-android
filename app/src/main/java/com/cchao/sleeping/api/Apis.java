@@ -2,10 +2,12 @@ package com.cchao.sleeping.api;
 
 
 import com.cchao.sleeping.model.javabean.RespBean;
+import com.cchao.sleeping.model.javabean.fall.FallIndex;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -21,4 +23,7 @@ public interface Apis {
     @FormUrlEncoded
     @POST("?com=customer&t=findPwdByEmail")
     Observable<RespBean> resetPwdByEmail(@Field("email") String email);
+
+    @GET("/fallIndex")
+    Observable<RespBean<FallIndex>> getIndexData();
 }

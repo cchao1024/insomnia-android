@@ -118,22 +118,6 @@ public class ImageLoader {
         return false;
     }
 
-    /**
-     * 用app的context 下载图片，
-     */
-    public static void downloadImage(String url, RequestListener<Drawable> requestListener) {
-        GlideApp.with(LibCore.getContext())
-            .load(url).listener(requestListener)
-            .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
-    }
-
-    public static void displayCircularImage(final Context context, String url, final ImageView imageView, @DrawableRes int placeholder) {
-        if (isContextDestroyed(context)) {
-            return;
-        }
-        GlideApp.with(context).load(url).placeholder(placeholder).apply(RequestOptions.circleCropTransform()).into(imageView);
-    }
-
     public static void clearCache(Context context) {
         try {
             ThreadPoolUtils.execute(new Runnable() {
@@ -146,7 +130,6 @@ public class ImageLoader {
             Logs.e(TAG_LOG, "clearCache error: ", e);
         }
     }
-
 
     private static <T> RequestListener<T> getCropListener(ImageView imageView) {
         return new RequestListener<T>() {

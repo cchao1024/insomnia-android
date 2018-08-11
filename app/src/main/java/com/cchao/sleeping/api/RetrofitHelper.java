@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitHelper {
 
     private Apis mApiService = null;
-    private static RetrofitHelper mRetrofit;
+    private static volatile RetrofitHelper mRetrofit;
 
     private RetrofitHelper() {
     }
@@ -26,13 +26,14 @@ public class RetrofitHelper {
      * 获取默认正式环境 retrofit
      */
     public static RetrofitHelper getDefault() {
-        if (mRetrofit == null) {
-            mRetrofit = new RetrofitHelper();
-            mRetrofit.initApiService(Constants.Config.API_Host, Apis.class);
+        synchronized (RetrofitHelper.class) {
+            if (mRetrofit == null) {
+                mRetrofit = new RetrofitHelper();
+                mRetrofit.initApiService(Constants.Config.API_Host, Apis.class);
+            }
         }
         return mRetrofit;
     }
-
 
     private void initApiService(String baseUrl, Class clz) {
         Retrofit retrofit = new Retrofit.Builder()
@@ -44,14 +45,6 @@ public class RetrofitHelper {
             .build();
 
         mApiService = (Apis) retrofit.create(clz);
-    }
-
-    public Apis getApiService() {
-        if (mApiService != null) {
-            return mApiService;
-        } else {
-            throw new IllegalArgumentException("mApiService is null");
-        }
     }
 
     public static Apis getApis() {

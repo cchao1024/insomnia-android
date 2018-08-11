@@ -17,7 +17,6 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
-
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     final int[] mTabTitleArr = {R.string.tab_name_0, R.string.tab_name_1};

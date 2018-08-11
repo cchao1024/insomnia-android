@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="item"
+            type="com.cchao.sleeping.model.javabean.fall.FallMusic"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="145dp"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_4"
+                android:drawableLeft="@android:drawable/btn_radio"
+                android:text="@{item.src}"
+                android:textSize="@dimen/sp_12"/>
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_10"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{item.src}"
+            android:textSize="@dimen/sp_11"
+            tools:text="@string/app_name"/>
+    </LinearLayout>
+</layout>

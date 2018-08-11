@@ -20,22 +20,17 @@ public abstract class Constants {
 
     public interface Config {
 
-        String API_Host = "127.0.0.1:8080"; //接口API版本
+        String API_Host = "http://192.168.0.104:8080"; //接口API版本
         String API_BUILD = String.valueOf(BuildConfig.VERSION_CODE); //接口API版本
 
         boolean SUPPORT_THUMBNAIL = false; //是否支持缩略图(使用最高清的图片)
 
-        int TIMEOUT = 30 * 1000; // 网络访问超时时间
+        int TIMEOUT = 10 * 1000; // 网络访问超时时间
 
-        String EMAIL = "cservice@yoins.com";
         String PHONE = "+00852-21364966";
         String LIVE_CHAT_NUMBER = "7243681";
         int LIVE_CHAT_GROUP = 6;
         int PAGE_SIZE = 30;
-
-
-        String DEFAULT_AVATAR = "http://images.yoins.com/customers_avatars/default.jpg";
-        String M_WEBSITE = "http://m.yoins.com/";
 
         String PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.yoinsapp";
     }
