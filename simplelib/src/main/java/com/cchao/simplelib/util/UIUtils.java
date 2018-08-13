@@ -39,7 +39,6 @@ import java.util.concurrent.Executors;
 public class UIUtils {
 
     private static long lastClickTime;
-    private static LayoutManagerType LayoutManagerType = null;
     /**
      * 第一个可见的item的位置
      */

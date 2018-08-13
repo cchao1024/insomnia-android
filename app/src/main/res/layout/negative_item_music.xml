@@ -4,6 +4,7 @@
     >
 
     <data>
+
         <variable
             name="item"
             type="com.cchao.sleeping.model.javabean.fall.FallMusic"/>
@@ -25,12 +26,18 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:layout_marginTop="@dimen/dp_4"
-                android:drawableLeft="@android:drawable/btn_radio"
-                android:text="@{item.src}"
-                android:textSize="@dimen/sp_12"/>
+                android:drawableLeft="@drawable/play_count"
+                android:gravity="center_vertical"
+                android:paddingEnd="@dimen/dp_4"
+                android:paddingStart="@dimen/dp_0"
+                android:text="@{item.play_count}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                tools:text="@string/app_name"/>
 
         </android.support.v7.widget.CardView>
 
@@ -42,7 +49,7 @@
             android:layout_marginTop="@dimen/dp_10"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="@{item.src}"
+            android:text="@{item.name}"
             android:textSize="@dimen/sp_11"
             tools:text="@string/app_name"/>
     </LinearLayout>

@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="click"
+            type="android.view.View.OnClickListener"/>
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -26,39 +29,74 @@
                 android:textSize="@dimen/sp_16"/>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_music"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_100"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:gravity="center_vertical"
-                android:text="@string/sleep_music"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_16"/>
-
-            <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_nature"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_100"/>
+                android:layout_height="wrap_content"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="@dimen/dp_10"
+                android:layout_height="@dimen/dp_50"
                 android:layout_marginTop="@dimen/dp_10"
-                android:gravity="center_vertical"
-                android:text="@string/sleep_image"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_16"/>
+                android:paddingEnd="@dimen/dp_0"
+                android:paddingStart="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/sleep_music"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_16"/>
+
+                <TextView
+                    android:id="@+id/music_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:padding="@dimen/dp_10"
+                    android:text="@string/see_more"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_music"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_0"
+                android:paddingStart="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/sleep_image"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_16"/>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/image_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:onClick="@{click.onClick}"
+                    android:padding="@dimen/dp_10"
+                    android:text="@string/see_more"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_image"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_100"/>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

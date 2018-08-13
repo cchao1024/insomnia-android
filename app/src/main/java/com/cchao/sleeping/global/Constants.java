@@ -16,7 +16,7 @@ public abstract class Constants {
     public static final boolean IS_USE_APPINDEXING = true; // 是否使用AppIndexing
     public static String Header_Referer = ""; // 需要添加请求头Referer, 为了标识从活动页到商品页
     public static boolean Use_OLD_IDEAL = false; // 使用回老的ideal
-    public static final String TEST_IMAGE_PATH = "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1851112709,3707645540&fm=26&gp=0.jpg";
+    public static final String TEST_IMAGE_PATH = "http://d6.yihaodianimg.com/V00/M00/3E/5C/CgQDslSNDEyAQp-mAAHoVWDzhu877700_380x380.jpg";
 
     public interface Config {
 
@@ -275,6 +275,7 @@ public abstract class Constants {
         public static final String POINT_TYPE = "com.yoinsapp.PointType";
 
         public static final String IMAGES = "com.yoinsapp.Images";
+        public static final String IMAGE_URL = "com.yoinsapp.Images";
         public static final String JSON = "com.yoinsapp.json";
         public static final String IMAGE_INDEX = "com.yoinsapp.ImageIndex";
 

@@ -15,12 +15,13 @@ import java.util.List;
  * @author cchao
  * @version 8/11/18.
  */
-public abstract class DatabindQuickAdapter<T> extends BaseQuickAdapter<T, DatabindQuickAdapter.DataBindViewHolder> {
+public abstract class DataBindQuickAdapter<T> extends BaseQuickAdapter<T, DataBindQuickAdapter.DataBindViewHolder> {
 
-    public DatabindQuickAdapter(int layoutResId, List<T> data) {
+    public DataBindQuickAdapter(int layoutResId, List<T> data) {
         super(layoutResId, data);
     }
-    public DatabindQuickAdapter(int layoutResId) {
+
+    public DataBindQuickAdapter(int layoutResId) {
         super(layoutResId, null);
     }
 

@@ -1,12 +1,15 @@
 package com.cchao.simplelib.ui.activity;
 
 import android.app.Dialog;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 
@@ -27,9 +30,10 @@ import butterknife.Unbinder;
  * Created by cchao on 2017/3/16.
  */
 
-public abstract class BaseToolbarActivity extends BaseActivity implements BaseStateView {
+public abstract class BaseToolbarActivity<B extends ViewDataBinding> extends BaseActivity implements BaseStateView {
     protected Toolbar mToolbar;
     MultiStateView mStateView;
+    protected B mDataBind;
 
     private @StringRes
     int mActionText; //toolbar右边的文字
@@ -65,7 +69,7 @@ public abstract class BaseToolbarActivity extends BaseActivity implements BaseSt
     /**
      * 加载数据，可被 net-error reload 按钮调起
      */
-    protected abstract void loadData();
+    protected abstract void onLoadData();
 
     @Override
     protected void onDestroy() {
@@ -149,14 +153,16 @@ public abstract class BaseToolbarActivity extends BaseActivity implements BaseSt
 
     //<editor-fold desc="对StateView的操作">
     private void initStateView() {
-        mStateView.setViewForState(getLayout(), MultiStateView.VIEW_STATE_CONTENT);
+        View contentView= LayoutInflater.from(mContext).inflate(getLayout(),mStateView,false);
+        mDataBind = DataBindingUtil.bind(contentView);
+        mStateView.setViewForState(contentView, MultiStateView.VIEW_STATE_CONTENT);
         // 网络出错重新加载
         ((INetErrorView) mStateView.getView(MultiStateView.VIEW_STATE_ERROR))
             .setReloadListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     switchView(LOADING);
-                    loadData();
+                    onLoadData();
                 }
             });
     }

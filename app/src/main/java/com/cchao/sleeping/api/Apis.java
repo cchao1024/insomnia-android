@@ -2,6 +2,8 @@ package com.cchao.sleeping.api;
 
 
 import com.cchao.sleeping.model.javabean.RespBean;
+import com.cchao.sleeping.model.javabean.RespListBean;
+import com.cchao.sleeping.model.javabean.fall.FallImage;
 import com.cchao.sleeping.model.javabean.fall.FallIndex;
 
 import io.reactivex.Observable;
@@ -26,4 +28,8 @@ public interface Apis {
 
     @GET("/fallIndex")
     Observable<RespBean<FallIndex>> getIndexData();
+
+    @FormUrlEncoded
+    @POST("/fallimage/getByPage")
+    Observable<RespListBean<FallImage>> getImageList(@Field("page") int page);
 }

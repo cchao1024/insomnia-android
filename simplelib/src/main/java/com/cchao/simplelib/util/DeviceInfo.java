@@ -2,20 +2,37 @@ package com.cchao.simplelib.util;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 
 import com.cchao.simplelib.LibCore;
 
-/**
- * <pre>
- *     author: Blankj
- *     blog  : http://blankj.com
- *     time  : 2016/8/1
- *     desc  : 设备相关工具类
- * </pre>
- */
-public class DeviceUtils {
+public class DeviceInfo {
+
+    private static int mScreenWidth;
+    private static int mScreenHeight;
+
+    public static int getScreenWidth() {
+        if (mScreenWidth == 0) {
+            Resources resources = LibCore.getContext().getResources();
+            DisplayMetrics dm = resources.getDisplayMetrics();
+            mScreenWidth = dm.widthPixels;
+            mScreenHeight = dm.heightPixels;
+        }
+        return mScreenWidth;
+    }
+
+    public static int getScreenHeight() {
+        if (mScreenHeight == 0) {
+            Resources resources = LibCore.getContext().getResources();
+            DisplayMetrics dm = resources.getDisplayMetrics();
+            mScreenWidth = dm.widthPixels;
+            mScreenHeight = dm.heightPixels;
+        }
+        return mScreenHeight;
+    }
 
     /**
      * 判断当前设备是手机还是平板，代码来自 Google I/O App for Android

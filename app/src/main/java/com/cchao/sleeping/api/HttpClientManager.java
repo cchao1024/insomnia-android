@@ -2,7 +2,7 @@ package com.cchao.sleeping.api;
 
 import android.text.TextUtils;
 
-import com.cchao.simplelib.util.DeviceUtils;
+import com.cchao.simplelib.util.DeviceInfo;
 import com.cchao.simplelib.util.ExceptionCollect;
 import com.cchao.simplelib.util.StringHelper;
 import com.cchao.simplelib.util.UrlUtil;
@@ -55,7 +55,7 @@ public class HttpClientManager {
                     String originUrl = chain.request().url().url().toString();
                     // 加入通用的请求参数
                     Map<String, String> paramsMap = new HashMap<>();
-                    paramsMap.put("device_number", DeviceUtils.getDeviceNum());
+                    paramsMap.put("device_number", DeviceInfo.getDeviceNum());
                     paramsMap.put("appBuild", Constants.Config.API_BUILD);
                     originUrl = UrlUtil.buildUrl(originUrl, paramsMap);
                     // 构建request
