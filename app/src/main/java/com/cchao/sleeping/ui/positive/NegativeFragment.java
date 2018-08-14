@@ -15,13 +15,17 @@ import com.cchao.sleeping.R;
 import com.cchao.sleeping.api.RetrofitHelper;
 import com.cchao.sleeping.databinding.NegativeFragmentBinding;
 import com.cchao.sleeping.global.Constants;
+import com.cchao.sleeping.manager.MusicHelper;
 import com.cchao.sleeping.model.javabean.fall.FallImage;
 import com.cchao.sleeping.model.javabean.fall.FallMusic;
 import com.cchao.sleeping.ui.global.ImageShowActivity;
+import com.cchao.sleeping.ui.music.MusicPlayerActivity;
 import com.cchao.sleeping.ui.negative.ImageListActivity;
 import com.cchao.sleeping.view.adapter.DataBindQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.lzx.musiclibrary.aidl.model.SongInfo;
+import com.lzx.musiclibrary.manager.MusicManager;
 
 /**
  * @author cchao
@@ -70,6 +74,18 @@ public class NegativeFragment extends SimpleLazyFragment<NegativeFragmentBinding
                 } else {
                     ImageLoader.loadImageCrop(mContext, Constants.TEST_IMAGE_PATH, helper.getView(R.id.image));
                 }
+            }
+        });
+        mMusicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                SongInfo songInfo = new SongInfo();
+                songInfo.setSongUrl(mMusicAdapter.getData().get(position).getSrc());
+                songInfo.setSongId(mMusicAdapter.getData().get(position).getId() + "");
+                MusicHelper.addSongToPlayList(songInfo);
+                MusicManager.get().playMusicByInfo(songInfo);
+                Router.turnTo(mContext, MusicPlayerActivity.class)
+                    .start();
             }
         });
     }
