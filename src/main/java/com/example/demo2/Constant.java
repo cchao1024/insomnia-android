@@ -1,4 +1,4 @@
-package com.example.demo2;
+package com.cchao.demo2;
 
 public class Constant {
 

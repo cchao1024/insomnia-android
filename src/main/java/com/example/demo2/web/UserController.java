@@ -1,7 +1,7 @@
-package com.example.demo2.web;
+package com.cchao.demo2.web;
 
-import com.example.demo2.entity.User;
-import com.example.demo2.dao.UserRepository;
+import com.cchao.demo2.entity.User;
+import com.cchao.demo2.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

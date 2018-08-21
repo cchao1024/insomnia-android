@@ -1,6 +1,6 @@
-package com.example.demo2.entity.global;
+package com.cchao.demo2.entity.global;
 
-import com.example.demo2.Constant;
+import com.cchao.demo2.Constant;
 
 public class RespBean<T> {
     String code;

@@ -1,4 +1,4 @@
-package com.example.demo2.entity.global;
+package com.cchao.demo2.entity.global;
 
 import java.util.List;
 

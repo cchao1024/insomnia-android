@@ -1,6 +1,6 @@
-package com.example.demo2.dao;
+package com.cchao.demo2.dao;
 
-import com.example.demo2.entity.FallImage;
+import com.cchao.demo2.entity.FallImage;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

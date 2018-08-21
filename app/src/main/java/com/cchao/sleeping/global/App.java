@@ -27,7 +27,7 @@ public class App extends Application {
     }
 
     private void initMusic() {
-        if (BaseUtil.getCurProcessName(this).equals("your package name")) {
+        if (BaseUtil.getCurProcessName(this).equals(getPackageName())) {
             MusicLibrary musicLibrary = new MusicLibrary.Builder(this)
                 .setUseMediaPlayer(true)
                 .setAutoPlayNext(true)

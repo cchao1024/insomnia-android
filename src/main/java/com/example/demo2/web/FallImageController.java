@@ -1,11 +1,11 @@
-package com.example.demo2.web;
+package com.cchao.demo2.web;
 
-import com.example.demo2.Constant;
-import com.example.demo2.dao.FallImageRepository;
-import com.example.demo2.entity.FallImage;
-import com.example.demo2.entity.global.RespBean;
-import com.example.demo2.entity.global.RespListBean;
-import com.example.demo2.util.SortHelper;
+import com.cchao.demo2.Constant;
+import com.cchao.demo2.dao.FallImageRepository;
+import com.cchao.demo2.entity.FallImage;
+import com.cchao.demo2.entity.global.RespBean;
+import com.cchao.demo2.entity.global.RespListBean;
+import com.cchao.demo2.util.SortHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

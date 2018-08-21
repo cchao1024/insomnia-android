@@ -1,6 +1,6 @@
-package com.example.demo2.mapper;
+package com.cchao.demo2.mapper;
 
-import com.example.demo2.entity.User;
+import com.cchao.demo2.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
