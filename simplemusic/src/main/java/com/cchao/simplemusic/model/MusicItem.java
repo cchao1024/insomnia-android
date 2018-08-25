@@ -16,6 +16,12 @@ public class MusicItem implements Parcelable {
     public String duration;
     public String picture;
 
+    public MusicItem(String id, String src, String name) {
+        this.id = id;
+        this.src = src;
+        this.name = name;
+    }
+
     protected MusicItem(Parcel in) {
         id = in.readString();
         src = in.readString();

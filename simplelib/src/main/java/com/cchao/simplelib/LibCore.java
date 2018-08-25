@@ -32,7 +32,6 @@ public class LibCore {
         return mInfoSupport;
     }
 
-
     public interface InfoSupport {
 
         OkHttpClient getOkHttpClient();

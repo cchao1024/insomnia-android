@@ -18,6 +18,5 @@ public interface MConstans {
         int Random = 2001;
         int Order = 2002;
         int Repeat = 2003;
-        int Single = 2004;
     }
 }

@@ -5,7 +5,7 @@ import com.cchao.simplemusic.IPlayStateListener;
 
 interface IMusicPlayer {
 
-        boolean isPlaying();
+        int getPlayState();
         void stop();
         void pause();
         void play();
@@ -15,9 +15,7 @@ interface IMusicPlayer {
         void setPlayMode(int mode);
         int getPlayMode();
         int getQueueSize();
-        long seek(long pos);
-        int getShuffleMode();
-        int getRepeatMode();
+        void seek(int pos);
 
         void registerListener(in IPlayStateListener listener);
         void unregisterListener(in IPlayStateListener listener);

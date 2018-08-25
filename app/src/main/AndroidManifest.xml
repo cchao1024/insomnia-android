@@ -17,6 +17,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <service
+            android:name="com.cchao.simplemusic.MusicService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+
         <activity android:name=".ui.negative.ImageListActivity"/>
         <activity android:name=".ui.global.ImageShowActivity"/>
         <activity android:name=".ui.music.MusicPlayerActivity"/>

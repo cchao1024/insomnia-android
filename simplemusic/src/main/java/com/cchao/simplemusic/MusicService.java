@@ -1,4 +1,4 @@
-package com.cchao.simplemusic.service;
+package com.cchao.simplemusic;
 
 import android.app.Service;
 import android.content.Context;
@@ -7,21 +7,10 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
-import android.os.Message;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
-import android.text.TextUtils;
 
-import com.cchao.simplemusic.IMusicPlayer;
-import com.cchao.simplemusic.IMusicPlayerListener;
-import com.cchao.simplemusic.IPlayStateListener;
-import com.cchao.simplemusic.MConstans;
-import com.cchao.simplemusic.MLogs;
-import com.cchao.simplemusic.bean.MusicServiceBean;
-import com.cchao.simplemusic.helper.GsonHelper;
 import com.cchao.simplemusic.model.MusicItem;
-import com.cchao.simplemusic.net.log.AGLog;
-import com.cchao.simplemusic.util.ToastUtil;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -39,14 +28,12 @@ import java.util.TimerTask;
  */
 public class MusicService extends Service {
 
-    public static int MUSIC_CURRENT_MODE = MUSIC_PLAY_MODE_RANDOM;
-
-
-    private MediaPlayer mMediaPlayer;
+    MediaPlayer mMediaPlayer;
     int mPlayerState = MConstans.State.Stop;
     int mPlayMode = MConstans.PlayMode.Random;
     private int mCurPlayIndex = 0;
-    private Timer mTimer;
+    private Timer mTimer = new Timer();
+    private TimerTask mTimerTask;
 
     RemoteCallbackList<IPlayStateListener> mListenerList = new RemoteCallbackList<>();
 
@@ -79,7 +66,7 @@ public class MusicService extends Service {
         mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
-                mPlayerState = MConstans.State.Prepared;
+                updatePlayState(MConstans.State.Prepared);
                 play();
             }
         });
@@ -90,6 +77,27 @@ public class MusicService extends Service {
                 next();
             }
         });
+        // seek
+        mMediaPlayer.setOnSeekCompleteListener(new MediaPlayer.OnSeekCompleteListener() {
+            @Override
+            public void onSeekComplete(MediaPlayer mediaPlayer) {
+                updatePlayState(MConstans.State.Playing);
+            }
+        });
+    }
+
+    // 更新播放状态
+    void updatePlayState(int playerState) {
+        MLogs.d("updatePlayState " + playerState);
+        if (playerState == mPlayerState && mPlayerState != MConstans.State.Playing) {
+            MLogs.d("重复的状态 " + playerState);
+            return;
+        }
+        if (playerState == MConstans.State.Pause || playerState == MConstans.State.Stop) {
+            mTimerTask.cancel();
+        }
+        mPlayerState = playerState;
+        broadState(mPlayerState, "");
     }
 
     private void initAudioFocus() {
@@ -143,16 +151,26 @@ public class MusicService extends Service {
     }
 
     //region 操作播放行为
-    void stop() throws RemoteException {
-        if (mMediaPlayer == null) {
-            broadError("mMediaPlayer == null");
+    void stop() {
+        if (checkError()) {
             return;
         }
         mMediaPlayer.stop();
-        mPlayerState = MConstans.State.Stop;
+        updatePlayState(MConstans.State.Stop);
+    }
+
+    private boolean checkError() {
+        if (mMediaPlayer == null) {
+            broadError("MediaPlayer == null");
+            return true;
+        }
+        return false;
     }
 
     void play() {
+        if (checkError()) {
+            return;
+        }
         switch (mPlayerState) {
             // 从停止中开始播放，reset后播放上一次播放队列索引
             case MConstans.State.Stop:
@@ -161,7 +179,7 @@ public class MusicService extends Service {
                     mMediaPlayer.reset();
                     mMediaPlayer.setDataSource(musicItem.getSrc());
                     mMediaPlayer.prepare();
-                    mPlayerState = MConstans.State.Loading;
+                    updatePlayState(MConstans.State.Loading);
                 } catch (IOException ex) {
                     MLogs.e(ex);
                 }
@@ -171,6 +189,14 @@ public class MusicService extends Service {
             case MConstans.State.Prepared:
                 try {
                     mMediaPlayer.start();
+                    mPlayerState = MConstans.State.Playing;
+                    mTimer.schedule(mTimerTask = new TimerTask() {
+                        @Override
+                        public void run() {
+                            broadState(mPlayerState
+                                , mMediaPlayer.getCurrentPosition() + "");
+                        }
+                    }, 0, 1000);
                 } catch (Exception ex) {
                     MLogs.e(ex);
                 }
@@ -178,9 +204,13 @@ public class MusicService extends Service {
         }
     }
 
-    void pause(){
-
+    void pause() {
+        if (checkError()) {
+            return;
+        }
+        mMediaPlayer.pause();
     }
+
     void prev() {
         if (mCurPlayIndex > 0) {
             mCurPlayIndex--;
@@ -191,57 +221,68 @@ public class MusicService extends Service {
     }
 
     void next() {
-        switch (MUSIC_CURRENT_MODE) {
+        switch (mPlayMode) {
             case MConstans.PlayMode.Random:
-                if (mMusicQueue != null && mMusicQueue.size() > 0) {
+                if (mMusicQueue.size() > 0) {
                     Random random = new Random();
                     mCurPlayIndex = random.nextInt(mMusicQueue.size());
                     play();
                 }
                 break;
             case MConstans.PlayMode.Repeat:
+//                play();
                 break;
             case MConstans.PlayMode.Order:
-                break;
-            case MConstans.PlayMode.Single:
-
+                mCurPlayIndex = (mCurPlayIndex + 1) % mMusicQueue.size();
                 play();
                 break;
         }
-        if (++mCurPlayIndex >= mMusicQueue.size()) {
-            mCurPlayIndex = 0;
-        }
-        play();
     }
 
-    private long seek(long pos) throws RemoteException {
-        return 0;
+    void seek(int pos){
+        if (checkError()) {
+            return;
+        }
+        if (mPlayerState == MConstans.State.Playing
+            || mPlayerState == MConstans.State.Loading
+            || mPlayerState == MConstans.State.Pause) {
+
+            mMediaPlayer.seekTo(pos);
+            updatePlayState(MConstans.State.Loading);
+        }
     }
     //endregion
 
-    public void enqueue(MusicItem item) throws RemoteException {
-
+    public void enqueue(MusicItem item){
+        for (MusicItem musicItem : mMusicQueue) {
+            if (musicItem.getId().equalsIgnoreCase(item.getId())) {
+//                mMusicQueue.remove(musicItem);
+                return;
+            }
+        }
+        mMusicQueue.add(item);
     }
 
     //region 获取、设置状态
-    public void setPlayMode(int mode) throws RemoteException {
+    public void setPlayMode(int mode){
+        if (mode != MConstans.PlayMode.Order
+            && mode != MConstans.PlayMode.Repeat
+            && mode != MConstans.PlayMode.Random) {
 
+            broadError("Please choose the right model");
+            return;
+        }
+        // 循环播放
+        mMediaPlayer.setLooping(mode == MConstans.PlayMode.Repeat);
+        mPlayMode = mode;
     }
 
-    public int getPlayMode() throws RemoteException {
-        return 0;
+    public int getPlayMode(){
+        return mPlayMode;
     }
 
-    public int getQueueSize() throws RemoteException {
-        return 0;
-    }
-
-    public int getShuffleMode() throws RemoteException {
-        return 0;
-    }
-
-    public int getRepeatMode() throws RemoteException {
-        return 0;
+    public int getQueueSize(){
+        return mMusicQueue.size();
     }
     //endregion
 
@@ -285,8 +326,7 @@ public class MusicService extends Service {
             }
         }
     }
-    //endregion
-
+//endregion
 
     final class ServiceStub extends IMusicPlayer.Stub {
 
@@ -297,78 +337,67 @@ public class MusicService extends Service {
         }
 
         @Override
-        public boolean isPlaying() throws RemoteException {
-            return false;
+        public int getPlayState(){
+            return mService.get().mPlayerState;
         }
 
         @Override
-        public void stop() throws RemoteException {
+        public void stop(){
             mService.get().stop();
         }
 
         @Override
-        public void pause() throws RemoteException {
+        public void pause(){
             mService.get().pause();
         }
 
-
         @Override
-        public void play() throws RemoteException {
+        public void play(){
             mService.get().play();
         }
 
         @Override
-        public void prev() throws RemoteException {
+        public void prev(){
             mService.get().prev();
         }
 
         @Override
-        public void next() throws RemoteException {
-            mService.get().gotoNext(true);
+        public void next(){
+            mService.get().next();
         }
 
         @Override
-        public void enqueue(MusicItem item) throws RemoteException {
-
+        public void enqueue(MusicItem item){
+            mService.get().enqueue(item);
         }
 
         @Override
-        public void setPlayMode(int mode) throws RemoteException {
-
+        public void setPlayMode(int mode){
+            mService.get().setPlayMode(mode);
         }
 
         @Override
-        public int getPlayMode() throws RemoteException {
-            return 0;
+        public int getPlayMode(){
+            return mService.get().getPlayMode();
         }
 
         @Override
-        public int getQueueSize() throws RemoteException {
-            return 0;
+        public int getQueueSize(){
+            return mService.get().getQueueSize();
         }
 
         @Override
-        public long seek(long pos) throws RemoteException {
-            return 0;
+        public void seek(int pos){
+            mService.get().seek(pos);
         }
 
         @Override
-        public int getShuffleMode() throws RemoteException {
-            return 0;
-        }
-
-        @Override
-        public int getRepeatMode() throws RemoteException {
-            return 0;
-        }
-
-        @Override
-        public void registerListener(IPlayStateListener listener) throws RemoteException {
+        public void registerListener(IPlayStateListener listener){
             mService.get().mListenerList.register(listener);
         }
 
         @Override
-        public void unregisterListener(IPlayStateListener listener) throws RemoteException {
+        public void unregisterListener(IPlayStateListener listener){
             mService.get().mListenerList.unregister(listener);
 
         }

@@ -18,7 +18,7 @@ import android.view.View;
 import com.cchao.simplelib.ui.activity.BaseActivity;
 import com.cchao.simplelib.ui.fragment.BaseFragment;
 import com.cchao.sleeping.databinding.MainActivityBinding;
-import com.cchao.sleeping.ui.positive.NegativeFragment;
+import com.cchao.sleeping.ui.fall.FallFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +55,8 @@ public class MainActivity extends BaseActivity {
      * tabLayout绑定ViewPager 懒加载Fragment
      */
     private void initTabLayout() {
-        mFragments.add(new NegativeFragment());
-        mFragments.add(new NegativeFragment());
+        mFragments.add(new FallFragment());
+        mFragments.add(new FallFragment());
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
