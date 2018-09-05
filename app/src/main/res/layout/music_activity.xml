@@ -102,7 +102,7 @@
                 android:id="@+id/play_pause"
                 style="@style/ClickableImageView"
                 android:onClick="@{clicker::onClick}"
-                app:srcCompat="@drawable/ic_play"/>
+                app:srcCompat="@drawable/music_play"/>
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/play_next"

@@ -27,6 +27,7 @@
         <activity android:name=".ui.negative.ImageListActivity"/>
         <activity android:name=".ui.global.ImageShowActivity"/>
         <activity android:name=".ui.music.MusicPlayerActivity"/>
+        <activity android:name=".ui.music.MusicListActivity"/>
     </application>
 
 </manifest>

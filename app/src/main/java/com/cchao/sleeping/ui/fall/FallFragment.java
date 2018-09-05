@@ -1,10 +1,5 @@
 package com.cchao.sleeping.ui.fall;
 
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
-import android.os.RemoteException;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,9 +10,6 @@ import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.ui.fragment.SimpleLazyFragment;
 import com.cchao.simplelib.util.ExceptionCollect;
 import com.cchao.simplelib.util.StringHelper;
-import com.cchao.simplemusic.IMusicPlayer;
-import com.cchao.simplemusic.MusicService;
-import com.cchao.simplemusic.model.MusicItem;
 import com.cchao.sleeping.BR;
 import com.cchao.sleeping.R;
 import com.cchao.sleeping.api.RetrofitHelper;
@@ -31,10 +23,8 @@ import com.cchao.sleeping.ui.negative.ImageListActivity;
 import com.cchao.sleeping.view.adapter.DataBindQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-
-import java.net.URLEncoder;
-
-import static android.content.Context.BIND_AUTO_CREATE;
+import com.lzx.musiclibrary.aidl.model.SongInfo;
+import com.lzx.musiclibrary.manager.MusicManager;
 
 /**
  * @author cchao
@@ -48,9 +38,6 @@ public class FallFragment extends SimpleLazyFragment<NegativeFragmentBinding> im
 
     DataBindQuickAdapter<FallMusic> mMusicAdapter;
     BaseQuickAdapter<FallImage, BaseViewHolder> mImageAdapter;
-
-    ServiceConnection mServiceConnection;
-    IMusicPlayer mMusicPlayer;
 
     @Override
     public void onFirstUserVisible() {
@@ -90,49 +77,17 @@ public class FallFragment extends SimpleLazyFragment<NegativeFragmentBinding> im
         mMusicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                FallMusic fallMusic = mMusicAdapter.getItem(position);
+                FallMusic item = mMusicAdapter.getItem(position);
 
-                MusicItem item = new MusicItem(fallMusic.getId() + ""
-                    , URLEncoder.encode(fallMusic.getSrc())`, fallMusic.getName());
+                SongInfo songInfo = new SongInfo();
+                songInfo.setSongId(String.valueOf(item.getId()));
+                songInfo.setSongUrl("https://m10.music.126.net/20180825221042/5686192ca1c72a70e1a83dc1d8632f4c/ymusic/2e4e/33dd/553e/12073de872c082c2edcb43ff4c40c2b1.mp3");
+                MusicManager.get().playMusicByInfo(songInfo);
 
-                try {
-                    if (mMusicPlayer == null) {
-                        initPlayService(item);
-                    } else {
-                        mMusicPlayer.stop();
-                        mMusicPlayer.enqueue(item);
-                        mMusicPlayer.play();
-                    }
-                } catch (RemoteException e) {
-                    ExceptionCollect.logException(e);
-                }
                 Router.turnTo(mContext, MusicPlayerActivity.class)
                     .start();
             }
         });
-    }
-
-    void initPlayService(MusicItem item) {
-        mServiceConnection = new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                mMusicPlayer = (IMusicPlayer) service;
-                try {
-                    mMusicPlayer.enqueue(item);
-                    mMusicPlayer.play();
-                } catch (RemoteException ex) {
-                    ExceptionCollect.logException(ex);
-                }
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-
-            }
-        };
-
-        Intent intent = new Intent(getActivity(), MusicService.class);
-        getActivity().bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
     }
 
     private void initImageAdapter() {
@@ -167,14 +122,6 @@ public class FallFragment extends SimpleLazyFragment<NegativeFragmentBinding> im
                 switchView(NET_ERROR);
                 ExceptionCollect.logException(throwable);
             }));
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (getActivity() != null) {
-            getActivity().unbindService(mServiceConnection);
-        }
     }
 
     @Override

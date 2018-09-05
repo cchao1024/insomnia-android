@@ -1,28 +1,20 @@
 package com.cchao.sleeping.ui.music;
 
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
-import android.os.RemoteException;
 import android.view.View;
 
-import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
-import com.cchao.simplelib.util.ExceptionCollect;
-import com.cchao.simplemusic.IMusicPlayer;
-import com.cchao.simplemusic.MusicService;
 import com.cchao.sleeping.R;
 import com.cchao.sleeping.databinding.MusicActivityBinding;
+import com.lzx.musiclibrary.aidl.listener.OnPlayerEventListener;
+import com.lzx.musiclibrary.aidl.model.SongInfo;
+import com.lzx.musiclibrary.constans.State;
+import com.lzx.musiclibrary.manager.MusicManager;
 
 /**
  * @author cchao
  * @version 8/13/18.
  */
 public class MusicPlayerActivity extends BaseToolbarActivity<MusicActivityBinding> implements View.OnClickListener {
-
-    ServiceConnection mServiceConnection;
-    IMusicPlayer mMusicPlayer;
 
     @Override
     protected int getLayout() {
@@ -36,19 +28,42 @@ public class MusicPlayerActivity extends BaseToolbarActivity<MusicActivityBindin
     }
 
     private void initPlayService() {
-        mServiceConnection = new ServiceConnection() {
+        MusicManager.get().addPlayerEventListener(new OnPlayerEventListener() {
             @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                mMusicPlayer = (IMusicPlayer) service;
+            public void onMusicSwitch(SongInfo music) {
+
             }
 
             @Override
-            public void onServiceDisconnected(ComponentName name) {
+            public void onPlayerStart() {
+                mDataBind.playPause.setImageResource(R.drawable.music_pause);
+            }
+
+            @Override
+            public void onPlayerPause() {
+                mDataBind.playPause.setImageResource(R.drawable.music_play);
+            }
+
+            @Override
+            public void onPlayCompletion() {
 
             }
-        };
-        Intent intent = new Intent(this, MusicService.class);
-        bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
+
+            @Override
+            public void onPlayerStop() {
+
+            }
+
+            @Override
+            public void onError(String errorMsg) {
+
+            }
+
+            @Override
+            public void onAsyncLoading(boolean isFinishLoading) {
+
+            }
+        });
     }
 
     @Override
@@ -57,31 +72,33 @@ public class MusicPlayerActivity extends BaseToolbarActivity<MusicActivityBindin
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbindService(mServiceConnection);
-    }
-
-    @Override
     public void onClick(View v) {
-        try {
-            if (mMusicPlayer == null) {
-                Logs.d("MusicPlayer is null");
-                return;
-            }
-            switch (v.getId()) {
-                case R.id.play_next:
-                    mMusicPlayer.next();
+        switch (v.getId()) {
+            case R.id.play_pause:
+                if (MusicManager.get().getStatus() == State.STATE_PLAYING) {
+                    MusicManager.get().pauseMusic();
                     break;
-                case R.id.play_pause:
-                    mMusicPlayer.pause();
+                }
+                if (MusicManager.get().getStatus() == State.STATE_PAUSED) {
+                    MusicManager.get().resumeMusic();
                     break;
-                case R.id.play_pre:
-                    mMusicPlayer.prev();
-                    break;
-            }
-        } catch (RemoteException e) {
-            ExceptionCollect.logException(e);
+                }
+
+                break;
+            case R.id.play_pre:
+                if (MusicManager.get().hasPre()) {
+                    MusicManager.get().playPre();
+                } else {
+                    showText("没有上一首了");
+                }
+                break;
+            case R.id.play_next:
+                if (MusicManager.get().hasNext()) {
+                    MusicManager.get().playNext();
+                } else {
+                    showText("没有下一首了");
+
+                }
         }
     }
 }
