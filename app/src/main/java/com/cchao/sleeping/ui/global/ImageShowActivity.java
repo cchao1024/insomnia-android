@@ -30,6 +30,6 @@ public class ImageShowActivity extends BaseToolbarActivity<ImageShowActivityBind
 
     @Override
     protected void onLoadData() {
-        ImageLoader.loadImageViewFit(mContext, mImageUrl, mPhotoView);
+        ImageLoader.loadImage(mContext, mImageUrl, mPhotoView);
     }
 }

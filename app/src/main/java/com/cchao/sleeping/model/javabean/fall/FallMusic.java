@@ -5,6 +5,7 @@ public class FallMusic {
     private Long id;
     private String name;
     private String src;
+    private String singer;
     private int play_count;
     private String cover_img;
     private String add_time;
@@ -55,5 +56,14 @@ public class FallMusic {
 
     public void setAdd_time(String add_time) {
         this.add_time = add_time;
+    }
+
+    public String getSinger() {
+        return singer;
+    }
+
+    public FallMusic setSinger(String singer) {
+        this.singer = singer;
+        return this;
     }
 }

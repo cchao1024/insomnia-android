@@ -43,8 +43,7 @@ public abstract class Constants {
 
     // 后端响应Code
     public interface ApiResp {
-        String CODE_SUC = "200";
-        String CODE_00 = "00";
+        String CODE_SUC = "00";
         String CODE = "code";
 
         String Json_Empty = "json_empty ";

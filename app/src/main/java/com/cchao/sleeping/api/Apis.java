@@ -5,6 +5,7 @@ import com.cchao.sleeping.model.javabean.RespBean;
 import com.cchao.sleeping.model.javabean.RespListBean;
 import com.cchao.sleeping.model.javabean.fall.FallImage;
 import com.cchao.sleeping.model.javabean.fall.FallIndex;
+import com.cchao.sleeping.model.javabean.fall.FallMusic;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -32,4 +33,8 @@ public interface Apis {
     @FormUrlEncoded
     @POST("/fallimage/getByPage")
     Observable<RespListBean<FallImage>> getImageList(@Field("page") int page);
+
+    @FormUrlEncoded
+    @POST("/fallmusic/getByPage")
+    Observable<RespListBean<FallMusic>> getMusicList(@Field("page") int page);
 }
