@@ -7,8 +7,10 @@ import android.view.View;
 
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Router;
+import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
+import com.cchao.simplelib.model.event.CommonEvent;
 import com.cchao.simplelib.ui.fragment.SimpleLazyFragment;
 import com.cchao.simplelib.util.DeviceInfo;
 import com.cchao.simplelib.util.ExceptionCollect;
@@ -16,7 +18,7 @@ import com.cchao.simplelib.util.StringHelper;
 import com.cchao.sleeping.BR;
 import com.cchao.sleeping.R;
 import com.cchao.sleeping.api.RetrofitHelper;
-import com.cchao.sleeping.databinding.NegativeFragmentBinding;
+import com.cchao.sleeping.databinding.FallFragmentBinding;
 import com.cchao.sleeping.global.Constants;
 import com.cchao.sleeping.model.javabean.fall.FallImage;
 import com.cchao.sleeping.model.javabean.fall.FallMusic;
@@ -34,7 +36,7 @@ import com.lzx.musiclibrary.manager.MusicManager;
  * @author cchao
  * @version 8/10/18.
  */
-public class FallFragment extends SimpleLazyFragment<NegativeFragmentBinding> implements View.OnClickListener {
+public class FallFragment extends SimpleLazyFragment<FallFragmentBinding> implements View.OnClickListener {
 
     RecyclerView mRvMusic;
     RecyclerView mRvImage;
@@ -43,23 +45,43 @@ public class FallFragment extends SimpleLazyFragment<NegativeFragmentBinding> im
     DataBindQuickAdapter<FallMusic> mMusicAdapter;
     BaseQuickAdapter<FallImage, BaseViewHolder> mImageAdapter;
 
+    View mMusicDisk;
+
     @Override
     public void onFirstUserVisible() {
         findViews();
+        initEvent();
         initMusicAdapter();
         initImageAdapter();
         onLoadData();
     }
 
+    private void initEvent() {
+        addSubscribe(RxBus.getDefault().toObservable(new RxBus.CommonCodeCallBack() {
+            @Override
+            public void onConsumer(CommonEvent commonEvent) {
+                switch (commonEvent.getCode()) {
+                    case MusicManager.MSG_PLAYER_START:
+                        mMusicDisk.setVisibility(View.VISIBLE);
+                        break;
+                    case MusicManager.MSG_PLAYER_STOP:
+                        mMusicDisk.setVisibility(View.GONE);
+                        break;
+                }
+            }
+        }));
+    }
+
     @Override
     protected int getLayoutId() {
-        return R.layout.negative_fragment;
+        return R.layout.fall_fragment;
     }
 
     private void findViews() {
         mRvMusic = mDataBind.rvMusic;
         mRvImage = mDataBind.rvImage;
         mRvNature = mDataBind.rvNature;
+        mMusicDisk = mDataBind.musicDisk;
 
         mDataBind.setClick(this);
     }
@@ -144,7 +166,7 @@ public class FallFragment extends SimpleLazyFragment<NegativeFragmentBinding> im
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.music_more:
-                Router.turnTo(mContext, FallMusicActivity.class)
+                Router.turnTo(mContext, FallMusicListActivity.class)
                     .start();
                 break;
             case R.id.image_more:

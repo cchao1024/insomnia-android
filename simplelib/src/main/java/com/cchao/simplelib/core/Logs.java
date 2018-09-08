@@ -8,7 +8,6 @@ import com.cchao.simplelib.util.FileUtils;
 /**
  * Log输出
  *
- * @author jason
  */
 public class Logs {
     public static final String DEFAULT_TAG = " [" + LibCore.getInfo().getAppName() + "] ";

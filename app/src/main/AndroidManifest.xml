@@ -28,7 +28,7 @@
         <activity android:name=".ui.global.ImageShowActivity"/>
         <activity android:name=".ui.music.MusicPlayerActivity"/>
         <activity android:name=".ui.music.MusicListActivity"/>
-        <activity android:name=".ui.fall.FallMusicActivity"/>
+        <activity android:name=".ui.fall.FallMusicListActivity"/>
     </application>
 
 </manifest>

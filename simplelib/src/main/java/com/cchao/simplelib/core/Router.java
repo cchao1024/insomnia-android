@@ -3,13 +3,7 @@ package com.cchao.simplelib.core;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-
-import com.cchao.simplelib.LibCore;
-import com.cchao.simplelib.util.ExceptionCollect;
-
-import okhttp3.Dispatcher;
 
 
 /**
@@ -20,19 +14,6 @@ import okhttp3.Dispatcher;
  * @version 2017.11.2.
  */
 public class Router {
-
-    private static Dispatcher mDispatcher = new Dispatcher();
-
-    /**
-     * 该url是否满足路由规则且被路由跳转
-     *
-     * @param activity activity
-     * @param url      url
-     * @return 是否已经被路由跳转
-     */
-    public static boolean routeURL(Activity activity, Uri url) {
-            return true;
-    }
 
     /**
      * 这里对跳转进行各种处理，拦截，记录

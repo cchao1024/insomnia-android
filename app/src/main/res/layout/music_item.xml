@@ -62,12 +62,11 @@
             app:srcCompat="@drawable/ic_play_select"/>
 
         <ImageView
-            android:id="@+id/add_play_list"
+            android:id="@+id/more_option"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_20"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/dp_10"
-            android:onClick="@{click::onClick}"
             app:srcCompat="@drawable/ic_more"/>
     </LinearLayout>
 </layout>

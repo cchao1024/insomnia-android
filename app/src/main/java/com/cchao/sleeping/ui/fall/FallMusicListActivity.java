@@ -12,13 +12,12 @@ import com.cchao.sleeping.BR;
 import com.cchao.sleeping.R;
 import com.cchao.sleeping.api.RetrofitHelper;
 import com.cchao.sleeping.databinding.CommonRecyclerBinding;
+import com.cchao.sleeping.manager.MusicHelper;
 import com.cchao.sleeping.model.javabean.RespListBean;
 import com.cchao.sleeping.model.javabean.fall.FallMusic;
 import com.cchao.sleeping.ui.music.MusicPlayerActivity;
 import com.cchao.sleeping.view.adapter.PageAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.lzx.musiclibrary.aidl.model.SongInfo;
-import com.lzx.musiclibrary.manager.MusicManager;
 
 import io.reactivex.Observable;
 
@@ -26,7 +25,7 @@ import io.reactivex.Observable;
  * @author cchao
  * @version 8/12/18.
  */
-public class FallMusicActivity extends BaseToolbarActivity<CommonRecyclerBinding> {
+public class FallMusicListActivity extends BaseToolbarActivity<CommonRecyclerBinding> {
 
     RecyclerView mRecycler;
     PageAdapter<FallMusic> mAdapter;
@@ -48,7 +47,7 @@ public class FallMusicActivity extends BaseToolbarActivity<CommonRecyclerBinding
 
         mRecycler.setLayoutManager(new LinearLayoutManager(mContext));
 
-        DividerItemDecoration divider = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        DividerItemDecoration divider = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         divider.setDrawable(UiHelper.getDrawable(R.drawable.music_list_divider));
         mRecycler.addItemDecoration(divider);
 
@@ -62,7 +61,12 @@ public class FallMusicActivity extends BaseToolbarActivity<CommonRecyclerBinding
 
             @Override
             protected void convert(DataBindViewHolder helper, FallMusic item) {
-                helper.getBinding().setVariable(BR.item,item);
+                helper.getBinding().setVariable(BR.item, item);
+                helper.setText(R.id.order_num, helper.getLayoutPosition());
+                helper.getView(R.id.more_option).setOnClickListener(v -> {
+                    MusicHelper.addToPlayList(item);
+                    showText("已加入播放列表");
+                });
             }
         });
 
@@ -71,11 +75,7 @@ public class FallMusicActivity extends BaseToolbarActivity<CommonRecyclerBinding
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 FallMusic item = mAdapter.getItem(position);
 
-                SongInfo songInfo = new SongInfo();
-                songInfo.setSongId(String.valueOf(item.getId()));
-                songInfo.setSongUrl(item.getSrc());
-                MusicManager.get().playMusicByInfo(songInfo);
-
+                MusicHelper.playNow(item);
                 Router.turnTo(mContext, MusicPlayerActivity.class)
                     .start();
             }

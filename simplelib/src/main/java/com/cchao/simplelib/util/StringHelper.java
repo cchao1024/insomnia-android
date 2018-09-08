@@ -14,17 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringHelper {
-    /**
-     * Represents a failed index search.
-     *
-     * @since 2.1
-     */
     public static final int INDEX_NOT_FOUND = -1;
-    /**
-     * The empty String {@code ""}.
-     *
-     * @since 2.0
-     */
 
     public static final String EMPTY = "";
     static final String CHARSET = "utf-8";
@@ -144,7 +134,7 @@ public class StringHelper {
 
     public static String upperFirstCase(String name) {
         name = name.substring(0, 1).toUpperCase() + name.substring(1);
-        return  name;
+        return name;
 
     }
 

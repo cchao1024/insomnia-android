@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.cchao.simplelib.R;
-import com.cchao.simplelib.core.CoreUtils;
+import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.ui.interfaces.BaseView;
 
@@ -46,7 +46,7 @@ public class BaseFragment extends Fragment implements BaseView {
 
     @Override
     public void showText(String string) {
-        CoreUtils.showToast(string);
+        UiHelper.showToast(string);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.cchao.simplelib.LibCore;
 import com.cchao.sleeping.api.HttpClientManager;
+import com.cchao.sleeping.manager.MusicHelper;
 import com.lzx.musiclibrary.manager.MusicLibrary;
 import com.lzx.musiclibrary.utils.BaseUtil;
 
@@ -33,6 +34,7 @@ public class App extends Application {
                 .setAutoPlayNext(true)
                 .build();
             musicLibrary.init();
+            MusicHelper.init();
         }
     }
 

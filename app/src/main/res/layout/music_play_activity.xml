@@ -8,11 +8,16 @@
         <variable
             name="clicker"
             type="android.view.View.OnClickListener"/>
+
+        <variable
+            name="song"
+            type="com.lzx.musiclibrary.aidl.model.SongInfo"/>
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/lightblue400"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -29,21 +34,45 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/text_view_name"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_20"
             android:gravity="center"
-            android:textSize="18sp"
-            tools:text="Drag me down"/>
+            android:text="@{song.songName}"
+            android:textSize="18sp"/>
 
         <TextView
-            android:id="@+id/text_view_artist"
+            android:id="@+id/singer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_20"
             android:gravity="center"
+            android:text="@{song.artist}"
             tools:text="One Direction"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/divider_horizontal_24"
+            android:gravity="center"
+            android:showDividers="middle">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/wish"
+                style="@style/ClickableImageView"
+                android:onClick="@{clicker::onClick}"
+                app:srcCompat="@drawable/ic_play_next"
+                />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/discuss"
+                style="@style/ClickableImageView"
+                android:onClick="@{clicker::onClick}"
+                app:srcCompat="@drawable/ic_play_next"
+                />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layout_progress"
@@ -73,6 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lines="1"
+                android:text="@{String.valueOf(song.duration)}"
                 android:textSize="12sp"
                 tools:text="03:22"/>
         </LinearLayout>
@@ -110,6 +140,12 @@
                 android:onClick="@{clicker::onClick}"
                 app:srcCompat="@drawable/ic_play_next"/>
 
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/play_list"
+                style="@style/ClickableImageView"
+                android:onClick="@{clicker::onClick}"
+                app:srcCompat="@drawable/ic_play_next"
+                />
         </LinearLayout>
     </LinearLayout>
 </layout>

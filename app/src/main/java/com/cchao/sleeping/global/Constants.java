@@ -39,6 +39,7 @@ public abstract class Constants {
         String USER_NAME = "user_name";
         String USER_EMAIL = "user_email";
         String LOGIN_TIPS = "login_tips";
+        String MUSIC_PLAY_MODE = "music_play_mode";
     }
 
     // 后端响应Code

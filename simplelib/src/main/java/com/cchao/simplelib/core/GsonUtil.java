@@ -1,5 +1,6 @@
 package com.cchao.simplelib.core;
 
+import com.cchao.simplelib.util.ExceptionCollect;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -22,31 +23,21 @@ public class GsonUtil {
 
     /**
      * 转成json
-     *
-     * @param object
-     * @return
      */
     public static String toJson(Object object) {
-        String gsonString = null;
-        gsonString = gson.toJson(object);
-
-        return gsonString;
+        return gson.toJson(object);
     }
 
     /**
      * 转成bean
-     *
-     * @param json
-     * @param cls
-     * @return
      */
     public static <T> T fromJson(String json, Class<T> cls) {
         try {
             T t = gson.fromJson(json, cls);
             return t;
         } catch (Exception e) {
-//            ParseUtils.logJsonException(json, e.getMessage());
-            throw e;
+            ExceptionCollect.logException(e);
+            return null;
         }
     }
 

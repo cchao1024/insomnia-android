@@ -8,7 +8,7 @@ import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 
 import com.cchao.simplelib.R;
-import com.cchao.simplelib.core.CoreUtils;
+import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.interfaces.BaseView;
 import com.cchao.simplelib.util.ExceptionCollect;
 
@@ -44,7 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     @Override
     public void showText(String stringId) {
-        CoreUtils.showToast(stringId);
+        UiHelper.showToast(stringId);
     }
 
     @Override

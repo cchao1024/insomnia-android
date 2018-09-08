@@ -1,20 +1,24 @@
 package com.cchao.simplelib.core;
 
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.widget.Toast;
 
 import com.cchao.simplelib.LibCore;
 
 /**
- * 一些常用的核心工具方法
+ * 一些常用的ui核心工具方法
  *
  * @author cchao
  * @version 18-5-13.
  */
-public class CoreUtils {
+public class UiHelper {
 
     //<editor-fold desc="对 px的转换">
 
@@ -28,15 +32,6 @@ public class CoreUtils {
             , LibCore.getContext().getResources().getDisplayMetrics());
     }
 
-    public static int px2dp(float pxValue) {
-        final float scale = LibCore.getContext().getResources().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
-    }
-
-    public static int px2sp(float pxValue) {
-        final float fontScale = LibCore.getContext().getResources().getDisplayMetrics().scaledDensity;
-        return (int) (pxValue / fontScale + 0.5f);
-    }
     //</editor-fold>
 
     //<editor-fold desc="toast 操作">
@@ -81,8 +76,30 @@ public class CoreUtils {
         }
         mToast.setText(text);
         mToast.setDuration(duration);
+        Logs.d("toast " + text);
 
-        mToast.show();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mToast.show();
+            }
+        });
+    }
+
+    //</editor-fold>
+
+    public static void runOnUiThread(Runnable runnable) {
+        mHandler.post(runnable);
+    }
+
+    //<editor-fold desc="Compat 方法">
+
+    public static Drawable getDrawable(@DrawableRes int id) {
+        return ContextCompat.getDrawable(LibCore.getContext(), id);
+    }
+
+    public static int getColor(@ColorRes int id) {
+        return ContextCompat.getColor(LibCore.getContext(), id);
     }
 
     //</editor-fold>

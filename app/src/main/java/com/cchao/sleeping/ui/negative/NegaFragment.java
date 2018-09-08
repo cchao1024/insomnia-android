@@ -15,7 +15,7 @@ public class NegaFragment extends SimpleLazyFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.negative_fragment;
+        return R.layout.fall_fragment;
     }
 
     @Override
