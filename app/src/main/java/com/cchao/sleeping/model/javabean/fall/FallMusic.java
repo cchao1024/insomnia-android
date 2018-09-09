@@ -10,6 +10,8 @@ public class FallMusic {
     private String cover_img;
     private String add_time;
 
+    private boolean isPlaying;
+
     public String getPlay_count() {
         return play_count + "";
     }

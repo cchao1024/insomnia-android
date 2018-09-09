@@ -37,4 +37,8 @@ public interface Apis {
     @FormUrlEncoded
     @POST("/fallmusic/getByPage")
     Observable<RespListBean<FallMusic>> getMusicList(@Field("page") int page);
+
+    @FormUrlEncoded
+    @POST("/fallmusic/play_count")
+    Observable<RespBean> playCount(@Field("id") String id);
 }

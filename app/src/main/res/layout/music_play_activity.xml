@@ -22,15 +22,18 @@
         android:orientation="vertical">
 
         <RelativeLayout
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <ImageView
-                android:id="@+id/image_view_album"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_centerInParent="true"/>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/music_album"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_centerInParent="true"
+                app:backgroundTint="@color/colorAction"
+                app:srcCompat="@drawable/ic_disk"/>
         </RelativeLayout>
 
         <TextView
@@ -46,7 +49,7 @@
             android:id="@+id/singer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_10"
             android:gravity="center"
             android:text="@{song.artist}"
             tools:text="One Direction"/>
@@ -54,23 +57,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@drawable/divider_horizontal_24"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
             android:gravity="center"
-            android:showDividers="middle">
+            android:showDividers="middle"
+            android:visibility="gone">
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/wish"
                 style="@style/ClickableImageView"
                 android:onClick="@{clicker::onClick}"
-                app:srcCompat="@drawable/ic_play_next"
-                />
+                app:srcCompat="@drawable/ic_wish_no"/>
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/discuss"
                 style="@style/ClickableImageView"
+                android:layout_marginStart="@dimen/dp_24"
                 android:onClick="@{clicker::onClick}"
-                app:srcCompat="@drawable/ic_play_next"
-                />
+                app:srcCompat="@drawable/ic_discuss"/>
+
+            <TextView
+                android:id="@+id/discuss_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_4"
+                android:text="(0)"
+                android:textColor="@color/white"/>
 
         </LinearLayout>
 
@@ -84,9 +96,11 @@
 
             <TextView
                 android:id="@+id/progress_time"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dp_40"
                 android:layout_height="wrap_content"
+                android:gravity="end"
                 android:lines="1"
+                android:text="00:00"
                 android:textSize="12sp"/>
 
             <android.support.v7.widget.AppCompatSeekBar
@@ -94,15 +108,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:max="10000"
+                android:max="@{(int)song.duration}"
+                android:paddingEnd="@dimen/dp_8"
+                android:paddingStart="@dimen/dp_8"
                 tools:progress="5000"/>
 
             <TextView
                 android:id="@+id/duration"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dp_40"
                 android:layout_height="wrap_content"
+                android:gravity="start"
                 android:lines="1"
-                android:text="@{String.valueOf(song.duration)}"
                 android:textSize="12sp"
                 tools:text="03:22"/>
         </LinearLayout>
@@ -119,6 +135,7 @@
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/play_mode_switch"
                 style="@style/ClickableImageView"
+                android:layout_marginEnd="@dimen/dp_15"
                 android:onClick="@{clicker::onClick}"
                 app:srcCompat="@drawable/ic_play_mode_shuffle"/>
 
@@ -143,8 +160,9 @@
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/play_list"
                 style="@style/ClickableImageView"
+                android:layout_marginStart="@dimen/dp_15"
                 android:onClick="@{clicker::onClick}"
-                app:srcCompat="@drawable/ic_play_next"
+                app:srcCompat="@drawable/ic_play_list"
                 />
         </LinearLayout>
     </LinearLayout>

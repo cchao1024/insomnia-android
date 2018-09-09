@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.cchao.sleeping.model.javabean.fall.FallMusic"/>
+            type="com.lzx.musiclibrary.aidl.model.SongInfo"/>
 
         <variable
             name="click"
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
-            android:text="@{item.name}"
+            android:text="@{item.songName}"
             android:textSize="@dimen/sp_15"
             tools:text="@string/app_name"/>
 
@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_20"
-            android:text="@{item.singer}"
+            android:text="@{item.artist}"
             android:textColor="@color/text_666"
             android:textSize="@dimen/sp_12"
             tools:text="@string/app_name"/>

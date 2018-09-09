@@ -24,7 +24,7 @@ public class ImageShowActivity extends BaseToolbarActivity<ImageShowActivityBind
     @Override
     protected void initEventAndData() {
         mImageUrl = getIntent().getStringExtra(Constants.Extra.IMAGE_URL);
-        mPhotoView = mDataBind.photoView;
+        mPhotoView = mDataBinding.photoView;
         onLoadData();
     }
 

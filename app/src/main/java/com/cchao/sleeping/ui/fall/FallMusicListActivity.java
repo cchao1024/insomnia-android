@@ -6,18 +6,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.cchao.simplelib.core.Router;
+import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.UiHelper;
+import com.cchao.simplelib.model.event.CommonEvent;
 import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
 import com.cchao.sleeping.BR;
 import com.cchao.sleeping.R;
 import com.cchao.sleeping.api.RetrofitHelper;
-import com.cchao.sleeping.databinding.CommonRecyclerBinding;
+import com.cchao.sleeping.databinding.MusicListBinding;
 import com.cchao.sleeping.manager.MusicHelper;
 import com.cchao.sleeping.model.javabean.RespListBean;
 import com.cchao.sleeping.model.javabean.fall.FallMusic;
 import com.cchao.sleeping.ui.music.MusicPlayerActivity;
+import com.cchao.sleeping.util.AnimHelper;
 import com.cchao.sleeping.view.adapter.PageAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.lzx.musiclibrary.manager.MusicManager;
 
 import io.reactivex.Observable;
 
@@ -25,25 +29,57 @@ import io.reactivex.Observable;
  * @author cchao
  * @version 8/12/18.
  */
-public class FallMusicListActivity extends BaseToolbarActivity<CommonRecyclerBinding> {
+public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding> {
 
     RecyclerView mRecycler;
     PageAdapter<FallMusic> mAdapter;
+    String mCurSongId = "";
 
     @Override
     protected int getLayout() {
-        return R.layout.common_recycler;
+        return R.layout.music_list;
     }
 
     @Override
     protected void initEventAndData() {
         initAdapter();
+        initEvent();
         onLoadData();
+        mDataBinding.setClicker(v -> {
+            switch (v.getId()) {
+                case R.id.music_disk:
+                    Router.turnTo(mContext, MusicPlayerActivity.class).start();
+                    break;
+
+            }
+        });
+    }
+
+    private void initEvent() {
+        addSubscribe(RxBus.getDefault().toObservable(new RxBus.CommonCodeCallBack() {
+            @Override
+            public void onConsumer(CommonEvent commonEvent) {
+                switch (commonEvent.getCode()) {
+                    case MusicManager.MSG_PLAYER_START:
+                        mDataBinding.musicDisk.setVisibility(View.VISIBLE);
+                        AnimHelper.startRotate(mDataBinding.musicDisk);
+                        mCurSongId = MusicManager.get().getCurrPlayingMusic().getSongId();
+                        mAdapter.notifyDataSetChanged();
+                        break;
+                    case MusicManager.MSG_PLAYER_STOP:
+                    case MusicManager.MSG_PLAYER_PAUSE:
+                        mDataBinding.musicDisk.setVisibility(View.GONE);
+                        mCurSongId = "";
+                        mAdapter.notifyDataSetChanged();
+                        break;
+                }
+            }
+        }));
     }
 
     private void initAdapter() {
-        mRecycler = mDataBind.recyclerView;
-        mDataBind.refreshLayout.setEnabled(false);
+        mRecycler = mDataBinding.recyclerView;
+        mDataBinding.refreshLayout.setEnabled(false);
 
         mRecycler.setLayoutManager(new LinearLayoutManager(mContext));
 
@@ -62,7 +98,9 @@ public class FallMusicListActivity extends BaseToolbarActivity<CommonRecyclerBin
             @Override
             protected void convert(DataBindViewHolder helper, FallMusic item) {
                 helper.getBinding().setVariable(BR.item, item);
-                helper.setText(R.id.order_num, helper.getLayoutPosition());
+                helper.setText(R.id.order_num, helper.getLayoutPosition() + "");
+
+                helper.setGone(R.id.play_now, mCurSongId.equals(String.valueOf(item.getId())));
                 helper.getView(R.id.more_option).setOnClickListener(v -> {
                     MusicHelper.addToPlayList(item);
                     showText("已加入播放列表");
@@ -76,8 +114,11 @@ public class FallMusicListActivity extends BaseToolbarActivity<CommonRecyclerBin
                 FallMusic item = mAdapter.getItem(position);
 
                 MusicHelper.playNow(item);
-                Router.turnTo(mContext, MusicPlayerActivity.class)
-                    .start();
+
+                if (mCurSongId.equals(String.valueOf(item.getId()))) {
+                    Router.turnTo(mContext, MusicPlayerActivity.class)
+                        .start();
+                }
             }
         });
 
@@ -89,5 +130,11 @@ public class FallMusicListActivity extends BaseToolbarActivity<CommonRecyclerBin
         switchView(LOADING);
         mAdapter.onLoadData(1);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AnimHelper.cancel(mDataBinding.musicDisk);
     }
 }

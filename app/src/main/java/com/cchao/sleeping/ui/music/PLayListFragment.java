@@ -14,6 +14,7 @@ import com.cchao.simplelib.core.UiHelper;
 import com.cchao.sleeping.BR;
 import com.cchao.sleeping.R;
 import com.cchao.sleeping.view.adapter.DataBindQuickAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzx.musiclibrary.aidl.model.SongInfo;
 import com.lzx.musiclibrary.manager.MusicManager;
 
@@ -46,11 +47,13 @@ public class PLayListFragment extends BottomSheetDialogFragment {
     private void initRecycler() {
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        DividerItemDecoration divider = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+        DividerItemDecoration divider = new DividerItemDecoration(getActivity()
+            , DividerItemDecoration.VERTICAL);
         divider.setDrawable(UiHelper.getDrawable(R.drawable.music_list_divider));
         mRecycler.addItemDecoration(divider);
 
-        mRecycler.setAdapter(mAdapter = new DataBindQuickAdapter<SongInfo>(R.layout.music_item, MusicManager.get().getPlayList()) {
+        mRecycler.setAdapter(mAdapter = new DataBindQuickAdapter<SongInfo>
+            (R.layout.play_list_item, MusicManager.get().getPlayList()) {
 
             @Override
             protected void convert(DataBindViewHolder helper, SongInfo item) {
@@ -58,6 +61,12 @@ public class PLayListFragment extends BottomSheetDialogFragment {
                 helper.getView(R.id.remove).setOnClickListener(v -> {
                     MusicManager.get().deleteSongInfoOnPlayList(item, false);
                 });
+            }
+        });
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                MusicManager.get().playMusicByInfo(mAdapter.getItem(position));
             }
         });
     }

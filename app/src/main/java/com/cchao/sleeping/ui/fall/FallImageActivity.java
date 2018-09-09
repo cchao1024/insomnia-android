@@ -46,8 +46,8 @@ public class FallImageActivity extends BaseToolbarActivity<CommonRecyclerBinding
     }
 
     private void initAdapter() {
-        mRecycler = mDataBind.recyclerView;
-        mDataBind.refreshLayout.setEnabled(false);
+        mRecycler = mDataBinding.recyclerView;
+        mDataBinding.refreshLayout.setEnabled(false);
 
         mRecycler.setLayoutManager(new StaggeredGridLayoutManager(2
             , StaggeredGridLayoutManager.VERTICAL));
