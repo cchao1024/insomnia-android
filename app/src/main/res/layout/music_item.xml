@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="item"
             type="com.cchao.sleeping.model.javabean.fall.FallMusic"/>
@@ -60,6 +60,7 @@
             android:layout_height="@dimen/dp_20"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/dp_20"
+            android:visibility="@{item.isPlaying? View.GONE : View.VISIBLE}"
             app:srcCompat="@drawable/ic_play_select"/>
 
         <ImageView

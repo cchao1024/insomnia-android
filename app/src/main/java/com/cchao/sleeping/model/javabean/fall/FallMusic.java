@@ -1,5 +1,7 @@
 package com.cchao.sleeping.model.javabean.fall;
 
+import android.databinding.ObservableBoolean;
+
 public class FallMusic {
 
     private Long id;
@@ -10,7 +12,7 @@ public class FallMusic {
     private String cover_img;
     private String add_time;
 
-    private boolean isPlaying;
+    public ObservableBoolean isPlaying;
 
     public String getPlay_count() {
         return play_count + "";

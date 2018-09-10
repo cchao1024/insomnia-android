@@ -33,7 +33,7 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
 
     RecyclerView mRecycler;
     PageAdapter<FallMusic> mAdapter;
-    String mCurSongId = "";
+    int mCurSongId = 0;
 
     @Override
     protected int getLayout() {
@@ -63,15 +63,17 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
                     case MusicManager.MSG_PLAYER_START:
                         mDataBinding.musicDisk.setVisibility(View.VISIBLE);
                         AnimHelper.startRotate(mDataBinding.musicDisk);
-                        mCurSongId = MusicManager.get().getCurrPlayingMusic().getSongId();
-                        mAdapter.notifyDataSetChanged();
+                        mCurSongId = Integer.parseInt(MusicManager.get().getCurrPlayingMusic().getSongId());
                         break;
                     case MusicManager.MSG_PLAYER_STOP:
                     case MusicManager.MSG_PLAYER_PAUSE:
                         mDataBinding.musicDisk.setVisibility(View.GONE);
-                        mCurSongId = "";
-                        mAdapter.notifyDataSetChanged();
+                        mCurSongId = 0;
                         break;
+                }
+
+                for (FallMusic music : mAdapter.getData()) {
+                    music.isPlaying.set(music.getId() == mCurSongId);
                 }
             }
         }));
@@ -100,7 +102,6 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
                 helper.getBinding().setVariable(BR.item, item);
                 helper.setText(R.id.order_num, helper.getLayoutPosition() + "");
 
-                helper.setGone(R.id.play_now, mCurSongId.equals(String.valueOf(item.getId())));
                 helper.getView(R.id.more_option).setOnClickListener(v -> {
                     MusicHelper.addToPlayList(item);
                     showText("已加入播放列表");
@@ -115,7 +116,7 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
 
                 MusicHelper.playNow(item);
 
-                if (mCurSongId.equals(String.valueOf(item.getId()))) {
+                if (mCurSongId == item.getId()) {
                     Router.turnTo(mContext, MusicPlayerActivity.class)
                         .start();
                 }
