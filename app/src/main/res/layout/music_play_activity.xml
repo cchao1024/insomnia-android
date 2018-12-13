@@ -27,7 +27,7 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <android.support.design.widget.FloatingActionButton
+            <ImageView
                 android:id="@+id/music_album"
                 android:layout_width="300dp"
                 android:layout_height="300dp"

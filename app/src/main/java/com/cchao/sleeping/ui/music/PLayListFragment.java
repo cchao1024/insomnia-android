@@ -1,14 +1,15 @@
 package com.cchao.sleeping.ui.music;
 
+import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.sleeping.BR;
@@ -22,28 +23,39 @@ import com.lzx.musiclibrary.manager.MusicManager;
  * @author cchao
  * @version 9/8/18.
  */
-public class PLayListFragment extends BottomSheetDialogFragment {
+public class PLayListFragment extends DialogFragment {
 
     RecyclerView mRecycler;
     DataBindQuickAdapter<SongInfo> mAdapter;
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater
-        , @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.music_play_list_fragment, container,
-            false);
-        mRecycler = view.findViewById(R.id.recycler_view);
-        return view;
-    }
 
     @Override
     public void onStart() {
         super.onStart();
         initRecycler();
     }
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        View view = getActivity().getLayoutInflater().inflate(R.layout.music_play_list_fragment, null);
+        mRecycler = view.findViewById(R.id.recycler_view);
+
+
+        // 不带style的构建的dialog宽度无法铺满屏幕
+        //     Dialog dialog = new Dialog(getActivity());
+        Dialog dialog = new Dialog(getActivity(), R.style.BottomDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(view);
+        dialog.setCanceledOnTouchOutside(true);
+
+        // 设置弹出框布局参数，宽度铺满全屏，底部。
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.BOTTOM;
+        wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(wlp);
+
+        return dialog;
+    }
     private void initRecycler() {
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 

@@ -44,8 +44,8 @@ public abstract class BaseListActivity<E> extends BaseToolbarActivity<CommonRecy
     protected abstract Observable<RespListBean<E>> getLoadObservable(int page);
 
     protected void initAdapter() {
-        mRecyclerView = mDataBinding.recyclerView;
-        mDataBinding.refreshLayout.setEnabled(false);
+        mRecyclerView = mDataBind.recyclerView;
+        mDataBind.refreshLayout.setEnabled(false);
         mRecyclerView.setAdapter(mAdapter = new DataBindQuickAdapter<E>(R.layout.fall_image_item) {
 
             @Override

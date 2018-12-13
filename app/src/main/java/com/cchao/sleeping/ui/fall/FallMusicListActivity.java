@@ -8,12 +8,12 @@ import android.view.View;
 import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.UiHelper;
-import com.cchao.simplelib.model.event.CommonEvent;
 import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
 import com.cchao.sleeping.BR;
 import com.cchao.sleeping.R;
 import com.cchao.sleeping.api.RetrofitHelper;
 import com.cchao.sleeping.databinding.MusicListBinding;
+import com.cchao.sleeping.global.Constants;
 import com.cchao.sleeping.manager.MusicHelper;
 import com.cchao.sleeping.model.javabean.RespListBean;
 import com.cchao.sleeping.model.javabean.fall.FallMusic;
@@ -22,6 +22,8 @@ import com.cchao.sleeping.util.AnimHelper;
 import com.cchao.sleeping.view.adapter.PageAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzx.musiclibrary.manager.MusicManager;
+
+import org.apache.commons.lang3.StringUtils;
 
 import io.reactivex.Observable;
 
@@ -33,7 +35,6 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
 
     RecyclerView mRecycler;
     PageAdapter<FallMusic> mAdapter;
-    int mCurSongId = 0;
 
     @Override
     protected int getLayout() {
@@ -45,7 +46,7 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
         initAdapter();
         initEvent();
         onLoadData();
-        mDataBinding.setClicker(v -> {
+        mDataBind.setClicker(v -> {
             switch (v.getId()) {
                 case R.id.music_disk:
                     Router.turnTo(mContext, MusicPlayerActivity.class).start();
@@ -56,32 +57,43 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
     }
 
     private void initEvent() {
-        addSubscribe(RxBus.getDefault().toObservable(new RxBus.CommonCodeCallBack() {
-            @Override
-            public void onConsumer(CommonEvent commonEvent) {
-                switch (commonEvent.getCode()) {
-                    case MusicManager.MSG_PLAYER_START:
-                        mDataBinding.musicDisk.setVisibility(View.VISIBLE);
-                        AnimHelper.startRotate(mDataBinding.musicDisk);
-                        mCurSongId = Integer.parseInt(MusicManager.get().getCurrPlayingMusic().getSongId());
-                        break;
-                    case MusicManager.MSG_PLAYER_STOP:
-                    case MusicManager.MSG_PLAYER_PAUSE:
-                        mDataBinding.musicDisk.setVisibility(View.GONE);
-                        mCurSongId = 0;
-                        break;
-                }
+        addSubscribe(RxBus.getDefault().toObservable(commonEvent -> {
+            switch (commonEvent.getCode()) {
+                case Constants.Event.Update_Play_Status:
+                    updateDiskView();
 
-                for (FallMusic music : mAdapter.getData()) {
-                    music.isPlaying.set(music.getId() == mCurSongId);
-                }
+                    for (FallMusic music : mAdapter.getData()) {
+                        music.isPlaying.set(StringUtils.equals(music.getId(), MusicHelper.getCurPlayingId()));
+                    }
+                    break;
             }
         }));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateDiskView();
+    }
+
+    private void updateDiskView() {
+        if (MusicManager.get() == null) {
+            return;
+        }
+        if (MusicManager.isPlaying()) {
+            if (MusicManager.get().getCurrPlayingMusic() == null) {
+                return;
+            }
+            mDataBind.musicDisk.setVisibility(View.VISIBLE);
+            AnimHelper.startRotate(mDataBind.musicDisk);
+        } else {
+            mDataBind.musicDisk.setVisibility(View.GONE);
+        }
+    }
+
     private void initAdapter() {
-        mRecycler = mDataBinding.recyclerView;
-        mDataBinding.refreshLayout.setEnabled(false);
+        mRecycler = mDataBind.recyclerView;
+        mDataBind.refreshLayout.setEnabled(false);
 
         mRecycler.setLayoutManager(new LinearLayoutManager(mContext));
 
@@ -114,11 +126,11 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 FallMusic item = mAdapter.getItem(position);
 
-                MusicHelper.playNow(item);
-
-                if (mCurSongId == item.getId()) {
+                if (StringUtils.equals(item.getId(), MusicHelper.getCurPlayingId())) {
                     Router.turnTo(mContext, MusicPlayerActivity.class)
                         .start();
+                } else {
+                    MusicHelper.playNow(item);
                 }
             }
         });
@@ -136,6 +148,6 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AnimHelper.cancel(mDataBinding.musicDisk);
+        AnimHelper.cancel(mDataBind.musicDisk);
     }
 }

@@ -12,7 +12,7 @@ public class FallMusic {
     private String cover_img;
     private String add_time;
 
-    public ObservableBoolean isPlaying;
+    public ObservableBoolean isPlaying = new ObservableBoolean(false);
 
     public String getPlay_count() {
         return play_count + "";
@@ -30,8 +30,8 @@ public class FallMusic {
         this.cover_img = cover_img;
     }
 
-    public Long getId() {
-        return id;
+    public String getId() {
+        return id+"";
     }
 
     public void setId(Long id) {

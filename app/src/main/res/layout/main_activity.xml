@@ -41,9 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@color/windowBackground"
-                    app:tabIndicatorColor="@color/blackPrimary"
-                    app:tabSelectedTextColor="@color/blackPrimary"
+                    android:background="@color/white"
                     app:tabTextColor="#666666">
                 </android.support.design.widget.TabLayout>
 

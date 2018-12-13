@@ -10,7 +10,6 @@ import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
-import com.cchao.simplelib.model.event.CommonEvent;
 import com.cchao.simplelib.ui.fragment.BaseStatefulFragment;
 import com.cchao.simplelib.util.DeviceInfo;
 import com.cchao.simplelib.util.ExceptionCollect;
@@ -33,6 +32,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lzx.musiclibrary.manager.MusicManager;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @author cchao
  * @version 8/10/18.
@@ -48,22 +49,22 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
 
     View mMusicDisk;
 
-    private void initEvent() {
-        addSubscribe(RxBus.getDefault().toObservable(new RxBus.CommonCodeCallBack() {
-            @Override
-            public void onConsumer(CommonEvent commonEvent) {
-                switch (commonEvent.getCode()) {
-                    case MusicManager.MSG_PLAYER_START:
-                        mMusicDisk.setVisibility(View.VISIBLE);
-                        AnimHelper.startRotate(mMusicDisk);
-                        break;
-                    case MusicManager.MSG_PLAYER_STOP:
-                    case MusicManager.MSG_PLAYER_PAUSE:
-                        mMusicDisk.setVisibility(View.GONE);
-                        break;
-                }
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateDiskView();
+    }
+
+    void updateDiskView() {
+        if (MusicManager.isPlaying()) {
+            if (MusicManager.get().getCurrPlayingMusic() == null) {
+                return;
             }
-        }));
+            mMusicDisk.setVisibility(View.VISIBLE);
+            AnimHelper.startRotate(mMusicDisk);
+        } else {
+            mMusicDisk.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -80,6 +81,7 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
         onLoadData();
     }
 
+
     private void findViews() {
         mRvMusic = mDataBind.rvMusic;
         mRvImage = mDataBind.rvImage;
@@ -89,11 +91,21 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
         mDataBind.setClick(this);
     }
 
+    private void initEvent() {
+        addSubscribe(RxBus.getDefault().toObservable(commonEvent -> {
+            switch (commonEvent.getCode()) {
+                case Constants.Event.Update_Play_Status:
+                    updateDiskView();
+                    break;
+            }
+        }));
+    }
+
     private void initMusicAdapter() {
         mRvMusic.setNestedScrollingEnabled(false);
         mRvMusic.setLayoutManager(new GridLayoutManager(mContext, 3));
 
-        mRvMusic.addItemDecoration(new GridSpacingItemDecoration(3, UiHelper.dp2dx(10), true));
+        mRvMusic.addItemDecoration(new GridSpacingItemDecoration(3, UiHelper.dp2px(10), true));
 
         mRvMusic.setAdapter(mMusicAdapter = new DataBindQuickAdapter<FallMusic>(R.layout.fall_music_item) {
             @Override
@@ -110,16 +122,19 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 FallMusic item = mMusicAdapter.getItem(position);
-                MusicHelper.addToPlayList(item);
-                Router.turnTo(mContext, MusicPlayerActivity.class)
-                    .start();
+                if (StringUtils.equals(item.getId(), MusicHelper.getCurPlayingId())) {
+                    Router.turnTo(mContext, MusicPlayerActivity.class)
+                        .start();
+                } else {
+                    MusicHelper.playNow(item);
+                }
             }
         });
     }
 
     private void initImageAdapter() {
         mRvImage.setNestedScrollingEnabled(false);
-        mRvImage.addItemDecoration(new GridSpacingItemDecoration(2, UiHelper.dp2dx(10), true));
+        mRvImage.addItemDecoration(new GridSpacingItemDecoration(2, UiHelper.dp2px(10), true));
 
         mRvImage.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRvImage.setAdapter(mImageAdapter = new BaseQuickAdapter<FallImage, BaseViewHolder>(R.layout.fall_image_item) {

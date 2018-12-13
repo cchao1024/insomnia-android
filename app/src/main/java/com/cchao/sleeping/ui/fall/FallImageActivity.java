@@ -46,14 +46,14 @@ public class FallImageActivity extends BaseToolbarActivity<CommonRecyclerBinding
     }
 
     private void initAdapter() {
-        mRecycler = mDataBinding.recyclerView;
-        mDataBinding.refreshLayout.setEnabled(false);
+        mRecycler = mDataBind.recyclerView;
+        mDataBind.refreshLayout.setEnabled(false);
 
         mRecycler.setLayoutManager(new StaggeredGridLayoutManager(2
             , StaggeredGridLayoutManager.VERTICAL));
 
         mRecycler.addItemDecoration(new GridSpacingItemDecoration(2
-            , UiHelper.dp2dx(10), true));
+            , UiHelper.dp2px(10), true));
 
         mRecycler.setAdapter(mAdapter = new PageAdapter<FallImage>
             (R.layout.fall_image_item, mDisposable, this) {

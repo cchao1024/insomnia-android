@@ -1,15 +1,10 @@
 package com.cchao.sleeping.ui.music;
 
-import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.cchao.simplelib.core.CollectionHelper;
-import com.cchao.simplelib.core.GlideApp;
+import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
 import com.cchao.sleeping.R;
@@ -45,7 +40,7 @@ public class MusicPlayerActivity extends BaseToolbarActivity<MusicPlayActivityBi
 
     @Override
     protected void initEventAndData() {
-        mDataBinding.setClicker(this);
+        mDataBind.setClicker(this);
 
         initPlayService();
         mSimpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
@@ -60,24 +55,24 @@ public class MusicPlayerActivity extends BaseToolbarActivity<MusicPlayActivityBi
 
             @Override
             public void onPlayerStart() {
-                mDataBinding.playPause.setImageResource(R.drawable.music_pause);
+                mDataBind.playPause.setImageResource(R.drawable.music_pause);
                 updateSongInfo(MusicManager.get().getCurrPlayingMusic());
             }
 
             @Override
             public void onPlayerPause() {
-                mDataBinding.playPause.setImageResource(R.drawable.music_play);
+                mDataBind.playPause.setImageResource(R.drawable.music_play);
                 mTaskManager.stopSeekBarUpdate();
             }
 
             @Override
             public void onPlayCompletion() {
-                mDataBinding.playPause.setImageResource(R.drawable.music_play);
+                mDataBind.playPause.setImageResource(R.drawable.music_play);
             }
 
             @Override
             public void onPlayerStop() {
-                mDataBinding.playPause.setImageResource(R.drawable.music_play);
+                mDataBind.playPause.setImageResource(R.drawable.music_play);
                 mTaskManager.stopSeekBarUpdate();
             }
 
@@ -95,8 +90,8 @@ public class MusicPlayerActivity extends BaseToolbarActivity<MusicPlayActivityBi
             @Override
             public void run() {
                 int progress = (int) MusicManager.get().getProgress();
-                mDataBinding.seekBar.setProgress(progress);
-                mDataBinding.progressTime.setText(mSimpleDateFormat.format(progress));
+                mDataBind.seekBar.setProgress(progress);
+                mDataBind.progressTime.setText(mSimpleDateFormat.format(progress));
             }
         });
     }
@@ -105,7 +100,7 @@ public class MusicPlayerActivity extends BaseToolbarActivity<MusicPlayActivityBi
     protected void onResume() {
         super.onResume();
         if (MusicManager.get().getStatus() == State.STATE_PLAYING) {
-            mDataBinding.playPause.setImageResource(R.drawable.music_pause);
+            mDataBind.playPause.setImageResource(R.drawable.music_pause);
         }
         updateSongInfo(getCurSong());
     }
@@ -135,22 +130,22 @@ public class MusicPlayerActivity extends BaseToolbarActivity<MusicPlayActivityBi
         songInfo.setDuration(MusicManager.get().getDuration());
         String hhmm = mSimpleDateFormat.format(MusicManager.get().getDuration());
 
-        mDataBinding.setSong(songInfo);
-        mDataBinding.duration.setText(hhmm);
+        mDataBind.setSong(songInfo);
+        mDataBind.duration.setText(hhmm);
 
-        mDataBinding.wish.setImageResource(UserManager.isInWishList(songInfo.getSongId())
+        mDataBind.wish.setImageResource(UserManager.isInWishList(songInfo.getSongId())
             ? R.drawable.ic_wish_ed : R.drawable.ic_wish_no);
         mTaskManager.scheduleSeekBarUpdate();
-//        ImageLoader.loadImage(mContext, Constants.TEST_IMAGE_PATH, mDataBinding.musicAlbum);
+        ImageLoader.loadImage(mContext, Constants.TEST_IMAGE_PATH, mDataBind.musicAlbum);
 
-        GlideApp.with(mContext).asDrawable()
+/*        GlideApp.with(mContext).asDrawable()
             .load(Constants.TEST_IMAGE_PATH)
             .into(new SimpleTarget<Drawable>() {
                 @Override
                 public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                    mDataBinding.musicAlbum.setImageDrawable(resource);
+                    mDataBind.musicAlbum.setImageDrawable(resource);
                 }
-            });
+            });*/
     }
 
     @Override
@@ -203,7 +198,7 @@ public class MusicPlayerActivity extends BaseToolbarActivity<MusicPlayActivityBi
             case R.id.wish:
                 String id = getCurSong().getSongId();
                 UserManager.toggleWish(id);
-                mDataBinding.wish.setImageResource(UserManager.isInWishList(id)
+                mDataBind.wish.setImageResource(UserManager.isInWishList(id)
                     ? R.drawable.ic_wish_ed : R.drawable.ic_wish_no);
                 break;
             case R.id.play_list:

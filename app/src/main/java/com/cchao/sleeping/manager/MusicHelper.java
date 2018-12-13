@@ -1,11 +1,12 @@
 package com.cchao.sleeping.manager;
 
 import android.support.annotation.NonNull;
+import android.util.Pair;
 
 import com.cchao.simplelib.core.PrefHelper;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
-import com.cchao.simplelib.util.Tuple;
+import com.cchao.simplelib.core.UiHelper;
 import com.cchao.sleeping.api.RetrofitHelper;
 import com.cchao.sleeping.global.Constants;
 import com.cchao.sleeping.model.javabean.fall.FallMusic;
@@ -13,6 +14,8 @@ import com.lzx.musiclibrary.aidl.listener.OnPlayerEventListener;
 import com.lzx.musiclibrary.aidl.model.SongInfo;
 import com.lzx.musiclibrary.constans.PlayMode;
 import com.lzx.musiclibrary.manager.MusicManager;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -28,33 +31,41 @@ public class MusicHelper {
     // 选择的播放方式
     private static int selectPlayMode = 2;
 
-    public static final Tuple.Tuple2<Integer, String>[] Play_Mode = new Tuple.Tuple2[]{
-        Tuple.tuple(PlayMode.PLAY_IN_SINGLE_LOOP, "单曲循环"),
-        Tuple.tuple(PlayMode.PLAY_IN_RANDOM, "随机播放"),
-        Tuple.tuple(PlayMode.PLAY_IN_LIST_LOOP, "列表循环"),
+    public static final Pair<Integer, String>[] Play_Mode = new Pair[]{
+        Pair.create(PlayMode.PLAY_IN_SINGLE_LOOP, "单曲循环"),
+        Pair.create(PlayMode.PLAY_IN_RANDOM, "随机播放"),
+        Pair.create(PlayMode.PLAY_IN_LIST_LOOP, "列表循环"),
     };
+
+    public static String getCurPlayingId() {
+        if (MusicManager.get().getCurrPlayingMusic() != null
+            && StringUtils.isNotEmpty(MusicManager.get().getCurrPlayingMusic().getSongId())) {
+            return MusicManager.get().getCurrPlayingMusic().getSongId();
+        } else {
+            return "null";
+        }
+    }
 
     public static void changePlayMode() {
         int toPlayMode = (++selectPlayMode) % Play_Mode.length;
         PrefHelper.putInt(Constants.Prefs.MUSIC_PLAY_MODE, toPlayMode);
-        MusicManager.get().setPlayMode(Play_Mode[toPlayMode].a);
+        MusicManager.get().setPlayMode(Play_Mode[toPlayMode].first);
     }
 
     public static void init() {
         selectPlayMode = PrefHelper.getInt(Constants.Prefs.MUSIC_PLAY_MODE, 2);
-        MusicManager.get().setPlayMode(Play_Mode[selectPlayMode].a);
+        MusicManager.get().setPlayMode(Play_Mode[selectPlayMode].first);
         MusicManager.get().addStateObservable(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
-                int msg = (int) arg;
-                RxBus.getDefault().postEvent(msg);
+                RxBus.getDefault().postEvent(Constants.Event.Update_Play_Status);
             }
         });
 
         MusicManager.get().addPlayerEventListener(new OnPlayerEventListener() {
             @Override
             public void onMusicSwitch(SongInfo music) {
-
+                RxBus.getDefault().postEvent(Constants.Event.Update_Play_Status);
             }
 
             @Override
@@ -63,26 +74,29 @@ public class MusicHelper {
                 RetrofitHelper.getApis().playCount(id)
                     .subscribeOn(Schedulers.io())
                     .subscribe(RxHelper.getNothingObserver());
+
+                RxBus.getDefault().postEvent(Constants.Event.Update_Play_Status);
             }
 
             @Override
             public void onPlayerPause() {
-
+                RxBus.getDefault().postEvent(Constants.Event.Update_Play_Status);
             }
 
             @Override
             public void onPlayCompletion() {
-
+                RxBus.getDefault().postEvent(Constants.Event.Update_Play_Status);
             }
 
             @Override
             public void onPlayerStop() {
-
+                RxBus.getDefault().postEvent(Constants.Event.Update_Play_Status);
             }
 
             @Override
             public void onError(String errorMsg) {
-
+                RxBus.getDefault().postEvent(Constants.Event.Update_Play_Status);
+                UiHelper.showToast(errorMsg);
             }
 
             @Override

@@ -1,21 +1,12 @@
 package com.cchao.sleeping.global;
 
-import android.support.annotation.StringDef;
-
 import com.cchao.sleeping.BuildConfig;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 
 /**
  * 常量
  */
 public abstract class Constants {
     public static final int SHAKE_INTERVAL = 600; //防用户抖动间隔
-    public static final boolean IS_USE_ACTIVITY_TRANS = true; // 是否使用activity之间的切换动画
-    public static final boolean IS_USE_APPINDEXING = true; // 是否使用AppIndexing
-    public static String Header_Referer = ""; // 需要添加请求头Referer, 为了标识从活动页到商品页
-    public static boolean Use_OLD_IDEAL = false; // 使用回老的ideal
     public static final String TEST_IMAGE_PATH = "http://d6.yihaodianimg.com/V00/M00/3E/5C/CgQDslSNDEyAQp-mAAHoVWDzhu877700_380x380.jpg";
 
     public interface Config {
@@ -55,127 +46,8 @@ public abstract class Constants {
 
     }
 
-    public static class Category {
-        public static final String PREORDER_CID = "preorder";
-        public static final String PREORDER_INDEX_ID = "-3";
-        public static final String ONLY_YOINS_ID = "onlyyoins";
-        public static final String SALES = "-2";
-        public static final String LOOKLOOK = "looklook";
-        public static final String NEWIN = "newin";
-        public static final String FLASH_DEALS = "flashdeals";
-
-        public static boolean isPreorderIndexId(String id) {
-            return PREORDER_INDEX_ID.equals(id);
-        }
-
-        public static boolean isPreorder(String id) {
-            return PREORDER_INDEX_ID.equals(id) || PREORDER_CID.equals(id);
-        }
-
-        public static boolean isOnlyYoins(String id) {
-            return ONLY_YOINS_ID.equals(id);
-        }
-
-        public static boolean isLooklook(String id) {
-            return LOOKLOOK.equals(id);
-        }
-
-        public static boolean isNewin(String id) {
-            return NEWIN.equalsIgnoreCase(id);
-        }
-
-        public static boolean isFlashDeals(String id) {
-            return FLASH_DEALS.equalsIgnoreCase(id);
-        }
-    }
-
-    public static class Language {
-
-        public static final String EN = "en-GB";
-
-    }
-
-    public static class Permissions {
-
-        public static final int REQUEST_READ_EXTERNAL_STORAGE = 1001;
-        public static final int REQUEST_CAMERA = 1002;
-        public static final int REQUEST_CALL_PHONE = 1003;
-
-    }
-
-    public static class DC {
-        public static final String UTM_SOURCE = "utm_source";
-        public static final String UTM_CAMPAIGN = "utm_campaign";
-        public static final String UTM_MEDIUM = "utm_medium";
-        public static final String UTM_CONTENT = "utm_content";
-        public static final String UTM_DESIGN = "utm_design";
-        public static final String UTM_TERM = "utm_term";
-        public static final String UTM_ID = "utmid";
-
-        public static final String DEEPLINK = "$deeplink_path";
-        public static final String REFERRING_LINK = "~referring_link";
-    }
-
-    public static class DeepLink {
-        public static final String PROD = "prod";
-        public static final String CATE = "cate";
-        public static final String MYPOINTS = "mypoints";
-        public static final String MYORDER = "myorder";
-        public static final String MYORDERLIST = "myorderlist";
-        public static final String HOME = "home";
-        public static final String LOGIN = "login";
-        public static final String URL = "url";
-        public static final String PROFILE = "profile";
-        public static final String REVIEW = "review";
-        public static final String PREORDER = "preorder";
-        public static final String ONLYYOINS = "onlyyoins";
-        public static final String LOOKLOOK = "looklook";
-        public static final String NEWIN = "newin";
-        public static final String FLASHDEALS = "flashdeals";
-    }
-
-    public static class Menu {
-        public static final int HOME = 1;
-        public static final int PREORDER = 2;
-        public static final int CATEGORY = 3;
-        public static final int ONLY_YOINS = 4;
-        public static final int BAG = 5;
-        public static final int DISCOVER = 6;
-        public static final int WISH = 7;
-        public static final int HOT_COUPONS = 17;
-        public static final int WHAT_S_HOT = 13;
-        public static final int MY_REFERRALS = 15;
-        public static final int ORDER = 8;
-        public static final int HISTORY = 9;
-        public static final int SETTING = 10;
-        public static final int CONTACT_US = 11;
-        public static final int CURRENCY = 12;
-        public static final int DIVIDER = 23112;
-
-    }
-
-    public static class Setting {
-
-        public static final int LANGUAGE = 0;
-        public static final int CURRENCY = 1;
-        public static final int NOTIFICATION = 2;
-        public static final int CACHE = 3;
-        public static final int ABOUT = 4;
-        public static final int SECURITY = 5;
-        public static final int TERMS = 6;
-        public static final int QUESTIONS = 7;
-        public static final int CONTACT_US = 8;
-        public static final int QUIT = 9;
-        public static final int PAYMENT = 10;
-
-    }
-
-    public static class Question {
-        public static final int RETURNS = 61;
-        public static final int INTERNATIONAL_DELIVERIES = 62;
-        public static final int CUSTOMER_SERVICE = 63;
-        public static final int ORDER_TRACKING = 64;
-        public static final int PROPERTY_CLAIMS = 65;
+    public interface Event {
+        int Update_Play_Status = 61;
 
     }
 
@@ -325,69 +197,6 @@ public abstract class Constants {
         public static final String RESULT = "result";
     }
 
-    public static class Color {
-        public static final int TRANSPARENT = 0x00000000;
-    }
-
-    @StringDef({PaymentMethod.NONE, PaymentMethod.PAYPAL, PaymentMethod.GLOBEBILL, PaymentMethod.OCEAN, PaymentMethod.STRIPE, PaymentMethod.OC_IDEAL, PaymentMethod.OC_SOFORT})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface PayMethod {
-    }
-
-    public static class PaymentMethod {
-        public static final String NONE = "none";
-        public static final String PAYPAL = "paypal";
-        public static final String OCEAN = "ocean_creditcard_re";
-        public static final String GLOBEBILL = "globebill_creditcard";
-        public static final String STRIPE = "stripe";
-        public static final String OC_IDEAL = "ocean_ideal";
-        public static final String OC_SOFORT = "ocean_sofort";
-    }
-
-    public static class HomeGroup {
-        public static final String INDEXGROUP = "indexGroup";
-        public static final String CATEBANNER = "cateBanner";
-        public static final String BANNERS = "banner";
-        public static final String SHOWINFO = "showInfo";
-        public static final String SHIPINFO = "shipInfo";
-        public static final String GROUPIDX = "groupIdx";
-        public static final String FDPRODUCTLIST = "fdProductList";
-        public static final String ACTIVITY_BANNER = "activity_banner";
-        public static final String HIDEFD = "hide_flash_deal";
-    }
-
-    public static class DiscountType {
-        public static final int CASH = 1;
-        public static final int COUPON = 2;
-        public static final int POINTS = 3;
-    }
-
-    public interface RecAc {
-        String VIEW = "view";
-        String BACK = "back";
-        String SEARCH = "search";
-        String PUSH = "push";
-        String CART = "cart";
-        String PREORDER = "preorder";
-        String WISH = "wish";
-        String REVIEW = "review";
-        String SHARE = "share";
-        String CHECKOUT = "checkout";
-    }
-
-    // 推荐位
-    public interface RecPosition {
-        String HOME_RECOMMEND = "home_recommend";
-        String DETAIL_SIMILAR_PRODUCT = "detail_similarProduct";
-        String CART_YOUR_RECENTLY_VIEWED_ITEMS = "cart_yourRecentlyViewedItems";
-        String CATEGORY = "category";
-        String SEARCH = "search";
-        String PRE_ORDER_LIST = "pre_order_list";
-        String BROWSINGHISTORY = "browsinghistory";
-        String SAVED_ITEMS = "saved_items";
-        String ORDER_DETAIL = "order_detail";
-    }
-
     // 推荐位
     public interface RecPage {
         String MAIN_ACTIVITY = "MainFragmentActivity";
@@ -405,16 +214,8 @@ public abstract class Constants {
 
     // 对应的服务器环境
     public static final int HOST_PRODUCT = 1;
-    public static final int HOST_BETA = 2;
-    public static final int HOST_BETA2 = 9;
-    public static final int HOST_GREY = 3;
-    public static final int HOST_IOS = 4;
-    public static final int HOST_IOS_GRAY = 5;
     public static final int HOST_CUSTIOM = 8;
     public static final String HOSTKEY = ".yoins.com";
 
     public static final int LOGIN_TYPE_NONE = 0;
-    public static final int LOGIN_TYPE_NORMAL = 1;
-    public static final int LOGIN_TYPE_FACEBOOK = 2;
-    public static final int LOGIN_TYPE_GOOGLE = 3;
 }
