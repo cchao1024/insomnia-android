@@ -1,5 +1,7 @@
 package com.cchao.sleeping.ui.fall;
 
+import android.databinding.DataBindingUtil;
+import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -18,8 +20,10 @@ import com.cchao.sleeping.BR;
 import com.cchao.sleeping.R;
 import com.cchao.sleeping.api.RetrofitHelper;
 import com.cchao.sleeping.databinding.FallFragmentBinding;
+import com.cchao.sleeping.databinding.FallHeadBinding;
 import com.cchao.sleeping.global.Constants;
 import com.cchao.sleeping.manager.MusicHelper;
+import com.cchao.sleeping.model.javabean.RespListBean;
 import com.cchao.sleeping.model.javabean.fall.FallImage;
 import com.cchao.sleeping.model.javabean.fall.FallMusic;
 import com.cchao.sleeping.ui.global.ImageShowActivity;
@@ -28,11 +32,13 @@ import com.cchao.sleeping.util.AnimHelper;
 import com.cchao.sleeping.util.ImageHelper;
 import com.cchao.sleeping.view.GridSpacingItemDecoration;
 import com.cchao.sleeping.view.adapter.DataBindQuickAdapter;
+import com.cchao.sleeping.view.adapter.PageAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.lzx.musiclibrary.manager.MusicManager;
 
 import org.apache.commons.lang3.StringUtils;
+
+import io.reactivex.Observable;
 
 /**
  * @author cchao
@@ -45,8 +51,8 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
     RecyclerView mRvNature;
 
     DataBindQuickAdapter<FallMusic> mMusicAdapter;
-    BaseQuickAdapter<FallImage, BaseViewHolder> mImageAdapter;
-
+    PageAdapter<FallImage> mImageAdapter;
+    FallHeadBinding mHeadBinding;
     View mMusicDisk;
 
     @Override
@@ -74,21 +80,25 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
 
     @Override
     protected void initEventAndData() {
-        findViews();
+        initView();
         initEvent();
-        initMusicAdapter();
         initImageAdapter();
+        initMusicAdapter();
         onLoadData();
     }
 
 
-    private void findViews() {
-        mRvMusic = mDataBind.rvMusic;
+    private void initView() {
+        mHeadBinding = DataBindingUtil.inflate(mLayoutInflater
+            , R.layout.fall_head, null, false);
+        mRvMusic = mHeadBinding.rvMusic;
+        mRvNature = mHeadBinding.rvNature;
+
         mRvImage = mDataBind.rvImage;
-        mRvNature = mDataBind.rvNature;
         mMusicDisk = mDataBind.musicDisk;
 
-        mDataBind.setClick(this);
+        mHeadBinding.setClicker(this);
+        mDataBind.setClicker(this);
     }
 
     private void initEvent() {
@@ -133,16 +143,32 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
     }
 
     private void initImageAdapter() {
+
         mRvImage.setNestedScrollingEnabled(false);
-        mRvImage.addItemDecoration(new GridSpacingItemDecoration(2, UiHelper.dp2px(10), true));
+        mRvImage.addItemDecoration(new GridSpacingItemDecoration(2, UiHelper.dp2px(10), true) {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                if (parent.getChildViewHolder(view).getItemViewType() == BaseQuickAdapter.HEADER_VIEW) {
+                    outRect.setEmpty();
+                    return;
+                }
+                super.getItemOffsets(outRect, view, parent, state);
+            }
+        });
 
         mRvImage.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        mRvImage.setAdapter(mImageAdapter = new BaseQuickAdapter<FallImage, BaseViewHolder>(R.layout.fall_image_item) {
+        mRvImage.setAdapter(mImageAdapter = new PageAdapter<FallImage>(R.layout.fall_image_item
+            , mDisposable, this) {
 
             int itemWidth = DeviceInfo.getScreenWidth() / 2;
 
             @Override
-            protected void convert(BaseViewHolder helper, FallImage item) {
+            protected Observable<RespListBean<FallImage>> getLoadObservable(int page) {
+                return RetrofitHelper.getApis().getImageList(page);
+            }
+
+            @Override
+            protected void convert(DataBindViewHolder helper, FallImage item) {
                 helper.itemView.getLayoutParams().width = itemWidth;
                 helper.itemView.getLayoutParams().height = ImageHelper
                     .getScaleHeight(itemWidth, item.getWidth(), item.getHeight());
@@ -150,14 +176,12 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
                 ImageLoader.loadImage(mContext, item.getUrl(), helper.getView(R.id.image));
             }
         });
-        mImageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Router.turnTo(mContext, ImageShowActivity.class)
-                    .putExtra(Constants.Extra.IMAGE_URL, mImageAdapter.getData().get(position).getUrl())
-                    .start();
-            }
+        mImageAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Router.turnTo(mContext, ImageShowActivity.class)
+                .putExtra(Constants.Extra.IMAGE_URL, mImageAdapter.getData().get(position).getUrl())
+                .start();
         });
+        mImageAdapter.addHeaderView(mHeadBinding.getRoot());
     }
 
     @Override
