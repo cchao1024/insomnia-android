@@ -8,6 +8,9 @@
     <dimen name="flagIconWidth">35dp</dimen>
     <dimen name="flagIconHeight">23dp</dimen>
 
+    // business
+    <dimen name="deal_tag_width">100dp</dimen>
+
     <dimen name="staggeredGridCornerRadius">2.5dp</dimen>
     <dimen name="staggeredGridElevation">1.25dp</dimen>
     <dimen name="staggeredGridContentPadding">-1.25dp</dimen>
@@ -161,6 +164,7 @@
     <dimen name="sp_16">16sp</dimen>
     <dimen name="sp_17">17sp</dimen>
     <dimen name="sp_18">18sp</dimen>
+    <dimen name="sp_20">20sp</dimen>
     <dimen name="sp_21">21sp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
