@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -21,11 +21,13 @@
             android:gravity="center_vertical"
             android:text="@string/sleep_nature"
             android:textColor="@color/black"
+            android:visibility="gone"
             android:textSize="@dimen/sp_16"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_nature"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"/>
 
         <LinearLayout
