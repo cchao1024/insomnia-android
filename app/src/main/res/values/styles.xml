@@ -23,4 +23,23 @@
         <item name="android:layout_height">@dimen/dp_50</item>
         <item name="android:layout_width">match_parent</item>
     </style>
+
+    <!--<editor-fold desc="通用的应用操作按钮">-->
+    <style name="CommonApplyRed">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_40</item>
+        <item name="normalBackgroundColor">@color/text_red_f22148</item>
+        <item name="pressedBackgroundColor">@color/red900</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingLeft">@dimen/dp_40</item>
+        <item name="android:paddingRight">@dimen/dp_40</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="radius">@dimen/dp_2</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="CommonApplyBlack" parent="CommonApplyRed">
+        <item name="normalBackgroundColor">@color/black</item>
+        <item name="pressedBackgroundColor">@color/grey800</item>
+    </style>
 </resources>

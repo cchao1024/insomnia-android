@@ -10,5 +10,11 @@
     <string name="sleep_music">音乐</string>
     <string name="sleep_nature">自然</string>
     <string name="see_more">查看更多</string>
+    <string name="log_in">登录</string>
+    <string name="sign_up">注册</string>
+    <string name="forgot_your_password">忘记密码</string>
+    <string name="password">密码</string>
+    <string name="email_address">邮箱</string>
+    <string name="invalid_email">邮箱无效</string>
 
 </resources>

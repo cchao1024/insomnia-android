@@ -6,12 +6,14 @@ import com.cchao.sleeping.model.javabean.RespListBean;
 import com.cchao.sleeping.model.javabean.fall.FallImage;
 import com.cchao.sleeping.model.javabean.fall.FallIndex;
 import com.cchao.sleeping.model.javabean.fall.FallMusic;
+import com.cchao.sleeping.model.javabean.user.UserBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * description
@@ -26,6 +28,12 @@ public interface Apis {
     @FormUrlEncoded
     @POST("?com=customer&t=findPwdByEmail")
     Observable<RespBean> resetPwdByEmail(@Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("/user/{path}")
+    Observable<RespBean<UserBean>> login(@Path("path") String path, @Field("email") String email
+        , @Field("password") String pwd);
+
 
     @GET("/fallIndex")
     Observable<RespBean<FallIndex>> getIndexData();

@@ -4,6 +4,7 @@ import com.cchao.simplelib.core.GsonUtil;
 import com.cchao.simplelib.core.PrefHelper;
 import com.cchao.simplelib.util.StringHelper;
 import com.cchao.sleeping.global.Constants;
+import com.cchao.sleeping.model.javabean.user.UserBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +16,11 @@ import java.util.List;
 public class UserManager {
 
     private static List<String> mWishList = new ArrayList<>();
+    private static UserBean mUserBean;
 
     static {
         mWishList = GsonUtil.jsonToList(PrefHelper.getString(Constants.Prefs.WISH_LIST, "[]"), String.class);
     }
-
 
     public static boolean isInWishList(String id) {
         if (StringHelper.isEmpty(id)) {
@@ -38,4 +39,15 @@ public class UserManager {
         PrefHelper.putString(Constants.Prefs.WISH_LIST, GsonUtil.toJson(mWishList));
     }
 
+    public static void setUserBean(UserBean userBean) {
+        mUserBean = userBean;
+    }
+
+    public static UserBean getUserBean() {
+        return mUserBean;
+    }
+
+    public static boolean isLogin() {
+        return mUserBean != null;
+    }
 }

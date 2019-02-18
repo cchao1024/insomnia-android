@@ -49,4 +49,8 @@ public class RespBean<T> {
     public boolean isCodeSuc() {
         return code.equals(Constants.ApiResp.CODE_SUC);
     }
+
+    public boolean isCodeFail() {
+        return !isCodeSuc();
+    }
 }

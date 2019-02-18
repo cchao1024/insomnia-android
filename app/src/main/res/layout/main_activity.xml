@@ -68,11 +68,70 @@
                 android:scrollbars="none">
 
                 <LinearLayout
-                    android:id="@+id/home_drawer_linear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/dp_10">
+                    android:orientation="vertical">
+
+                    <!-- 登录信息 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/dp_15">
+
+                        <ImageView
+                            android:id="@+id/icon_portrait"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            android:padding="@dimen/dp_2"
+                            app:srcCompat="@drawable/ic_more"/>
+
+                        <!--未登录-->
+                        <TextView
+                            android:id="@+id/login_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_12"
+                            android:text="@string/log_in"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_16"/>
+
+                        <!--已登录-->
+                        <LinearLayout
+                            android:id="@+id/user_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_12"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/user_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="@dimen/dp_8"
+                                android:text="@string/log_in"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_18"/>
+
+                            <TextView
+                                android:id="@+id/user_email"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_1"
+                                android:text="@string/log_in"
+                                android:textColor="#b3ffffff"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- 抽屉menu -->
+                    <LinearLayout
+                        android:id="@+id/home_drawer_linear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/dp_10">
+                    </LinearLayout>
                 </LinearLayout>
             </ScrollView>
         </RelativeLayout>

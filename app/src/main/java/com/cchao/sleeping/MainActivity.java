@@ -4,20 +4,36 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.cchao.simplelib.core.ImageLoader;
+import com.cchao.simplelib.core.Router;
+import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseActivity;
 import com.cchao.simplelib.ui.fragment.BaseFragment;
+import com.cchao.simplelib.util.StringHelper;
 import com.cchao.sleeping.databinding.MainActivityBinding;
+import com.cchao.sleeping.manager.UserManager;
+import com.cchao.sleeping.model.javabean.home.NavItem;
+import com.cchao.sleeping.model.javabean.user.UserBean;
+import com.cchao.sleeping.ui.account.LogInActivity;
 import com.cchao.sleeping.ui.fall.FallFragment;
 
 import java.util.ArrayList;
@@ -29,6 +45,14 @@ public class MainActivity extends BaseActivity {
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
+    //<editor-fold desc="左侧抽屉导航声明">
+    private View mLoginText;
+    private View mLoggedView;
+    private LinearLayout mDrawerLinear;
+    private ImageView mUserPhotoImage;
+    TextView mNikeName;
+    TextView mEmailView;
+    //</editor-fold>
 
     final int[] mTabTitleArr = {R.string.tab_name_0, R.string.tab_name_1};
     List<BaseFragment> mFragments = new ArrayList<>();
@@ -42,13 +66,14 @@ public class MainActivity extends BaseActivity {
         initToolbar();
         initTabLayout();
         initDrawerLayout();
+        initMenu();
     }
 
     private void findViews() {
         mTabLayout = mBinding.tabLayout;
         mViewPager = mBinding.viewPager;
         mDrawerLayout = mBinding.drawerLayout;
-        mToolbar= mBinding.mainToolbar;
+        mToolbar = mBinding.mainToolbar;
     }
 
     /**
@@ -98,6 +123,7 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -114,13 +140,105 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initDrawerLayout() {
-        mDrawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+            this, mDrawerLayout, mToolbar, R.string.app_name, R.string.app_name);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-//        StatusBarCompat.setStatusBarColor(this, R.color.transparent_color);
-//        mDrawerLinear = findViewById(R.id.home_drawer_linear);
-//        initMenu();
+    }
+
+    private void initMenu() {
+        mLoginText = findViewById(R.id.login_text);
+        mLoggedView = findViewById(R.id.user_layout);
+        mUserPhotoImage = findViewById(R.id.icon_portrait);
+        mNikeName = findViewById(R.id.user_name);
+        mEmailView = findViewById(R.id.user_email);
+
+        mHeadBgImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!UserManager.isLogin()) {
+                    Router.turnTo(mContext, LogInActivity.class).start();
+                }
+                closeDrawer();
+            }
+        });
+
+        // 填充左侧item实体
+        List<NavItem> menus = new ArrayList<>();
+        menus.add(new NavItem(1001, getString(R.string.menu_order_list), R.drawable.main_nav_order_list, NavItem.Margin.top));
+        menus.add(new NavItem(1002, getString(R.string.menu_bag), R.drawable.ic_menu_bag));
+        menus.add(new NavItem(1003, getString(R.string.menu_saved_items), R.drawable.ic_saveditems));
+        menus.add(new NavItem(1004, getString(R.string.menu_browsing_history), R.drawable.main_nav_history, NavItem.Margin.bottom));
+        menus.add(new NavItem(1111, "", 0));
+        menus.add(new NavItem(2001, getString(R.string.hot_coupons), R.drawable.ic_hot_coupons, NavItem.Margin.top));
+        menus.add(new NavItem(2002, getString(R.string.what_s_hot), R.drawable.ic_menu_what_hot, NavItem.Margin.bottom));
+        menus.add(new NavItem(2003, getString(R.string.menu_settings), R.drawable.ic_settings, NavItem.Margin.bottom));
+
+        // 加入到linearLayout
+        for (int i = 0; i < menus.size(); i++) {
+            NavItem item = menus.get(i);
+            View itemView;
+            // 分割线
+            if (item.ID == 1111) {
+                itemView = new View(mContext);
+                itemView.setBackgroundColor(UiHelper.getColor(R.color.white));
+                itemView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                    , UiHelper.dp2px(10)));
+                mDrawerLinear.addView(itemView);
+                continue;
+            } else {
+                itemView = LayoutInflater.from(mContext).inflate(R.layout.home_drawer_menu_item
+                    , mDrawerLinear, false);
+                if (item.getMargin() == NavItem.Margin.top) {
+                    ((LinearLayout.LayoutParams) itemView.getLayoutParams())
+                        .setMargins(0, UiHelper.dp2px(8), 0, 0);
+                } else if (item.getMargin() == NavItem.Margin.bottom) {
+                    ((LinearLayout.LayoutParams) itemView.getLayoutParams())
+                        .setMargins(0, 0, 0, UiHelper.dp2px(8));
+                }
+                mDrawerLinear.addView(itemView);
+            }
+
+            itemView.setOnClickListener(v -> clickMenuItem(item.ID));
+        }
+    }
+
+    private void clickMenuItem(int menu) {
+        switch (menu) {
+            case 1001:
+            default:
+                break;
+        }
+
+        closeDrawer();
+    }
+
+    private void closeDrawer() {
+        new Handler().postDelayed(() -> {
+            if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+            }
+        }, 250);
+    }
+
+    private void updateUserViews() {
+        UserBean userInfoBean = UserManager.getUserBean();
+        mLoginText.setVisibility(View.GONE);
+        mLoggedView.setVisibility(View.GONE);
+
+        // 未登录
+        if (userInfoBean == null) {
+            mLoginText.setVisibility(View.VISIBLE);
+            mUserPhotoImage.setImageResource(R.drawable.default_portrait);
+        } else {
+            mLoggedView.setVisibility(View.VISIBLE);
+            if (StringHelper.isNotEmpty(userInfoBean.getAvatar())) {
+                ImageLoader.loadImage(mContext, userInfoBean.getAvatar(),
+                    mUserPhotoImage, R.drawable.default_portrait);
+            }
+
+            mNikeName.setText(userInfoBean.getNickname());
+            mEmailView.setText(userInfoBean.getEmail());
+        }
     }
 }
