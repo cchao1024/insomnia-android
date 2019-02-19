@@ -153,26 +153,21 @@ public class MainActivity extends BaseActivity {
         mNikeName = findViewById(R.id.user_name);
         mEmailView = findViewById(R.id.user_email);
 
-        mHeadBgImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!UserManager.isLogin()) {
-                    Router.turnTo(mContext, LogInActivity.class).start();
-                }
-                closeDrawer();
+        findViewById(R.id.login_field).setOnClickListener(view -> {
+            if (!UserManager.isLogin()) {
+                Router.turnTo(mContext, LogInActivity.class).start();
             }
+            closeDrawer();
         });
 
         // 填充左侧item实体
         List<NavItem> menus = new ArrayList<>();
-        menus.add(new NavItem(1001, getString(R.string.menu_order_list), R.drawable.main_nav_order_list, NavItem.Margin.top));
-        menus.add(new NavItem(1002, getString(R.string.menu_bag), R.drawable.ic_menu_bag));
-        menus.add(new NavItem(1003, getString(R.string.menu_saved_items), R.drawable.ic_saveditems));
-        menus.add(new NavItem(1004, getString(R.string.menu_browsing_history), R.drawable.main_nav_history, NavItem.Margin.bottom));
+        menus.add(new NavItem(1001, getString(R.string.app_name), R.drawable.ic_wish_no, NavItem.Margin.top));
+        menus.add(new NavItem(1004, getString(R.string.app_name), R.drawable.ic_wish_no, NavItem.Margin.bottom));
         menus.add(new NavItem(1111, "", 0));
-        menus.add(new NavItem(2001, getString(R.string.hot_coupons), R.drawable.ic_hot_coupons, NavItem.Margin.top));
-        menus.add(new NavItem(2002, getString(R.string.what_s_hot), R.drawable.ic_menu_what_hot, NavItem.Margin.bottom));
-        menus.add(new NavItem(2003, getString(R.string.menu_settings), R.drawable.ic_settings, NavItem.Margin.bottom));
+        menus.add(new NavItem(2001, getString(R.string.app_name), R.drawable.ic_wish_no, NavItem.Margin.top));
+        menus.add(new NavItem(2002, getString(R.string.app_name), R.drawable.ic_wish_no, NavItem.Margin.bottom));
+        menus.add(new NavItem(2003, getString(R.string.app_name), R.drawable.ic_wish_no, NavItem.Margin.bottom));
 
         // 加入到linearLayout
         for (int i = 0; i < menus.size(); i++) {
@@ -237,7 +232,7 @@ public class MainActivity extends BaseActivity {
                     mUserPhotoImage, R.drawable.default_portrait);
             }
 
-            mNikeName.setText(userInfoBean.getNickname());
+            mNikeName.setText(userInfoBean.getNikeName());
             mEmailView.setText(userInfoBean.getEmail());
         }
     }

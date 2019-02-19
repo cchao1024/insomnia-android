@@ -74,6 +74,7 @@
 
                     <!-- 登录信息 -->
                     <LinearLayout
+                        android:id="@+id/login_field"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"

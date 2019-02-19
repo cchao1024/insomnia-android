@@ -1,6 +1,5 @@
 package com.cchao.sleeping.ui.account;
 
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -25,16 +24,12 @@ import com.cchao.sleeping.api.RetrofitHelper;
 import com.cchao.sleeping.databinding.LoginActivityBinding;
 import com.cchao.sleeping.global.Constants;
 import com.cchao.sleeping.manager.UserManager;
-import com.cchao.sleeping.model.javabean.RespBean;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author cchao
@@ -117,7 +112,7 @@ public class LogInActivity extends BaseToolbarActivity<LoginActivityBinding> imp
                 if (mPagers.size() == 2) {
                     onTypeChange(mPagers.get(mLoginType));
                 }
-                KeyboardUtils.hideSoftInput(LogInActivity.this);
+                UiHelper.hideSoftInput(LogInActivity.this);
             }
 
             @Override
