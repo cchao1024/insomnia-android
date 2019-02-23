@@ -13,8 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +27,7 @@ import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseActivity;
 import com.cchao.simplelib.ui.fragment.BaseFragment;
 import com.cchao.simplelib.util.StringHelper;
+import com.cchao.sleeping.databinding.HomeDrawerMenuItemBinding;
 import com.cchao.sleeping.databinding.MainActivityBinding;
 import com.cchao.sleeping.manager.UserManager;
 import com.cchao.sleeping.model.javabean.home.NavItem;
@@ -147,6 +146,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initMenu() {
+        mDrawerLinear = findViewById(R.id.home_drawer_linear);
         mLoginText = findViewById(R.id.login_text);
         mLoggedView = findViewById(R.id.user_layout);
         mUserPhotoImage = findViewById(R.id.icon_portrait);
@@ -182,16 +182,22 @@ public class MainActivity extends BaseActivity {
                 mDrawerLinear.addView(itemView);
                 continue;
             } else {
-                itemView = LayoutInflater.from(mContext).inflate(R.layout.home_drawer_menu_item
-                    , mDrawerLinear, false);
+                HomeDrawerMenuItemBinding binding = DataBindingUtil.inflate(mLayoutInflater
+                    , R.layout.home_drawer_menu_item, mDrawerLinear, false);
+                binding.menuIcon.setImageResource(item.mIconRes);
+                binding.menuText.setText(item.mLabelText);
+
+                itemView = binding.getRoot();
+                mDrawerLinear.addView(binding.getRoot());
+
+                LinearLayout.LayoutParams layoutParams = ((LinearLayout.LayoutParams)
+                    binding.getRoot().getLayoutParams());
+
                 if (item.getMargin() == NavItem.Margin.top) {
-                    ((LinearLayout.LayoutParams) itemView.getLayoutParams())
-                        .setMargins(0, UiHelper.dp2px(8), 0, 0);
+                    layoutParams.setMargins(0, UiHelper.dp2px(8), 0, 0);
                 } else if (item.getMargin() == NavItem.Margin.bottom) {
-                    ((LinearLayout.LayoutParams) itemView.getLayoutParams())
-                        .setMargins(0, 0, 0, UiHelper.dp2px(8));
+                    layoutParams.setMargins(0, 0, 0, UiHelper.dp2px(8));
                 }
-                mDrawerLinear.addView(itemView);
             }
 
             itemView.setOnClickListener(v -> clickMenuItem(item.ID));

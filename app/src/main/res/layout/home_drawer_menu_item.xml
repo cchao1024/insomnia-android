@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:paddingStart="@dimen/dp_8"
-    android:paddingEnd="@dimen/dp_17">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/menu_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:paddingBottom="@dimen/menu_padding"
-        android:paddingLeft="@dimen/menu_padding"
-        android:paddingTop="@dimen/menu_padding"/>
+    <data>
 
-    <TextView
-        android:id="@+id/menu_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/dp_15"
-        android:layout_toRightOf="@+id/menu_icon"
-        tools:text="@string/app_name"/>
-</RelativeLayout>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:paddingStart="@dimen/dp_8"
+        android:paddingEnd="@dimen/dp_17">
+
+        <ImageView
+            android:id="@+id/menu_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="@dimen/menu_padding"
+            android:paddingLeft="@dimen/menu_padding"
+            android:paddingTop="@dimen/menu_padding"/>
+
+        <TextView
+            android:id="@+id/menu_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_toRightOf="@+id/menu_icon"
+            tools:text="@string/app_name"/>
+    </RelativeLayout>
+</layout>
