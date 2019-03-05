@@ -1,6 +1,6 @@
-package com.cchao.sleeping.global;
+package com.cchao.insomnia.global;
 
-import com.cchao.sleeping.BuildConfig;
+import com.cchao.insomnia.BuildConfig;
 
 /**
  * 常量

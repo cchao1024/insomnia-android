@@ -1,7 +1,7 @@
-package com.cchao.sleeping.ui.negative;
+package com.cchao.insomnia.ui.negative;
 
 import com.cchao.simplelib.ui.fragment.SimpleLazyFragment;
-import com.cchao.sleeping.R;
+import com.cchao.insomnia.R;
 
 /**
  * @author cchao

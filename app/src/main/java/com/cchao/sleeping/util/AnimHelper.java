@@ -1,4 +1,4 @@
-package com.cchao.sleeping.util;
+package com.cchao.insomnia.util;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;

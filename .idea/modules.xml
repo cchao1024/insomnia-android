@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Sleeping.iml" filepath="$PROJECT_DIR$/Sleeping.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Insomnia.iml" filepath="$PROJECT_DIR$/Insomnia.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/simplelib/simplelib.iml" filepath="$PROJECT_DIR$/simplelib/simplelib.iml" />
       <module fileurl="file://$PROJECT_DIR$/simplemusic/simplemusic.iml" filepath="$PROJECT_DIR$/simplemusic/simplemusic.iml" />

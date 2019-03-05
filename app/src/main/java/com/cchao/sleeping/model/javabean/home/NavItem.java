@@ -1,4 +1,4 @@
-package com.cchao.sleeping.model.javabean.home;
+package com.cchao.insomnia.model.javabean.home;
 
 /**
  * 抽屉Menu的实体

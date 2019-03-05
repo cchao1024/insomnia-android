@@ -1,10 +1,10 @@
-package com.cchao.sleeping.view.adapter;
+package com.cchao.insomnia.view.adapter;
 
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.interfaces.BaseStateView;
 import com.cchao.simplelib.util.ExceptionCollect;
-import com.cchao.sleeping.model.javabean.RespListBean;
+import com.cchao.insomnia.model.javabean.RespListBean;
 
 import java.util.List;
 

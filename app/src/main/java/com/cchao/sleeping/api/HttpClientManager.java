@@ -1,4 +1,4 @@
-package com.cchao.sleeping.api;
+package com.cchao.insomnia.api;
 
 import android.text.TextUtils;
 
@@ -6,8 +6,8 @@ import com.cchao.simplelib.util.DeviceInfo;
 import com.cchao.simplelib.util.ExceptionCollect;
 import com.cchao.simplelib.util.StringHelper;
 import com.cchao.simplelib.util.UrlUtil;
-import com.cchao.sleeping.global.Constants;
-import com.cchao.sleeping.global.GLobalInfo;
+import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.global.GLobalInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,7 +1,7 @@
-package com.cchao.sleeping.ui.music;
+package com.cchao.insomnia.ui.music;
 
 import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
-import com.cchao.sleeping.R;
+import com.cchao.insomnia.R;
 
 /**
  * @author cchao

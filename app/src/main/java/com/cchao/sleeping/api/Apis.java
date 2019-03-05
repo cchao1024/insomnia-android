@@ -1,12 +1,12 @@
-package com.cchao.sleeping.api;
+package com.cchao.insomnia.api;
 
 
-import com.cchao.sleeping.model.javabean.RespBean;
-import com.cchao.sleeping.model.javabean.RespListBean;
-import com.cchao.sleeping.model.javabean.fall.FallImage;
-import com.cchao.sleeping.model.javabean.fall.FallIndex;
-import com.cchao.sleeping.model.javabean.fall.FallMusic;
-import com.cchao.sleeping.model.javabean.user.UserBean;
+import com.cchao.insomnia.model.javabean.RespBean;
+import com.cchao.insomnia.model.javabean.RespListBean;
+import com.cchao.insomnia.model.javabean.fall.FallImage;
+import com.cchao.insomnia.model.javabean.fall.FallIndex;
+import com.cchao.insomnia.model.javabean.fall.FallMusic;
+import com.cchao.insomnia.model.javabean.user.UserBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;

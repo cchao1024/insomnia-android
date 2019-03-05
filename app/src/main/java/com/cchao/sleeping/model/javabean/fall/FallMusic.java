@@ -1,4 +1,4 @@
-package com.cchao.sleeping.model.javabean.fall;
+package com.cchao.insomnia.model.javabean.fall;
 
 import android.databinding.ObservableBoolean;
 

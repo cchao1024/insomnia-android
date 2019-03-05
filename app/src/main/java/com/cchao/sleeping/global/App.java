@@ -1,11 +1,11 @@
-package com.cchao.sleeping.global;
+package com.cchao.insomnia.global;
 
 import android.app.Application;
 import android.content.Context;
 
 import com.cchao.simplelib.LibCore;
-import com.cchao.sleeping.api.HttpClientManager;
-import com.cchao.sleeping.manager.MusicHelper;
+import com.cchao.insomnia.api.HttpClientManager;
+import com.cchao.insomnia.manager.MusicHelper;
 import com.lzx.musiclibrary.manager.MusicLibrary;
 import com.lzx.musiclibrary.utils.BaseUtil;
 

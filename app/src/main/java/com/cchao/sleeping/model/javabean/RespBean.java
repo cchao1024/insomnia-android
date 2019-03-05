@@ -1,6 +1,6 @@
-package com.cchao.sleeping.model.javabean;
+package com.cchao.insomnia.model.javabean;
 
-import com.cchao.sleeping.global.Constants;
+import com.cchao.insomnia.global.Constants;
 
 /**
  * description 服务器响应的数据

@@ -1,4 +1,4 @@
-package com.cchao.sleeping;
+package com.cchao.insomnia;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;

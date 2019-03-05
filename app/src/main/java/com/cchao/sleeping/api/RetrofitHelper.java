@@ -1,6 +1,6 @@
-package com.cchao.sleeping.api;
+package com.cchao.insomnia.api;
 
-import com.cchao.sleeping.global.Constants;
+import com.cchao.insomnia.global.Constants;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;

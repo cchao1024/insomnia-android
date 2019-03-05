@@ -1,10 +1,10 @@
-package com.cchao.sleeping.ui.global;
+package com.cchao.insomnia.ui.global;
 
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
-import com.cchao.sleeping.R;
-import com.cchao.sleeping.databinding.ImageShowActivityBinding;
-import com.cchao.sleeping.global.Constants;
+import com.cchao.insomnia.R;
+import com.cchao.insomnia.databinding.ImageShowActivityBinding;
+import com.cchao.insomnia.global.Constants;
 import com.github.chrisbanes.photoview.PhotoView;
 
 /**

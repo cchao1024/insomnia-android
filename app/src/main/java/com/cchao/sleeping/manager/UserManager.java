@@ -1,10 +1,10 @@
-package com.cchao.sleeping.manager;
+package com.cchao.insomnia.manager;
 
 import com.cchao.simplelib.core.GsonUtil;
 import com.cchao.simplelib.core.PrefHelper;
 import com.cchao.simplelib.util.StringHelper;
-import com.cchao.sleeping.global.Constants;
-import com.cchao.sleeping.model.javabean.user.UserBean;
+import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.model.javabean.user.UserBean;
 
 import java.util.ArrayList;
 import java.util.List;

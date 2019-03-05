@@ -1,4 +1,4 @@
-package com.cchao.sleeping.ui.music;
+package com.cchao.insomnia.ui.music;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -12,9 +12,9 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.cchao.simplelib.core.UiHelper;
-import com.cchao.sleeping.BR;
-import com.cchao.sleeping.R;
-import com.cchao.sleeping.view.adapter.DataBindQuickAdapter;
+import com.cchao.insomnia.BR;
+import com.cchao.insomnia.R;
+import com.cchao.insomnia.view.adapter.DataBindQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzx.musiclibrary.aidl.model.SongInfo;
 import com.lzx.musiclibrary.manager.MusicManager;

@@ -1,4 +1,4 @@
-package com.cchao.sleeping;
+package com.cchao.insomnia;
 
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
@@ -27,13 +27,13 @@ import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseActivity;
 import com.cchao.simplelib.ui.fragment.BaseFragment;
 import com.cchao.simplelib.util.StringHelper;
-import com.cchao.sleeping.databinding.HomeDrawerMenuItemBinding;
-import com.cchao.sleeping.databinding.MainActivityBinding;
-import com.cchao.sleeping.manager.UserManager;
-import com.cchao.sleeping.model.javabean.home.NavItem;
-import com.cchao.sleeping.model.javabean.user.UserBean;
-import com.cchao.sleeping.ui.account.LogInActivity;
-import com.cchao.sleeping.ui.fall.FallFragment;
+import com.cchao.insomnia.databinding.HomeDrawerMenuItemBinding;
+import com.cchao.insomnia.databinding.MainActivityBinding;
+import com.cchao.insomnia.manager.UserManager;
+import com.cchao.insomnia.model.javabean.home.NavItem;
+import com.cchao.insomnia.model.javabean.user.UserBean;
+import com.cchao.insomnia.ui.account.LogInActivity;
+import com.cchao.insomnia.ui.fall.FallFragment;
 
 import java.util.ArrayList;
 import java.util.List;

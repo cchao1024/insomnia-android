@@ -1,4 +1,4 @@
-package com.cchao.sleeping.model.javabean;
+package com.cchao.insomnia.model.javabean;
 
 import java.util.List;
 

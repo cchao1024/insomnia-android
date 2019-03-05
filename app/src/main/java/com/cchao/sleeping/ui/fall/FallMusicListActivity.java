@@ -1,4 +1,4 @@
-package com.cchao.sleeping.ui.fall;
+package com.cchao.insomnia.ui.fall;
 
 import android.databinding.DataBindingUtil;
 import android.support.design.widget.BottomSheetDialog;
@@ -12,18 +12,18 @@ import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
-import com.cchao.sleeping.BR;
-import com.cchao.sleeping.R;
-import com.cchao.sleeping.api.RetrofitHelper;
-import com.cchao.sleeping.databinding.MusicItemMenuListBinding;
-import com.cchao.sleeping.databinding.MusicListBinding;
-import com.cchao.sleeping.global.Constants;
-import com.cchao.sleeping.manager.MusicHelper;
-import com.cchao.sleeping.model.javabean.RespListBean;
-import com.cchao.sleeping.model.javabean.fall.FallMusic;
-import com.cchao.sleeping.ui.music.MusicPlayerActivity;
-import com.cchao.sleeping.util.AnimHelper;
-import com.cchao.sleeping.view.adapter.PageAdapter;
+import com.cchao.insomnia.BR;
+import com.cchao.insomnia.R;
+import com.cchao.insomnia.api.RetrofitHelper;
+import com.cchao.insomnia.databinding.MusicItemMenuListBinding;
+import com.cchao.insomnia.databinding.MusicListBinding;
+import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.manager.MusicHelper;
+import com.cchao.insomnia.model.javabean.RespListBean;
+import com.cchao.insomnia.model.javabean.fall.FallMusic;
+import com.cchao.insomnia.ui.music.MusicPlayerActivity;
+import com.cchao.insomnia.util.AnimHelper;
+import com.cchao.insomnia.view.adapter.PageAdapter;
 import com.lzx.musiclibrary.manager.MusicManager;
 
 import org.apache.commons.lang3.StringUtils;

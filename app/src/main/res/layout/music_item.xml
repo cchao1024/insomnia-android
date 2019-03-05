@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="item"
-            type="com.cchao.sleeping.model.javabean.fall.FallMusic"/>
+            type="com.cchao.insomnia.model.javabean.fall.FallMusic"/>
 
         <variable
             name="click"

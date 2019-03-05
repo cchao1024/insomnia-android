@@ -1,4 +1,4 @@
-package com.cchao.sleeping.ui.music;
+package com.cchao.insomnia.ui.music;
 
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
@@ -7,11 +7,11 @@ import com.cchao.simplelib.core.CollectionHelper;
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
-import com.cchao.sleeping.R;
-import com.cchao.sleeping.databinding.MusicPlayActivityBinding;
-import com.cchao.sleeping.global.Constants;
-import com.cchao.sleeping.manager.MusicHelper;
-import com.cchao.sleeping.manager.UserManager;
+import com.cchao.insomnia.R;
+import com.cchao.insomnia.databinding.MusicPlayActivityBinding;
+import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.manager.MusicHelper;
+import com.cchao.insomnia.manager.UserManager;
 import com.lzx.musiclibrary.aidl.listener.OnPlayerEventListener;
 import com.lzx.musiclibrary.aidl.model.SongInfo;
 import com.lzx.musiclibrary.constans.PlayMode;

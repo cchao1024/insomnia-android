@@ -1,4 +1,4 @@
-package com.cchao.sleeping;
+package com.cchao.insomnia;
 
 import org.junit.Test;
 

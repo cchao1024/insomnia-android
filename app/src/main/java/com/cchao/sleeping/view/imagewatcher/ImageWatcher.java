@@ -1,4 +1,4 @@
-package com.cchao.sleeping.view.imagewatcher;
+package com.cchao.insomnia.view.imagewatcher;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -31,7 +31,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cchao.sleeping.R;
+import com.cchao.insomnia.R;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

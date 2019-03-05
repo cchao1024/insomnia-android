@@ -1,4 +1,4 @@
-package com.cchao.sleeping.view;
+package com.cchao.insomnia.view;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

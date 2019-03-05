@@ -1,4 +1,4 @@
-package com.cchao.sleeping.ui.fall;
+package com.cchao.insomnia.ui.fall;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -11,16 +11,16 @@ import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
 import com.cchao.simplelib.util.DeviceInfo;
 import com.cchao.simplelib.util.UIUtils;
-import com.cchao.sleeping.R;
-import com.cchao.sleeping.api.RetrofitHelper;
-import com.cchao.sleeping.databinding.CommonRecyclerBinding;
-import com.cchao.sleeping.global.Constants;
-import com.cchao.sleeping.model.javabean.RespListBean;
-import com.cchao.sleeping.model.javabean.fall.FallImage;
-import com.cchao.sleeping.ui.global.ImageShowActivity;
-import com.cchao.sleeping.util.ImageHelper;
-import com.cchao.sleeping.view.GridSpacingItemDecoration;
-import com.cchao.sleeping.view.adapter.PageAdapter;
+import com.cchao.insomnia.R;
+import com.cchao.insomnia.api.RetrofitHelper;
+import com.cchao.insomnia.databinding.CommonRecyclerBinding;
+import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.model.javabean.RespListBean;
+import com.cchao.insomnia.model.javabean.fall.FallImage;
+import com.cchao.insomnia.ui.global.ImageShowActivity;
+import com.cchao.insomnia.util.ImageHelper;
+import com.cchao.insomnia.view.GridSpacingItemDecoration;
+import com.cchao.insomnia.view.adapter.PageAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import io.reactivex.Observable;

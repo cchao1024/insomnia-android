@@ -1,11 +1,11 @@
-package com.cchao.sleeping.view.adapter;
+package com.cchao.insomnia.view.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cchao.sleeping.R;
+import com.cchao.insomnia.R;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 

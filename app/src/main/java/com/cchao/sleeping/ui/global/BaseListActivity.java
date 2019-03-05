@@ -1,14 +1,14 @@
-package com.cchao.sleeping.ui.global;
+package com.cchao.insomnia.ui.global;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
-import com.cchao.sleeping.R;
-import com.cchao.sleeping.databinding.CommonRecyclerBinding;
-import com.cchao.sleeping.model.javabean.RespListBean;
-import com.cchao.sleeping.view.adapter.DataBindQuickAdapter;
+import com.cchao.insomnia.R;
+import com.cchao.insomnia.databinding.CommonRecyclerBinding;
+import com.cchao.insomnia.model.javabean.RespListBean;
+import com.cchao.insomnia.view.adapter.DataBindQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.List;

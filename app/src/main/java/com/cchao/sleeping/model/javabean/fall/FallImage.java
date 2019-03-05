@@ -1,4 +1,4 @@
-package com.cchao.sleeping.model.javabean.fall;
+package com.cchao.insomnia.model.javabean.fall;
 
 public class FallImage {
     private Long id;

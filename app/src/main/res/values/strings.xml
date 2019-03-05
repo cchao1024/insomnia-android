@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sleeping</string>
+    <string name="app_name">insomnia</string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
     <string name="tab_name_0">睡不着</string>

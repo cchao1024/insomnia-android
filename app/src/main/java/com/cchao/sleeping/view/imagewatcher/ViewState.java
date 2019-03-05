@@ -1,4 +1,4 @@
-package com.cchao.sleeping.view.imagewatcher;
+package com.cchao.insomnia.view.imagewatcher;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;

@@ -1,4 +1,4 @@
-package com.cchao.sleeping.ui.account;
+package com.cchao.insomnia.ui.account;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -19,11 +19,11 @@ import com.cchao.simplelib.util.ExceptionCollect;
 import com.cchao.simplelib.util.RegexUtils;
 import com.cchao.simplelib.util.StringHelper;
 import com.cchao.simplelib.util.UIUtils;
-import com.cchao.sleeping.R;
-import com.cchao.sleeping.api.RetrofitHelper;
-import com.cchao.sleeping.databinding.LoginActivityBinding;
-import com.cchao.sleeping.global.Constants;
-import com.cchao.sleeping.manager.UserManager;
+import com.cchao.insomnia.R;
+import com.cchao.insomnia.api.RetrofitHelper;
+import com.cchao.insomnia.databinding.LoginActivityBinding;
+import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.manager.UserManager;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
