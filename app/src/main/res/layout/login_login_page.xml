@@ -43,7 +43,7 @@
             android:inputType="textPassword"/>
     </android.support.design.widget.TextInputLayout>
 
-    <com.yoinsapp.view.views.StateTextView
+    <com.cchao.simplelib.view.StateTextView
         android:id="@+id/login_signup_btn"
         style="@style/CommonApplyBlack"
         android:layout_marginTop="28dp"
