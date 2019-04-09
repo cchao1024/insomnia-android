@@ -5,12 +5,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.cchao.simplelib.core.ImageLoader;
-import com.cchao.simplelib.core.Router;
-import com.cchao.simplelib.core.UiHelper;
-import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
-import com.cchao.simplelib.util.DeviceInfo;
-import com.cchao.simplelib.util.UIUtils;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.databinding.CommonRecyclerBinding;
@@ -21,6 +15,11 @@ import com.cchao.insomnia.ui.global.ImageShowActivity;
 import com.cchao.insomnia.util.ImageHelper;
 import com.cchao.insomnia.view.GridSpacingItemDecoration;
 import com.cchao.insomnia.view.adapter.PageAdapter;
+import com.cchao.simplelib.core.ImageLoader;
+import com.cchao.simplelib.core.Router;
+import com.cchao.simplelib.core.UiHelper;
+import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
+import com.cchao.simplelib.util.UIUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import io.reactivex.Observable;
@@ -63,7 +62,7 @@ public class FallImageActivity extends BaseToolbarActivity<CommonRecyclerBinding
                 return RetrofitHelper.getApis().getImageList(page);
             }
 
-            int itemWidth = DeviceInfo.getScreenWidth() / 2 - UIUtils.dp2px(10);
+            int itemWidth = UiHelper.getScreenWidth() / 2 - UIUtils.dp2px(10);
 
             @Override
             protected void convert(DataBindViewHolder helper, FallImage item) {

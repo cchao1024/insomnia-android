@@ -3,12 +3,9 @@ package com.cchao.insomnia.ui.post;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.global.Constants;
-import com.cchao.insomnia.model.javabean.RespBean;
 import com.cchao.insomnia.model.javabean.post.PostVO;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
-
-import io.reactivex.functions.Consumer;
 
 /**
  * @author : cchao
@@ -32,17 +29,14 @@ public class PostDetailActivity extends BaseToolbarActivity {
         switchView(LOADING);
         addSubscribe(RetrofitHelper.getApis().getPostDetail(mId)
             .compose(RxHelper.rxSchedulerTran())
-            .subscribe(new Consumer<RespBean<PostVO>>() {
-                @Override
-                public void accept(RespBean<PostVO> respBean) throws Exception {
-                    if (respBean.isCodeFail()) {
-                        showText(respBean.getMsg());
-                        switchView(NET_ERROR);
-                        return;
-                    }
-                    switchView(CONTENT);
-                    updateDetail(respBean.getData());
+            .subscribe(respBean -> {
+                if (respBean.isCodeFail()) {
+                    showText(respBean.getMsg());
+                    switchView(NET_ERROR);
+                    return;
                 }
+                switchView(CONTENT);
+                updateDetail(respBean.getData());
             }, RxHelper.getSwitchErrorConsumer(this)));
     }
 

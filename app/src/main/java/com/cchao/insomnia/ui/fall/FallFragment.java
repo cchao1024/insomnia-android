@@ -7,15 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
-import com.cchao.simplelib.core.ImageLoader;
-import com.cchao.simplelib.core.Router;
-import com.cchao.simplelib.core.RxBus;
-import com.cchao.simplelib.core.RxHelper;
-import com.cchao.simplelib.core.UiHelper;
-import com.cchao.simplelib.ui.fragment.BaseStatefulFragment;
-import com.cchao.simplelib.util.DeviceInfo;
-import com.cchao.simplelib.util.ExceptionCollect;
-import com.cchao.simplelib.util.StringHelper;
 import com.cchao.insomnia.BR;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.RetrofitHelper;
@@ -33,6 +24,14 @@ import com.cchao.insomnia.util.ImageHelper;
 import com.cchao.insomnia.view.GridSpacingItemDecoration;
 import com.cchao.insomnia.view.adapter.DataBindQuickAdapter;
 import com.cchao.insomnia.view.adapter.PageAdapter;
+import com.cchao.simplelib.core.ImageLoader;
+import com.cchao.simplelib.core.Router;
+import com.cchao.simplelib.core.RxBus;
+import com.cchao.simplelib.core.RxHelper;
+import com.cchao.simplelib.core.UiHelper;
+import com.cchao.simplelib.ui.fragment.BaseStatefulFragment;
+import com.cchao.simplelib.util.ExceptionCollect;
+import com.cchao.simplelib.util.StringHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzx.musiclibrary.manager.MusicManager;
 
@@ -160,7 +159,7 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
         mRvImage.setAdapter(mImageAdapter = new PageAdapter<FallImage>(R.layout.fall_image_item
             , mDisposable, this) {
 
-            int itemWidth = DeviceInfo.getScreenWidth() / 2;
+            int itemWidth = UiHelper.getScreenWidth() / 2;
 
             @Override
             protected Observable<RespListBean<FallImage>> getLoadObservable(int page) {

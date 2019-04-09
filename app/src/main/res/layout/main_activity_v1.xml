@@ -30,7 +30,7 @@
 
         <fragment
             android:id="@+id/idd"
-            android:name="com.cchao.insomnia.ui.fall.FallFragment"
+            android:name="com.cchao.insomnia.ui.post.PostBoxFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </android.support.v4.widget.NestedScrollView>

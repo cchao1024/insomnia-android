@@ -13,6 +13,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 
 /**
+ * 整合dataBinding的抽象页面加载Adapter，
+ *
  * @author cchao
  * @version 8/11/18.
  */

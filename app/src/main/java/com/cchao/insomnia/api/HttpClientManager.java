@@ -2,12 +2,12 @@ package com.cchao.insomnia.api;
 
 import android.text.TextUtils;
 
-import com.cchao.simplelib.util.DeviceInfo;
+import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.global.GLobalInfo;
+import com.cchao.simplelib.core.AndroidHelper;
 import com.cchao.simplelib.util.ExceptionCollect;
 import com.cchao.simplelib.util.StringHelper;
 import com.cchao.simplelib.util.UrlUtil;
-import com.cchao.insomnia.global.Constants;
-import com.cchao.insomnia.global.GLobalInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,7 +55,7 @@ public class HttpClientManager {
                     String originUrl = chain.request().url().url().toString();
                     // 加入通用的请求参数
                     Map<String, String> paramsMap = new HashMap<>();
-                    paramsMap.put("device_number", DeviceInfo.getDeviceNum());
+                    paramsMap.put("device_number", AndroidHelper.getDeviceNum());
                     paramsMap.put("appBuild", Constants.Config.API_BUILD);
                     originUrl = UrlUtil.buildUrl(originUrl, paramsMap);
                     // 构建request
