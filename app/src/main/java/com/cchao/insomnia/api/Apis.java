@@ -53,6 +53,15 @@ public interface Apis {
     Observable<RespBean<PostVO>> getPostDetail(@Field("id") long id);
 
     @FormUrlEncoded
+    @POST("/postbox/post/new")
+    Observable<RespBean> addPost(@Field("content") String content,@Field("images") String images);
+
+    @FormUrlEncoded
+    @POST("/postbox/{type}/new")
+    Observable<RespBean> addCommentOrReply(@Path("type") String type
+        ,@Field("content") String content,@Field("images") String images);
+
+    @FormUrlEncoded
     @POST("/fallmusic/getByPage")
     Observable<RespListBean<FallMusic>> getMusicList(@Field("page") int page);
 

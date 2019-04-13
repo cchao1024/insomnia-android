@@ -16,7 +16,7 @@ public abstract class Constants {
 
         boolean SUPPORT_THUMBNAIL = false; //是否支持缩略图(使用最高清的图片)
 
-        int TIMEOUT = 10 * 1000; // 网络访问超时时间
+        int TIMEOUT = 60 * 1000; // 网络访问超时时间
 
         String PHONE = "+00852-21364966";
         String LIVE_CHAT_NUMBER = "7243681";

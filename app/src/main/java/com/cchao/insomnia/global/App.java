@@ -39,22 +39,23 @@ public class App extends Application {
     }
 
     private void initSimpleLib() {
-        LibCore.init(this, new LibCore.InfoSupport() {
-            @Override
-            public OkHttpClient getOkHttpClient() {
-                return HttpClientManager.getProdOkHttpClient();
-            }
+        LibCore.init(this
+            , new LibCore.InfoSupport() {
+                @Override
+                public OkHttpClient getOkHttpClient() {
+                    return HttpClientManager.getProdOkHttpClient();
+                }
 
-            @Override
-            public boolean isDebug() {
-                return GLobalInfo.isDebug();
-            }
+                @Override
+                public boolean isDebug() {
+                    return GLobalInfo.isDebug();
+                }
 
-            @Override
-            public String getAppName() {
-                return App.getContext().getPackageName();
-            }
-        });
+                @Override
+                public String getAppName() {
+                    return App.getContext().getPackageName();
+                }
+            });
     }
 
     public static Context getContext() {

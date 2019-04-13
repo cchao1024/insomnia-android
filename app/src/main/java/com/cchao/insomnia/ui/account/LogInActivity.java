@@ -16,7 +16,6 @@ import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
 import com.cchao.simplelib.ui.adapter.AbstractPagerAdapter;
 import com.cchao.simplelib.util.ExceptionCollect;
-import com.cchao.simplelib.util.RegexUtils;
 import com.cchao.simplelib.util.StringHelper;
 import com.cchao.simplelib.util.UIUtils;
 import com.cchao.insomnia.R;
@@ -197,11 +196,11 @@ public class LogInActivity extends BaseToolbarActivity<LoginActivityBinding> imp
                     return;
                 }
 
-                if (!RegexUtils.isEmail(email)) {
+                /*if (!RegexUtils.isEmail(email)) {
                     showText(R.string.invalid_email);
                     UiHelper.showSoftInput(mContext, mEmailEdit);
                     return;
-                }
+                }*/
                 PrefHelper.putString(Constants.Prefs.USER_EMAIL, email);
 
                 onSendRequest(email, password);

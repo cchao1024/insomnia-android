@@ -21,9 +21,6 @@ public class PostListVO {
     String images;
     Date updateTime;
 
-    int curPage;
-    int totalPage;
-
     public long getId() {
         return id;
     }
@@ -94,21 +91,5 @@ public class PostListVO {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public int getCurPage() {
-        return curPage;
-    }
-
-    public void setCurPage(int curPage) {
-        this.curPage = curPage;
-    }
-
-    public int getTotalPage() {
-        return totalPage;
-    }
-
-    public void setTotalPage(int totalPage) {
-        this.totalPage = totalPage;
     }
 }

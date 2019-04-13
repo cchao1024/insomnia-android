@@ -1,10 +1,11 @@
 package com.cchao.insomnia.view.adapter;
 
+import com.cchao.insomnia.model.javabean.RespListBean;
+import com.cchao.simplelib.core.CollectionHelper;
+import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.interfaces.BaseStateView;
-import com.cchao.simplelib.util.ExceptionCollect;
-import com.cchao.insomnia.model.javabean.RespListBean;
 
 import java.util.List;
 
@@ -48,25 +49,31 @@ public abstract class PageAdapter<T> extends DataBindQuickAdapter<T> {
             .subscribe(new Consumer<RespListBean<T>>() {
                 @Override
                 public void accept(RespListBean<T> respBean) throws Exception {
-                    solvePage(respBean);
+                    solvePage(page, respBean);
                 }
             }, new Consumer<Throwable>() {
                 @Override
                 public void accept(Throwable throwable) throws Exception {
-                    ExceptionCollect.logException(throwable);
-                    if (page == 1 && getData().size() == 0) {
-                        mStateView.switchView(BaseStateView.NET_ERROR);
+                    Logs.logException(throwable);
+                    if (page == 1) {
+                        mStateView.switchView(CollectionHelper.isEmpty(getData())
+                            ? BaseStateView.EMPTY : BaseStateView.NET_ERROR);
                     } else {
                         UiHelper.showToast(throwable.getMessage());
+                        loadMoreFail();
                     }
                 }
             }));
     }
 
-    public void solvePage(RespListBean<T> respBean) {
-        if (!respBean.isCodeSuc()) {
+    public void solvePage(int page, RespListBean<T> respBean) {
+        // 响应出错
+        if (respBean.isCodeFail()) {
             UiHelper.showToast(respBean.getMsg());
-            loadMoreComplete();
+            loadMoreFail();
+            if (page == 1) {
+                mStateView.switchView(BaseStateView.NET_ERROR);
+            }
             return;
         }
         mStateView.switchView(BaseStateView.CONTENT);

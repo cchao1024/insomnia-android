@@ -109,7 +109,7 @@ public class MusicPlayerActivity extends BaseToolbarActivity<MusicPlayActivityBi
         SongInfo songInfo = new SongInfo();
         if (MusicManager.get().getStatus() == State.STATE_PLAYING) {
             songInfo = MusicManager.get().getCurrPlayingMusic();
-        } else if (CollectionHelper.isNotEmptyList(MusicManager.get().getPlayList())) {
+        } else if (CollectionHelper.isNotEmpty(MusicManager.get().getPlayList())) {
             songInfo = MusicManager.get().getPlayList().get(0);
         }
         return songInfo;

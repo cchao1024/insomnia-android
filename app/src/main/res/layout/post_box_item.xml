@@ -11,20 +11,24 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_16"
+        android:paddingEnd="@dimen/dp_16">
 
         <TextView
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.postUserName}"
+            android:text="@{`@`+item.postUserName}"
             tools:text="@string/app_name"/>
 
         <TextView
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_8"
             android:text="@{item.content}"
             tools:text="@string/app_name"/>
 
@@ -32,7 +36,9 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_4"
             android:text="@{String.valueOf(item.updateTime)}"
+            android:textSize="@dimen/sp_12"
             tools:text="@string/app_name"/>
 
         <LinearLayout
@@ -44,8 +50,9 @@
                 android:id="@+id/like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableStart="@drawable/post_like_disable"
                 android:drawablePadding="@dimen/dp_8"
-                android:drawableStart="@drawable/ic_more"
+                android:gravity="center_vertical"
                 android:text="@{String.valueOf(item.likeCount)}"
                 tools:text="@string/app_name"/>
 
@@ -53,8 +60,11 @@
                 android:id="@+id/comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:drawableStart="@drawable/post_comment"
                 android:drawablePadding="@dimen/dp_8"
-                android:drawableStart="@drawable/ic_more"
+                android:gravity="center_vertical"
                 android:text="@{String.valueOf(item.reviewCount)}"
                 tools:text="@string/app_name"/>
 

@@ -1,17 +1,19 @@
 package com.cchao.insomnia.ui.post;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.databinding.CommonRecyclerBinding;
+import com.cchao.insomnia.databinding.PostBoxBinding;
 import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.model.javabean.RespListBean;
 import com.cchao.insomnia.model.javabean.post.PostListVO;
 import com.cchao.insomnia.view.adapter.PageAdapter;
 import com.cchao.simplelib.core.Router;
-import com.cchao.simplelib.ui.fragment.SimpleLazyFragment;
+import com.cchao.simplelib.ui.fragment.BaseStatefulFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import io.reactivex.Observable;
@@ -22,12 +24,18 @@ import io.reactivex.Observable;
  * @author : cchao
  * @version 2019-04-05
  */
-public class PostBoxFragment extends SimpleLazyFragment<CommonRecyclerBinding> {
+public class PostBoxFragment extends BaseStatefulFragment<PostBoxBinding> implements View.OnClickListener {
 
     PageAdapter<PostListVO> mAdapter;
 
     @Override
-    public void onFirstUserVisible() {
+    protected int getLayoutId() {
+        return R.layout.post_box;
+    }
+
+    @Override
+    protected void initEventAndData() {
+        mDataBind.setClicker(this);
         initAdapter();
         onLoadData();
     }
@@ -48,6 +56,8 @@ public class PostBoxFragment extends SimpleLazyFragment<CommonRecyclerBinding> {
             }
         });
 
+        mDataBind.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -59,13 +69,17 @@ public class PostBoxFragment extends SimpleLazyFragment<CommonRecyclerBinding> {
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.common_recycler;
-    }
-
-    @Override
     protected void onLoadData() {
         switchView(LOADING);
         mAdapter.onLoadData(1);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bottom_action:
+                Router.turnTo(mContext, AddPostActivity.class).start();
+                break;
+        }
     }
 }

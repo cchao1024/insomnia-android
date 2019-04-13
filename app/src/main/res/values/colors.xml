@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimaryDark">@color/transparent_color</color>
-    <color name="colorPrimary">#fefefe</color>
-    <color name="colorAccent">#343434</color>
+    <color name="colorAccent">#333333</color>
+    <color name="colorTextSecondary">#333333</color>
 </resources>
