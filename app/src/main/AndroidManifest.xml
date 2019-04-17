@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivityV1">
+        <activity android:name=".ui.main.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW" />
@@ -35,6 +35,7 @@
         <activity android:name=".ui.account.LogInActivity"/>
         <activity android:name=".ui.post.PostDetailActivity"/>
         <activity android:name=".ui.post.AddPostActivity"/>
+        <activity android:name=".MainActivity"/>
     </application>
 
 </manifest>

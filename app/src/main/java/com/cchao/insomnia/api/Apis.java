@@ -6,6 +6,7 @@ import com.cchao.insomnia.model.javabean.RespListBean;
 import com.cchao.insomnia.model.javabean.fall.FallImage;
 import com.cchao.insomnia.model.javabean.fall.FallIndex;
 import com.cchao.insomnia.model.javabean.fall.FallMusic;
+import com.cchao.insomnia.model.javabean.global.AppLaunch;
 import com.cchao.insomnia.model.javabean.post.PostListVO;
 import com.cchao.insomnia.model.javabean.post.PostVO;
 import com.cchao.insomnia.model.javabean.user.UserBean;
@@ -23,6 +24,9 @@ import retrofit2.http.Path;
  * date  2017/2/24
  **/
 public interface Apis {
+
+    @GET("/postbox/app/appLaunch")
+    Observable<RespBean<AppLaunch>> appLaunch();
 
     /**
      * 忘记密码 必选参数: email

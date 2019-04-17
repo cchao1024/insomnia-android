@@ -2,13 +2,13 @@ package com.cchao.insomnia.api;
 
 import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.global.GLobalInfo;
+import com.cchao.insomnia.manager.UserManager;
 import com.cchao.simplelib.core.AndroidHelper;
 import com.cchao.simplelib.util.ExceptionCollect;
 import com.cchao.simplelib.util.StringHelper;
 import com.cchao.simplelib.util.UrlUtil;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +26,7 @@ import okhttp3.Response;
 public class HttpClientManager {
     private static final String TAG_LOG = "RetrofitHelper";
     private static OkHttpClient mProdHttpClient = null;
-    static final Charset UTF8 = Charset.forName("UTF-8");
+    public static final String AUTHORIZATION = "authorization";
 
     public static OkHttpClient getProdOkHttpClient() {
         if (mProdHttpClient == null) {
@@ -40,7 +40,7 @@ public class HttpClientManager {
             .connectTimeout(Constants.Config.TIMEOUT, TimeUnit.MILLISECONDS)
             .writeTimeout(Constants.Config.TIMEOUT, TimeUnit.MILLISECONDS)
             .readTimeout(Constants.Config.TIMEOUT, TimeUnit.MILLISECONDS)
-            //拦截器添加公共的参数
+            // 添加公共的参数
             .addNetworkInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
@@ -52,10 +52,11 @@ public class HttpClientManager {
                     paramsMap.put("appBuild", Constants.Config.API_BUILD);
                     originUrl = UrlUtil.buildUrl(originUrl, paramsMap);
                     // 构建request
-                    request = request.newBuilder().url(originUrl).build();
+                    request = request.newBuilder().url(originUrl)
+                        .addHeader(AUTHORIZATION, UserManager.getToken())
+                        .build();
                     // 事件收集
-                    ExceptionCollect.logEvent("发起网络请求："
-                        , "请求Url : 【" + request.url() + "】");
+                    ExceptionCollect.logEvent("发起请求：", "请求Url :【" + request.url() + "】");
                     //收集请求体
                     if (request.body() instanceof FormBody) {
                         FormBody formBody = ((FormBody) request.body());

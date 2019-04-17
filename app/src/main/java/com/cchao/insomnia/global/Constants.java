@@ -11,7 +11,7 @@ public abstract class Constants {
 
     public interface Config {
 
-        String API_Host = "http://192.168.0.104:8080"; //接口API版本
+        String API_Host = "http://192.168.0.104:8080/"; //接口API版本
         String API_BUILD = String.valueOf(BuildConfig.VERSION_CODE); //接口API版本
 
         boolean SUPPORT_THUMBNAIL = false; //是否支持缩略图(使用最高清的图片)
@@ -31,6 +31,7 @@ public abstract class Constants {
     }
 
     public interface Prefs {
+        String USER_INFO = "user_info";
         String USER_NAME = "user_name";
         String USER_EMAIL = "user_email";
         String LOGIN_TIPS = "login_tips";

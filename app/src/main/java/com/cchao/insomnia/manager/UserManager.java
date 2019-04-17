@@ -1,10 +1,10 @@
 package com.cchao.insomnia.manager;
 
+import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.model.javabean.user.UserBean;
 import com.cchao.simplelib.core.GsonUtil;
 import com.cchao.simplelib.core.PrefHelper;
 import com.cchao.simplelib.util.StringHelper;
-import com.cchao.insomnia.global.Constants;
-import com.cchao.insomnia.model.javabean.user.UserBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,7 @@ public class UserManager {
 
     static {
         mWishList = GsonUtil.jsonToList(PrefHelper.getString(Constants.Prefs.WISH_LIST, "[]"), String.class);
+        mUserBean = GsonUtil.fromJson(PrefHelper.getString(Constants.Prefs.USER_INFO), UserBean.class);
     }
 
     public static boolean isInWishList(String id) {
@@ -41,10 +42,25 @@ public class UserManager {
 
     public static void setUserBean(UserBean userBean) {
         mUserBean = userBean;
+        PrefHelper.putString(Constants.Prefs.USER_INFO, GsonUtil.toJson(userBean));
     }
 
     public static UserBean getUserBean() {
         return mUserBean;
+    }
+
+    public static String getToken() {
+        if (mUserBean == null) {
+            return "";
+        }
+        return mUserBean.getToken();
+    }
+
+    public static boolean isVisitor() {
+        if (isLogin()) {
+            return mUserBean.isVisitor();
+        }
+        throw new NullPointerException();
     }
 
     public static boolean isLogin() {

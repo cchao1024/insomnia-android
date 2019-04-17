@@ -136,7 +136,7 @@ public class MusicPlayerActivity extends BaseToolbarActivity<MusicPlayActivityBi
         mDataBind.wish.setImageResource(UserManager.isInWishList(songInfo.getSongId())
             ? R.drawable.ic_wish_ed : R.drawable.ic_wish_no);
         mTaskManager.scheduleSeekBarUpdate();
-        ImageLoader.loadImage(mContext, Constants.TEST_IMAGE_PATH, mDataBind.musicAlbum);
+        ImageLoader.loadImage(mDataBind.musicAlbum, Constants.TEST_IMAGE_PATH);
 
 /*        GlideApp.with(mContext).asDrawable()
             .load(Constants.TEST_IMAGE_PATH)

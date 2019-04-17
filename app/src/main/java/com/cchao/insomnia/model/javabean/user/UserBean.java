@@ -1,53 +1,19 @@
 package com.cchao.insomnia.model.javabean.user;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 /**
  * @author : cchao
  * @version 2019-02-18
  */
+@Data
+@Accessors(chain = true)
 public class UserBean {
+    boolean isVisitor;
     String token;
     String email;
     String nikeName;
     String avatar;
     int age;
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getNikeName() {
-        return nikeName;
-    }
-
-    public void setNikeName(String nikeName) {
-        this.nikeName = nikeName;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
 }

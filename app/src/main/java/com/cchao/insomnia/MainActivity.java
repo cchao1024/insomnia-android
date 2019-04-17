@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cchao.insomnia.ui.post.PostBoxFragment;
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.UiHelper;
@@ -80,7 +81,7 @@ public class MainActivity extends BaseActivity {
      */
     private void initTabLayout() {
         mFragments.add(new FallFragment());
-        mFragments.add(new FallFragment());
+        mFragments.add(new PostBoxFragment());
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -234,8 +235,7 @@ public class MainActivity extends BaseActivity {
         } else {
             mLoggedView.setVisibility(View.VISIBLE);
             if (StringHelper.isNotEmpty(userInfoBean.getAvatar())) {
-                ImageLoader.loadImage(mContext, userInfoBean.getAvatar(),
-                    mUserPhotoImage, R.drawable.default_portrait);
+                ImageLoader.loadImage(mUserPhotoImage, userInfoBean.getAvatar(), R.drawable.default_portrait);
             }
 
             mNikeName.setText(userInfoBean.getNikeName());

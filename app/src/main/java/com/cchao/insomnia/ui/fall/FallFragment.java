@@ -121,9 +121,9 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
             protected void convert(DataBindViewHolder helper, FallMusic item) {
                 helper.getBinding().setVariable(BR.item, item);
                 if (StringHelper.isNotEmpty(item.getCover_img())) {
-                    ImageLoader.loadImage(mContext, item.getSrc(), helper.getView(R.id.image));
+                    ImageLoader.loadImage(helper.getView(R.id.image), item.getSrc());
                 } else {
-                    ImageLoader.loadImage(mContext, Constants.TEST_IMAGE_PATH, helper.getView(R.id.image));
+                    ImageLoader.loadImage(helper.getView(R.id.image), Constants.TEST_IMAGE_PATH);
                 }
             }
         });
@@ -172,7 +172,7 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
                 helper.itemView.getLayoutParams().height = ImageHelper
                     .getScaleHeight(itemWidth, item.getWidth(), item.getHeight());
 
-                ImageLoader.loadImage(mContext, item.getUrl(), helper.getView(R.id.image));
+                ImageLoader.loadImage(helper.getView(R.id.image), item.getUrl());
             }
         });
         mImageAdapter.setOnItemClickListener((adapter, view, position) -> {

@@ -71,7 +71,7 @@ public class FallImageActivity extends BaseToolbarActivity<CommonRecyclerBinding
                 helper.itemView.getLayoutParams().height = ImageHelper.getScaleHeight(itemWidth
                     , item.getWidth(), item.getHeight());
 
-                ImageLoader.loadImage(mContext, item.getUrl(), imageView);
+                ImageLoader.loadImage(imageView, item.getUrl());
             }
         });
 
