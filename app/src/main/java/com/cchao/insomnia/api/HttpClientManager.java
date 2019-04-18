@@ -4,7 +4,7 @@ import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.global.GLobalInfo;
 import com.cchao.insomnia.manager.UserManager;
 import com.cchao.simplelib.core.AndroidHelper;
-import com.cchao.simplelib.util.ExceptionCollect;
+import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.util.StringHelper;
 import com.cchao.simplelib.util.UrlUtil;
 
@@ -56,7 +56,7 @@ public class HttpClientManager {
                         .addHeader(AUTHORIZATION, UserManager.getToken())
                         .build();
                     // 事件收集
-                    ExceptionCollect.logEvent("发起请求：", "请求Url :【" + request.url() + "】");
+                    Logs.logEvent("发起请求：", "请求Url :【" + request.url() + "】");
                     //收集请求体
                     if (request.body() instanceof FormBody) {
                         FormBody formBody = ((FormBody) request.body());
@@ -65,7 +65,7 @@ public class HttpClientManager {
                             postBody += formBody.encodedName(i) + " = " + formBody.encodedValue(i) + " & ";
                         }
                         if (StringHelper.isNotEmpty(postBody)) {
-                            ExceptionCollect.logEvent("请求体：", postBody);
+                            Logs.logEvent("请求体：", postBody);
                         }
                     }
                     return chain.proceed(request);

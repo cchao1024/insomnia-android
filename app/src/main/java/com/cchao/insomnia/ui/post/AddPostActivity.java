@@ -6,9 +6,7 @@ import android.view.View;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.databinding.PostAddActivityBinding;
-import com.cchao.insomnia.model.javabean.RespBean;
 import com.cchao.simplelib.core.RxHelper;
-import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
 
 /**
@@ -38,7 +36,7 @@ public class AddPostActivity extends BaseTitleBarActivity<PostAddActivityBinding
         }
         showProgress();
         addSubscribe(RetrofitHelper.getApis().addPost(mDataBind.edit.getText().toString(), "")
-            .compose(RxHelper.rxSchedulerTran())
+            .compose(RxHelper.toMain())
             .subscribe(respBean -> {
                 hideProgress();
                 showText(respBean.getMsg());

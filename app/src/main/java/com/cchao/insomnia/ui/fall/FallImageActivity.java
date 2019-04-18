@@ -19,7 +19,6 @@ import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
-import com.cchao.simplelib.util.UIUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import io.reactivex.Observable;
@@ -62,7 +61,7 @@ public class FallImageActivity extends BaseToolbarActivity<CommonRecyclerBinding
                 return RetrofitHelper.getApis().getImageList(page);
             }
 
-            int itemWidth = UiHelper.getScreenWidth() / 2 - UIUtils.dp2px(10);
+            int itemWidth = UiHelper.getScreenWidth() / 2 - UiHelper.dp2px(10);
 
             @Override
             protected void convert(DataBindViewHolder helper, FallImage item) {

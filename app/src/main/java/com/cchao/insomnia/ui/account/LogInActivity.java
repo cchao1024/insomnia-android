@@ -10,19 +10,19 @@ import android.widget.EditText;
 import android.widget.Scroller;
 import android.widget.TextView;
 
-import com.cchao.simplelib.core.PrefHelper;
-import com.cchao.simplelib.core.RxHelper;
-import com.cchao.simplelib.core.UiHelper;
-import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
-import com.cchao.simplelib.ui.adapter.AbstractPagerAdapter;
-import com.cchao.simplelib.util.ExceptionCollect;
-import com.cchao.simplelib.util.StringHelper;
-import com.cchao.simplelib.util.UIUtils;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.databinding.LoginActivityBinding;
 import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.manager.UserManager;
+import com.cchao.simplelib.core.Logs;
+import com.cchao.simplelib.core.PrefHelper;
+import com.cchao.simplelib.core.RxHelper;
+import com.cchao.simplelib.core.UiHelper;
+import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
+import com.cchao.simplelib.ui.adapter.AbstractPagerAdapter;
+import com.cchao.simplelib.util.StringHelper;
+import com.cchao.simplelib.util.UIUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -71,8 +71,6 @@ public class LogInActivity extends BaseToolbarActivity<LoginActivityBinding> imp
     }
 
     private void initTabLayout() {
-        // 状态栏颜色
-        UIUtils.setStatusBarTranslucent(getWindow());
 
         mViewPageTitles.add(getString(R.string.log_in));
         mViewPageTitles.add(getString(R.string.sign_up));
@@ -137,7 +135,7 @@ public class LogInActivity extends BaseToolbarActivity<LoginActivityBinding> imp
                 }
             });
         } catch (Exception e) {
-            ExceptionCollect.logException(e);
+            Logs.logException(e);
         }
     }
 
@@ -217,7 +215,7 @@ public class LogInActivity extends BaseToolbarActivity<LoginActivityBinding> imp
         showProgress();
         String path = mLoginType == LOG_IN ? "login" : "signup";
         addSubscribe(RetrofitHelper.getApis().login(path, email, password)
-            .compose(RxHelper.rxSchedulerTran())
+            .compose(RxHelper.toMain())
             .subscribe(respBean -> {
                 hideProgress();
                 if (respBean.isCodeFail()) {

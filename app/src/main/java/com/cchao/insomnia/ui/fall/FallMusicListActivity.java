@@ -66,7 +66,7 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
                     updateDiskView();
 
                     for (FallMusic music : mAdapter.getData()) {
-                        music.isPlaying.set(StringUtils.equals(music.getId(), MusicHelper.getCurPlayingId()));
+                        music.isPlaying.set(StringHelper.equals(music.getId(), MusicHelper.getCurPlayingId()));
                     }
                     break;
             }
@@ -132,7 +132,7 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             FallMusic item = mAdapter.getItem(position);
 
-            if (StringUtils.equals(item.getId(), MusicHelper.getCurPlayingId())) {
+            if (StringHelper.equals(item.getId(), MusicHelper.getCurPlayingId())) {
                 Router.turnTo(mContext, MusicPlayerActivity.class)
                     .start();
             } else {

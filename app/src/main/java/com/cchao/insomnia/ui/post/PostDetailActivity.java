@@ -1,9 +1,7 @@
 package com.cchao.insomnia.ui.post;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
-import android.database.DatabaseUtils;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -17,7 +15,6 @@ import com.cchao.insomnia.databinding.PostDetailActivityBinding;
 import com.cchao.insomnia.databinding.PostDetailCommentBinding;
 import com.cchao.insomnia.databinding.PostDetailHeadBinding;
 import com.cchao.insomnia.global.Constants;
-import com.cchao.insomnia.model.javabean.RespBean;
 import com.cchao.insomnia.model.javabean.post.CommentVO;
 import com.cchao.insomnia.model.javabean.post.PostVO;
 import com.cchao.insomnia.model.javabean.post.ReplyVO;
@@ -27,7 +24,6 @@ import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
-import com.cchao.simplelib.util.CallBacks;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
@@ -86,7 +82,7 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
     protected void onLoadData() {
         switchView(LOADING);
         addSubscribe(RetrofitHelper.getApis().getPostDetail(mId)
-            .compose(RxHelper.rxSchedulerTran())
+            .compose(RxHelper.toMain())
             .subscribe(respBean -> {
                 if (respBean.isCodeFail()) {
                     showText(respBean.getMsg());
@@ -166,7 +162,7 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
         showProgress();
         String type = toUserId == mPostVO.getPostUserId() ? "comment" : "reply";
         addSubscribe(RetrofitHelper.getApis().addCommentOrReply(type, content, "")
-            .compose(RxHelper.rxSchedulerTran())
+            .compose(RxHelper.toMain())
             .subscribe(respBean -> {
                 showText(respBean.getMsg());
                 if (respBean.isCodeSuc()) {

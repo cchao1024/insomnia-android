@@ -39,7 +39,7 @@ public class MusicHelper {
 
     public static String getCurPlayingId() {
         if (MusicManager.get().getCurrPlayingMusic() != null
-            && StringUtils.isNotEmpty(MusicManager.get().getCurrPlayingMusic().getSongId())) {
+            && StringHelper.isNotEmpty(MusicManager.get().getCurrPlayingMusic().getSongId())) {
             return MusicManager.get().getCurrPlayingMusic().getSongId();
         } else {
             return "null";

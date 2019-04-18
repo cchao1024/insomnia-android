@@ -45,7 +45,7 @@ public abstract class PageAdapter<T> extends DataBindQuickAdapter<T> {
 
     public void onLoadData(int page) {
         mDisposable.add(getLoadObservable(page)
-            .compose(RxHelper.rxSchedulerTran())
+            .compose(RxHelper.toMain())
             .subscribe(new Consumer<RespListBean<T>>() {
                 @Override
                 public void accept(RespListBean<T> respBean) throws Exception {

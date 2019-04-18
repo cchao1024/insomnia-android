@@ -25,17 +25,15 @@ import com.cchao.insomnia.view.GridSpacingItemDecoration;
 import com.cchao.insomnia.view.adapter.DataBindQuickAdapter;
 import com.cchao.insomnia.view.adapter.PageAdapter;
 import com.cchao.simplelib.core.ImageLoader;
+import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.fragment.BaseStatefulFragment;
-import com.cchao.simplelib.util.ExceptionCollect;
 import com.cchao.simplelib.util.StringHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzx.musiclibrary.manager.MusicManager;
-
-import org.apache.commons.lang3.StringUtils;
 
 import io.reactivex.Observable;
 
@@ -86,7 +84,6 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
         onLoadData();
     }
 
-
     private void initView() {
         mHeadBinding = DataBindingUtil.inflate(mLayoutInflater
             , R.layout.fall_head, null, false);
@@ -131,7 +128,7 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 FallMusic item = mMusicAdapter.getItem(position);
-                if (StringUtils.equals(item.getId(), MusicHelper.getCurPlayingId())) {
+                if (StringHelper.equals(item.getId(), MusicHelper.getCurPlayingId())) {
                     Router.turnTo(mContext, MusicPlayerActivity.class)
                         .start();
                 } else {
@@ -193,14 +190,14 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
     protected void onLoadData() {
         switchView(LOADING);
         addSubscribe(RetrofitHelper.getApis().getIndexData()
-            .compose(RxHelper.rxSchedulerTran())
+            .compose(RxHelper.toMain())
             .subscribe(respBean -> {
                 switchView(CONTENT);
                 mImageAdapter.setNewData(respBean.getData().getFallimages());
                 mMusicAdapter.setNewData(respBean.getData().getMusic());
             }, throwable -> {
                 switchView(NET_ERROR);
-                ExceptionCollect.logException(throwable);
+                Logs.logException(throwable);
             }));
     }
 

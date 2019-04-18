@@ -21,7 +21,7 @@ public class GlobalHelper {
      */
     public static void syncAppInfo() {
         Disposable disposable = RetrofitHelper.getApis().appLaunch()
-            .compose(RxHelper.rxSchedulerTran())
+            .compose(RxHelper.toMain())
             .subscribe(new Consumer<RespBean<AppLaunch>>() {
                 @Override
                 public void accept(RespBean<AppLaunch> respBean) throws Exception {

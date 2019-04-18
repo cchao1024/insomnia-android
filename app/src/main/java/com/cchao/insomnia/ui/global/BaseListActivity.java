@@ -95,7 +95,7 @@ public abstract class BaseListActivity<E> extends BaseToolbarActivity<CommonRecy
     protected void onLoadData() {
         switchView(LOADING);
         addSubscribe(getLoadObservable(1)
-            .compose(RxHelper.rxSchedulerTran())
+            .compose(RxHelper.toMain())
             .subscribe(new Consumer<RespListBean<E>>() {
                 @Override
                 public void accept(RespListBean<E> respBean) throws Exception {
@@ -106,7 +106,7 @@ public abstract class BaseListActivity<E> extends BaseToolbarActivity<CommonRecy
 
     protected void loadMore() {
         addSubscribe(getLoadObservable(++mCurPage)
-            .compose(RxHelper.rxSchedulerTran())
+            .compose(RxHelper.toMain())
             .subscribe(new Consumer<RespListBean<E>>() {
                 @Override
                 public void accept(RespListBean<E> respBean) throws Exception {
