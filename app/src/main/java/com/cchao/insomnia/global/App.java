@@ -3,9 +3,10 @@ package com.cchao.insomnia.global;
 import android.app.Application;
 import android.content.Context;
 
-import com.cchao.simplelib.LibCore;
 import com.cchao.insomnia.api.HttpClientManager;
 import com.cchao.insomnia.manager.MusicHelper;
+import com.cchao.simplelib.Const;
+import com.cchao.simplelib.LibCore;
 import com.lzx.musiclibrary.manager.MusicLibrary;
 import com.lzx.musiclibrary.utils.BaseUtil;
 
@@ -39,23 +40,29 @@ public class App extends Application {
     }
 
     private void initSimpleLib() {
-        LibCore.init(this
-            , new LibCore.InfoSupport() {
-                @Override
-                public OkHttpClient getOkHttpClient() {
-                    return HttpClientManager.getProdOkHttpClient();
-                }
+        LibCore.init(this, new LibCore.InfoSupport() {
+            @Override
+            public OkHttpClient getOkHttpClient() {
+                return HttpClientManager.getProdOkHttpClient();
+            }
 
-                @Override
-                public boolean isDebug() {
-                    return GLobalInfo.isDebug();
-                }
+            @Override
+            public boolean isDebug() {
+                return GLobalInfo.isDebug();
+            }
 
-                @Override
-                public String getAppName() {
-                    return App.getContext().getPackageName();
-                }
-            });
+            @Override
+            public String getAppName() {
+                return App.getContext().getPackageName();
+            }
+
+            @Override
+            public LibCore.LibConfig getLibConfig() {
+                return new LibCore.LibConfig()
+                    .setTitleBarStyle(Const.TitleStyle.title)
+                    .setOverrideCookieJar(false);
+            }
+        });
     }
 
     public static Context getContext() {

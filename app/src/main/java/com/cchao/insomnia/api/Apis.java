@@ -25,7 +25,7 @@ import retrofit2.http.Path;
  **/
 public interface Apis {
 
-    @GET("/postbox/app/appLaunch")
+    @GET("/postbox/app/getLaunch")
     Observable<RespBean<AppLaunch>> appLaunch();
 
     /**

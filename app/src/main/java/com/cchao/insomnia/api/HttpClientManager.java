@@ -26,7 +26,7 @@ import okhttp3.Response;
 public class HttpClientManager {
     private static final String TAG_LOG = "RetrofitHelper";
     private static OkHttpClient mProdHttpClient = null;
-    public static final String AUTHORIZATION = "authorization";
+    public static final String AUTHORIZATION = "Authorization";
 
     public static OkHttpClient getProdOkHttpClient() {
         if (mProdHttpClient == null) {

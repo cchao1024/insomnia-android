@@ -27,6 +27,6 @@ public class GlobalHelper {
                 public void accept(RespBean<AppLaunch> respBean) throws Exception {
                     UserManager.setUserBean(respBean.getData().getUserInfo());
                 }
-            });
+            },RxHelper.getErrorConsumer());
     }
 }

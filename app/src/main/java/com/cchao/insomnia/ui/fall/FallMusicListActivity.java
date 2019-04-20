@@ -5,13 +5,8 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 
-import com.cchao.simplelib.core.Router;
-import com.cchao.simplelib.core.RxBus;
-import com.cchao.simplelib.core.UiHelper;
-import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
 import com.cchao.insomnia.BR;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.RetrofitHelper;
@@ -24,6 +19,10 @@ import com.cchao.insomnia.model.javabean.fall.FallMusic;
 import com.cchao.insomnia.ui.music.MusicPlayerActivity;
 import com.cchao.insomnia.util.AnimHelper;
 import com.cchao.insomnia.view.adapter.PageAdapter;
+import com.cchao.simplelib.core.Router;
+import com.cchao.simplelib.core.RxBus;
+import com.cchao.simplelib.core.UiHelper;
+import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
 import com.lzx.musiclibrary.manager.MusicManager;
 
 import org.apache.commons.lang3.StringUtils;
@@ -66,7 +65,7 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
                     updateDiskView();
 
                     for (FallMusic music : mAdapter.getData()) {
-                        music.isPlaying.set(StringHelper.equals(music.getId(), MusicHelper.getCurPlayingId()));
+                        music.isPlaying.set(StringUtils.equals(music.getId(), MusicHelper.getCurPlayingId()));
                     }
                     break;
             }
@@ -132,7 +131,7 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             FallMusic item = mAdapter.getItem(position);
 
-            if (StringHelper.equals(item.getId(), MusicHelper.getCurPlayingId())) {
+            if (StringUtils.equals(item.getId(), MusicHelper.getCurPlayingId())) {
                 Router.turnTo(mContext, MusicPlayerActivity.class)
                     .start();
             } else {

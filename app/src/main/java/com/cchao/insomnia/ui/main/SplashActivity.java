@@ -22,6 +22,7 @@ public class SplashActivity extends BaseStatefulActivity {
         GlobalHelper.syncAppInfo();
         RxHelper.timerConsumer(1000, consumer -> {
             Router.turnTo(mContext, MainActivity.class).start();
+            finish();
         });
     }
 

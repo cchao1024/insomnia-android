@@ -3,19 +3,18 @@ package com.cchao.insomnia.manager;
 import android.support.annotation.NonNull;
 import android.util.Pair;
 
+import com.cchao.insomnia.api.RetrofitHelper;
+import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.model.javabean.fall.FallMusic;
 import com.cchao.simplelib.core.PrefHelper;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
-import com.cchao.insomnia.api.RetrofitHelper;
-import com.cchao.insomnia.global.Constants;
-import com.cchao.insomnia.model.javabean.fall.FallMusic;
+import com.cchao.simplelib.util.StringHelper;
 import com.lzx.musiclibrary.aidl.listener.OnPlayerEventListener;
 import com.lzx.musiclibrary.aidl.model.SongInfo;
 import com.lzx.musiclibrary.constans.PlayMode;
 import com.lzx.musiclibrary.manager.MusicManager;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Observable;
 import java.util.Observer;

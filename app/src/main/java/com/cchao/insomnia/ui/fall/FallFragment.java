@@ -35,6 +35,8 @@ import com.cchao.simplelib.util.StringHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzx.musiclibrary.manager.MusicManager;
 
+import org.apache.commons.lang3.StringUtils;
+
 import io.reactivex.Observable;
 
 /**
@@ -128,7 +130,7 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 FallMusic item = mMusicAdapter.getItem(position);
-                if (StringHelper.equals(item.getId(), MusicHelper.getCurPlayingId())) {
+                if (StringUtils.equals(item.getId(), MusicHelper.getCurPlayingId())) {
                     Router.turnTo(mContext, MusicPlayerActivity.class)
                         .start();
                 } else {

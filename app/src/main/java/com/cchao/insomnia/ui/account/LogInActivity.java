@@ -22,7 +22,6 @@ import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
 import com.cchao.simplelib.ui.adapter.AbstractPagerAdapter;
 import com.cchao.simplelib.util.StringHelper;
-import com.cchao.simplelib.util.UIUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
