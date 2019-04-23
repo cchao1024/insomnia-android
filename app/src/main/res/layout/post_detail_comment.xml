@@ -18,5 +18,29 @@
             android:hint="我觉得吧..."
             android:minLines="4"
             android:padding="@dimen/dp_16"/>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_50"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_5">
+
+            <TextView
+                android:id="@+id/send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/font_family_medium"
+                android:padding="@dimen/dp_16"
+                android:text="发送"
+                android:textColor="@color/text_blue"/>
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+        </FrameLayout>
     </LinearLayout>
 </layout>

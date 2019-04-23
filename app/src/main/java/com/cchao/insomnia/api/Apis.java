@@ -11,8 +11,11 @@ import com.cchao.insomnia.model.javabean.post.PostListVO;
 import com.cchao.insomnia.model.javabean.post.PostVO;
 import com.cchao.insomnia.model.javabean.user.UserBean;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -58,12 +61,11 @@ public interface Apis {
 
     @FormUrlEncoded
     @POST("/postbox/post/new")
-    Observable<RespBean> addPost(@Field("content") String content,@Field("images") String images);
+    Observable<RespBean> addPost(@Field("content") String content, @Field("images") String images);
 
     @FormUrlEncoded
     @POST("/postbox/{type}/new")
-    Observable<RespBean> addCommentOrReply(@Path("type") String type
-        ,@Field("content") String content,@Field("images") String images);
+    Observable<RespBean> addCommentOrReply(@Path("type") String type, @FieldMap Map<String,String> map);
 
     @FormUrlEncoded
     @POST("/fallmusic/getByPage")

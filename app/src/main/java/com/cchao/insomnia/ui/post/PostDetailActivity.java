@@ -1,8 +1,9 @@
 package com.cchao.insomnia.ui.post;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.databinding.DataBindingUtil;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,8 +29,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.functions.Consumer;
 
 /**
  * 帖子详情页， recycler view， add详情header，
@@ -124,7 +123,8 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bottom_action:
-                showCommentDialog(mPostVO.getPostUserId());
+                String type = mPostVO.getPostUserId() == mPostVO.getPostUserId() ? "comment" : "reply";
+                showCommentDialog(type, mPostVO.getId());
                 break;
         }
     }
@@ -132,49 +132,56 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
     /**
      * 显示评论对话框，用户输入，点发送
      *
-     * @param toUserId 目标用户id
+     * @param id id
      */
-    private void showCommentDialog(long toUserId) {
+    private void showCommentDialog(String type, long id) {
         PostDetailCommentBinding binding = DataBindingUtil.inflate(mLayoutInflater
             , R.layout.post_detail_comment, null, false);
+
         // 弹出对话框
-        new AlertDialog.Builder(mContext)
+        Dialog dialog = new AlertDialog.Builder(mContext)
             .setTitle("元芳，你怎么看")
             .setView(binding.getRoot())
-            .setPositiveButton("发送", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (TextUtils.isEmpty(binding.edit.getText().toString())) {
-                        showText("内容不能为空");
-                    }
-                    onSendComment(binding.edit.getText().toString(), toUserId, () -> {
-                        dialog.dismiss();
-                    });
-                }
-            }).show();
+            .show();
+
+        binding.send.setOnClickListener(click -> {
+            if (TextUtils.isEmpty(binding.edit.getText().toString())) {
+                showText("内容不能为空");
+            }
+            onSendComment(binding, type, id, () -> {
+                dialog.dismiss();
+            });
+        });
     }
 
     /**
      * 发送评论，
      * 如果toUserId == PostUserId 则为评论，否则为回复
      */
-    void onSendComment(String content, long toUserId, Runnable runnable) {
-        showProgress();
-        String type = toUserId == mPostVO.getPostUserId() ? "comment" : "reply";
-        addSubscribe(RetrofitHelper.getApis().addCommentOrReply(type, content, "")
+    void onSendComment(PostDetailCommentBinding binding, String type, long id, Runnable callback) {
+        UiHelper.setVisibleElseGone(binding.send, false);
+        UiHelper.setVisibleElseGone(binding.progress, true);
+        ArrayMap<String, String> map = new ArrayMap<>();
+        map.put("toId", String.valueOf(id));
+        map.put("content", binding.edit.getText().toString());
+        map.put("images", "");
+
+        addSubscribe(RetrofitHelper.getApis().addCommentOrReply(type, map)
             .compose(RxHelper.toMain())
             .subscribe(respBean -> {
                 showText(respBean.getMsg());
                 if (respBean.isCodeSuc()) {
-                    runnable.run();
+                    callback.run();
                 }
-                hideProgress();
-            }, new Consumer<Throwable>() {
-                @Override
-                public void accept(Throwable throwable) throws Exception {
-                    Logs.logException(throwable);
-                    hideProgress();
-                }
+
+                UiHelper.setVisibleElseGone(binding.send, true);
+                UiHelper.setVisibleElseGone(binding.progress, false);
+            }, throwable -> {
+                Logs.logException(throwable);
+                showError();
+
+                UiHelper.setVisibleElseGone(binding.send, true);
+                UiHelper.setVisibleElseGone(binding.progress, false);
             }));
     }
 }

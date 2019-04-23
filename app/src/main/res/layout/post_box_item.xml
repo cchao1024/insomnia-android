@@ -9,7 +9,7 @@
             type="com.cchao.insomnia.model.javabean.post.PostListVO"/>
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -17,34 +17,59 @@
         android:paddingTop="@dimen/dp_16"
         android:paddingEnd="@dimen/dp_16">
 
+        <ImageView
+            android:id="@+id/avatar"
+            url="@{item.postUserAvatar}"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"/>
+
         <TextView
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/avatar"
             android:text="@{`@`+item.postUserName}"
+            android:textColor="@color/black"
             tools:text="@string/app_name"/>
 
         <TextView
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_8"
+            android:layout_below="@id/user_name"
+            android:layout_alignStart="@+id/user_name"
+            android:layout_marginTop="@dimen/dp_10"
             android:text="@{item.content}"
+            android:textSize="@dimen/sp_18"
             tools:text="@string/app_name"/>
 
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_4"
-            android:text="@{String.valueOf(item.updateTime)}"
+            android:layout_below="@+id/content"
+            android:layout_alignStart="@+id/user_name"
+            android:layout_marginTop="@dimen/dp_10"
+            android:textColor="@color/text_999"
             android:textSize="@dimen/sp_12"
             tools:text="@string/app_name"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/comment_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="end">
+            android:layout_below="@+id/content"
+            android:layout_toEndOf="@+id/date"
+            android:padding="@dimen/dp_10"
+            android:text="评论"
+            android:textColor="@color/text_blue"
+            android:textSize="@dimen/sp_12"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/comment_button"
+            android:layout_alignParentEnd="true">
 
             <TextView
                 android:id="@+id/like"
@@ -54,6 +79,7 @@
                 android:drawablePadding="@dimen/dp_8"
                 android:gravity="center_vertical"
                 android:text="@{String.valueOf(item.likeCount)}"
+                android:textColor="@color/text_666"
                 tools:text="@string/app_name"/>
 
             <TextView
@@ -66,6 +92,7 @@
                 android:drawablePadding="@dimen/dp_8"
                 android:gravity="center_vertical"
                 android:text="@{String.valueOf(item.reviewCount)}"
+                android:textColor="@color/text_666"
                 tools:text="@string/app_name"/>
 
         </LinearLayout>
@@ -73,7 +100,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>
