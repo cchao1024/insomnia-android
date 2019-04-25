@@ -2,4 +2,5 @@
 <resources>
     <dimen name="dp_120">120dp</dimen>
     <dimen name="actionbarHeight">50dp</dimen>
+    <dimen name="width_upload_image">90dp</dimen>
 </resources>

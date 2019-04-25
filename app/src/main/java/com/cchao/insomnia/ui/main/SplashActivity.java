@@ -19,10 +19,11 @@ public class SplashActivity extends BaseStatefulActivity {
 
     @Override
     protected void initEventAndData() {
-        GlobalHelper.syncAppInfo();
-        RxHelper.timerConsumer(1000, consumer -> {
-            Router.turnTo(mContext, MainActivity.class).start();
-            finish();
+        GlobalHelper.syncAppInfo(appLaunchRespBean -> {
+            RxHelper.timerConsumer(1000, consumer -> {
+                Router.turnTo(mContext, MainActivity.class).start();
+                finish();
+            });
         });
     }
 

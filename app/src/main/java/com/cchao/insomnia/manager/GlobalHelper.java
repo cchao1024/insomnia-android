@@ -19,13 +19,13 @@ public class GlobalHelper {
     /**
      * 启动同步获取app信息
      */
-    public static void syncAppInfo() {
+    public static void syncAppInfo(Consumer<RespBean<AppLaunch>> consumer) {
         Disposable disposable = RetrofitHelper.getApis().appLaunch()
             .compose(RxHelper.toMain())
-            .subscribe(new Consumer<RespBean<AppLaunch>>() {
-                @Override
-                public void accept(RespBean<AppLaunch> respBean) throws Exception {
-                    UserManager.setUserBean(respBean.getData().getUserInfo());
+            .subscribe(respBean -> {
+                UserManager.setUserBean(respBean.getData().getUserInfo());
+                if (consumer != null) {
+                    consumer.accept(respBean);
                 }
             },RxHelper.getErrorConsumer());
     }

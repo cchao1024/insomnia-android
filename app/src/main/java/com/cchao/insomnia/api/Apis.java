@@ -9,16 +9,20 @@ import com.cchao.insomnia.model.javabean.fall.FallMusic;
 import com.cchao.insomnia.model.javabean.global.AppLaunch;
 import com.cchao.insomnia.model.javabean.post.PostListVO;
 import com.cchao.insomnia.model.javabean.post.PostVO;
+import com.cchao.insomnia.model.javabean.post.UploadImageBean;
 import com.cchao.insomnia.model.javabean.user.UserBean;
 
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 /**
@@ -28,7 +32,7 @@ import retrofit2.http.Path;
  **/
 public interface Apis {
 
-    @GET("/postbox/app/getLaunch")
+    @GET("/app/getLaunch")
     Observable<RespBean<AppLaunch>> appLaunch();
 
     /**
@@ -37,6 +41,10 @@ public interface Apis {
     @FormUrlEncoded
     @POST("?com=customer&t=findPwdByEmail")
     Observable<RespBean> resetPwdByEmail(@Field("email") String email);
+
+    @Multipart
+    @POST("/file/uploadImage")
+    Observable<RespBean<UploadImageBean>> uploadImage(@Part MultipartBody.Part file);
 
     @FormUrlEncoded
     @POST("/user/{path}")
@@ -52,20 +60,20 @@ public interface Apis {
     Observable<RespListBean<FallImage>> getImageList(@Field("page") int page);
 
     @FormUrlEncoded
-    @POST("/postbox/post/list")
+    @POST("/post/list")
     Observable<RespListBean<PostListVO>> getPostBoxList(@Field("page") int page);
 
     @FormUrlEncoded
-    @POST("/postbox/post/detail")
+    @POST("/post/detail")
     Observable<RespBean<PostVO>> getPostDetail(@Field("id") long id);
 
     @FormUrlEncoded
-    @POST("/postbox/post/new")
+    @POST("/post/new")
     Observable<RespBean> addPost(@Field("content") String content, @Field("images") String images);
 
     @FormUrlEncoded
-    @POST("/postbox/{type}/new")
-    Observable<RespBean> addCommentOrReply(@Path("type") String type, @FieldMap Map<String,String> map);
+    @POST("/{type}/new")
+    Observable<RespBean> addCommentOrReply(@Path("type") String type, @FieldMap Map<String, String> map);
 
     @FormUrlEncoded
     @POST("/fallmusic/getByPage")
