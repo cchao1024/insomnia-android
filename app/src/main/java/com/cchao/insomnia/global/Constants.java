@@ -12,7 +12,7 @@ public class Constants {
 
     public interface Config {
 
-        String API_Host = "http://192.168.0.104:8080/";
+        String API_Host = "http://127.0.0.1:8080/";
 
         // 接口API版本
         String API_BUILD = String.valueOf(BuildConfig.VERSION_CODE);
@@ -20,7 +20,7 @@ public class Constants {
         // 网络访问超时时间
         int TIMEOUT = 60 * 1000;
 
-        int PAGE_SIZE = 30;
+        int PAGE_SIZE = 20;
     }
 
     public interface Event {

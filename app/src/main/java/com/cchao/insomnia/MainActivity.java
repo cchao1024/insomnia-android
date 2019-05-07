@@ -45,7 +45,6 @@ public class MainActivity extends BaseActivity {
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
-    //<editor-fold desc="左侧抽屉导航声明">
     private View mLoginText;
     private View mLoggedView;
     private LinearLayout mDrawerLinear;

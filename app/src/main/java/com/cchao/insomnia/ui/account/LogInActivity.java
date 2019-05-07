@@ -19,7 +19,7 @@ import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.PrefHelper;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
-import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
+import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
 import com.cchao.simplelib.ui.adapter.AbstractPagerAdapter;
 import com.cchao.simplelib.util.StringHelper;
 
@@ -33,7 +33,7 @@ import java.util.Map;
  * @author cchao
  * @version 2/18/19.
  */
-public class LogInActivity extends BaseToolbarActivity<LoginActivityBinding> implements View.OnClickListener {
+public class LogInActivity extends BaseTitleBarActivity<LoginActivityBinding> implements View.OnClickListener {
     public static final int LOG_IN = 0;
     public static final int SIGN_UP = 1;
     private int mLoginType = LOG_IN;
@@ -54,7 +54,7 @@ public class LogInActivity extends BaseToolbarActivity<LoginActivityBinding> imp
 
     @Override
     protected void initEventAndData() {
-        setToolBarAble(false);
+        setTitleBarVisible(false);
         initTabLayout();
         findView();
     }

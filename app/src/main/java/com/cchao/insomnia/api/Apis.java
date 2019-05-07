@@ -51,12 +51,11 @@ public interface Apis {
     Observable<RespBean<UserBean>> login(@Path("path") String path, @Field("email") String email
         , @Field("password") String pwd);
 
-
-    @GET("/fallIndex")
+    @GET("/fall/index")
     Observable<RespBean<FallIndex>> getIndexData();
 
     @FormUrlEncoded
-    @POST("/fallimage/getByPage")
+    @POST("/fall/image/list")
     Observable<RespListBean<FallImage>> getImageList(@Field("page") int page);
 
     @FormUrlEncoded
@@ -76,10 +75,10 @@ public interface Apis {
     Observable<RespBean> addCommentOrReply(@Path("type") String type, @FieldMap Map<String, String> map);
 
     @FormUrlEncoded
-    @POST("/fallmusic/getByPage")
+    @POST("/fall/music/list")
     Observable<RespListBean<FallMusic>> getMusicList(@Field("page") int page);
 
     @FormUrlEncoded
-    @POST("/fallmusic/play_count")
-    Observable<RespBean> playCount(@Field("id") String id);
+    @POST("/fall/music/play")
+    Observable<RespBean> play(@Field("id") String id);
 }

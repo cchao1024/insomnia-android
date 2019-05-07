@@ -3,15 +3,15 @@ package com.cchao.insomnia.ui.music;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 
-import com.cchao.simplelib.core.CollectionHelper;
-import com.cchao.simplelib.core.ImageLoader;
-import com.cchao.simplelib.core.UiHelper;
-import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.databinding.MusicPlayActivityBinding;
 import com.cchao.insomnia.global.Constants;
-import com.cchao.insomnia.manager.MusicHelper;
+import com.cchao.insomnia.manager.MusicPlayer;
 import com.cchao.insomnia.manager.UserManager;
+import com.cchao.simplelib.core.CollectionHelper;
+import com.cchao.simplelib.core.ImageLoader;
+import com.cchao.simplelib.core.UiHelper;
+import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
 import com.lzx.musiclibrary.aidl.listener.OnPlayerEventListener;
 import com.lzx.musiclibrary.aidl.model.SongInfo;
 import com.lzx.musiclibrary.constans.PlayMode;
@@ -26,7 +26,7 @@ import java.util.TimeZone;
  * @author cchao
  * @version 8/13/18.
  */
-public class MusicPlayerActivity extends BaseToolbarActivity<MusicPlayActivityBinding> implements View.OnClickListener {
+public class MusicPlayerActivity extends BaseTitleBarActivity<MusicPlayActivityBinding> implements View.OnClickListener {
 
     PLayListFragment mPLayListFragment;
     TimerTaskManager mTaskManager = new TimerTaskManager();
@@ -179,7 +179,7 @@ public class MusicPlayerActivity extends BaseToolbarActivity<MusicPlayActivityBi
                 break;
             case R.id.play_mode_switch:
                 AppCompatImageView modeSwitch = (AppCompatImageView) v;
-                MusicHelper.changePlayMode();
+//                MusicPlayer.changePlayMode();
                 switch (MusicManager.get().getPlayMode()) {
                     case PlayMode.PLAY_IN_SINGLE_LOOP:
                         modeSwitch.setImageResource(R.drawable.ic_play_mode_single);

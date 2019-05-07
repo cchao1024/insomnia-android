@@ -13,12 +13,11 @@ import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.databinding.FallFragmentBinding;
 import com.cchao.insomnia.databinding.FallHeadBinding;
 import com.cchao.insomnia.global.Constants;
-import com.cchao.insomnia.manager.MusicHelper;
+import com.cchao.insomnia.manager.MusicPlayer;
 import com.cchao.insomnia.model.javabean.RespListBean;
 import com.cchao.insomnia.model.javabean.fall.FallImage;
 import com.cchao.insomnia.model.javabean.fall.FallMusic;
 import com.cchao.insomnia.ui.global.ImageShowActivity;
-import com.cchao.insomnia.ui.music.MusicPlayerActivity;
 import com.cchao.insomnia.util.AnimHelper;
 import com.cchao.insomnia.util.ImageHelper;
 import com.cchao.insomnia.view.GridSpacingItemDecoration;
@@ -33,7 +32,6 @@ import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.fragment.BaseStatefulFragment;
 import com.cchao.simplelib.util.StringHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.lzx.musiclibrary.manager.MusicManager;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -55,24 +53,6 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
     View mMusicDisk;
 
     @Override
-    public void onResume() {
-        super.onResume();
-        updateDiskView();
-    }
-
-    void updateDiskView() {
-        if (MusicManager.isPlaying()) {
-            if (MusicManager.get().getCurrPlayingMusic() == null) {
-                return;
-            }
-            mMusicDisk.setVisibility(View.VISIBLE);
-            AnimHelper.startRotate(mMusicDisk);
-        } else {
-            mMusicDisk.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
     protected int getLayoutId() {
         return R.layout.fall_fragment;
     }
@@ -84,6 +64,21 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
         initImageAdapter();
         initMusicAdapter();
         onLoadData();
+    }
+
+    @Override
+    protected void onLoadData() {
+        switchView(LOADING);
+        addSubscribe(RetrofitHelper.getApis().getIndexData()
+            .compose(RxHelper.toMain())
+            .subscribe(respBean -> {
+                switchView(CONTENT);
+                mImageAdapter.setNewData(respBean.getData().getFallImages());
+                mMusicAdapter.setNewData(respBean.getData().getMusic());
+            }, throwable -> {
+                switchView(NET_ERROR);
+                Logs.logException(throwable);
+            }));
     }
 
     private void initView() {
@@ -100,21 +95,21 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
     }
 
     private void initEvent() {
-        addSubscribe(RxBus.getDefault().toObservable(commonEvent -> {
-            switch (commonEvent.getCode()) {
+        addSubscribe(RxBus.get().toObservable(event -> {
+            switch (event.getCode()) {
                 case Constants.Event.Update_Play_Status:
-                    updateDiskView();
+                    updateDiskView(event.getContent());
                     break;
             }
         }));
     }
 
+    /**
+     * 设置音频列表适配器
+     */
     private void initMusicAdapter() {
-        mRvMusic.setNestedScrollingEnabled(false);
         mRvMusic.setLayoutManager(new GridLayoutManager(mContext, 3));
-
         mRvMusic.addItemDecoration(new GridSpacingItemDecoration(3, UiHelper.dp2px(10), true));
-
         mRvMusic.setAdapter(mMusicAdapter = new DataBindQuickAdapter<FallMusic>(R.layout.fall_music_item) {
             @Override
             protected void convert(DataBindViewHolder helper, FallMusic item) {
@@ -126,23 +121,22 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
                 }
             }
         });
-        mMusicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                FallMusic item = mMusicAdapter.getItem(position);
-                if (StringUtils.equals(item.getId(), MusicHelper.getCurPlayingId())) {
-                    Router.turnTo(mContext, MusicPlayerActivity.class)
-                        .start();
-                } else {
-                    MusicHelper.playNow(item);
-                }
+        mMusicAdapter.setOnItemClickListener((adapter, view, position) -> {
+            FallMusic item = mMusicAdapter.getItem(position);
+            if (StringUtils.equals(item.getId(), MusicPlayer.getCurPlayingId())) {
+//                    Router.turnTo(mContext, MusicPlayerActivity.class)
+//                        .start();
+                MusicPlayer.pause();
+            } else {
+                MusicPlayer.playNow(item);
             }
         });
     }
 
+    /**
+     * 设置图片列表适配器
+     */
     private void initImageAdapter() {
-
-        mRvImage.setNestedScrollingEnabled(false);
         mRvImage.addItemDecoration(new GridSpacingItemDecoration(2, UiHelper.dp2px(10), true) {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -171,36 +165,48 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
                 helper.itemView.getLayoutParams().height = ImageHelper
                     .getScaleHeight(itemWidth, item.getWidth(), item.getHeight());
 
-                ImageLoader.loadImage(helper.getView(R.id.image), item.getUrl());
+                ImageLoader.loadImage(helper.getView(R.id.image), item.getSrc());
             }
         });
         mImageAdapter.setOnItemClickListener((adapter, view, position) -> {
             Router.turnTo(mContext, ImageShowActivity.class)
-                .putExtra(Constants.Extra.IMAGE_URL, mImageAdapter.getData().get(position).getUrl())
+                .putExtra(Constants.Extra.IMAGE_URL, mImageAdapter.getData().get(position).getSrc())
                 .start();
         });
         mImageAdapter.addHeaderView(mHeadBinding.getRoot());
+    }
+
+    /**
+     * 更新光盘转动
+     *
+     * @param state
+     */
+    void updateDiskView(String state) {
+        boolean visible = false;
+        boolean startRotate = false;
+        switch (state) {
+            case MusicPlayer.State.Playing:
+                visible = true;
+                startRotate = true;
+                break;
+            case MusicPlayer.State.Pause:
+                visible = true;
+                startRotate = false;
+                break;
+        }
+
+        if (startRotate) {
+            AnimHelper.startRotate(mMusicDisk);
+        } else {
+            AnimHelper.cancel(mMusicDisk);
+        }
+        UiHelper.setVisibleElseGone(mMusicDisk, visible);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         AnimHelper.cancel(mMusicDisk);
-    }
-
-    @Override
-    protected void onLoadData() {
-        switchView(LOADING);
-        addSubscribe(RetrofitHelper.getApis().getIndexData()
-            .compose(RxHelper.toMain())
-            .subscribe(respBean -> {
-                switchView(CONTENT);
-                mImageAdapter.setNewData(respBean.getData().getFallimages());
-                mMusicAdapter.setNewData(respBean.getData().getMusic());
-            }, throwable -> {
-                switchView(NET_ERROR);
-                Logs.logException(throwable);
-            }));
     }
 
     @Override
@@ -215,7 +221,8 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
                     .start();
                 break;
             case R.id.music_disk:
-                Router.turnTo(mContext, MusicPlayerActivity.class).start();
+                MusicPlayer.clickDisk();
+//                Router.turnTo(mContext, MusicPlayerActivity.class).start();
                 break;
             default:
                 break;

@@ -13,7 +13,7 @@ import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.databinding.MusicItemMenuListBinding;
 import com.cchao.insomnia.databinding.MusicListBinding;
 import com.cchao.insomnia.global.Constants;
-import com.cchao.insomnia.manager.MusicHelper;
+import com.cchao.insomnia.manager.MusicPlayer;
 import com.cchao.insomnia.model.javabean.RespListBean;
 import com.cchao.insomnia.model.javabean.fall.FallMusic;
 import com.cchao.insomnia.ui.music.MusicPlayerActivity;
@@ -22,7 +22,7 @@ import com.cchao.insomnia.view.adapter.PageAdapter;
 import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.UiHelper;
-import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
+import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
 import com.lzx.musiclibrary.manager.MusicManager;
 
 import org.apache.commons.lang3.StringUtils;
@@ -33,7 +33,7 @@ import io.reactivex.Observable;
  * @author cchao
  * @version 8/12/18.
  */
-public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding> {
+public class FallMusicListActivity extends BaseTitleBarActivity<MusicListBinding> {
 
     RecyclerView mRecycler;
     PageAdapter<FallMusic> mAdapter;
@@ -45,6 +45,7 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
 
     @Override
     protected void initEventAndData() {
+        setTitleText("音乐列表");
         initAdapter();
         initEvent();
         onLoadData();
@@ -59,13 +60,13 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
     }
 
     private void initEvent() {
-        addSubscribe(RxBus.getDefault().toObservable(commonEvent -> {
-            switch (commonEvent.getCode()) {
+        addSubscribe(RxBus.get().toObservable(event -> {
+            switch (event.getCode()) {
                 case Constants.Event.Update_Play_Status:
                     updateDiskView();
 
                     for (FallMusic music : mAdapter.getData()) {
-                        music.isPlaying.set(StringUtils.equals(music.getId(), MusicHelper.getCurPlayingId()));
+                        music.isPlaying.set(StringUtils.equals(music.getId(), MusicPlayer.getCurPlayingId()));
                     }
                     break;
             }
@@ -117,7 +118,7 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
                 helper.setText(R.id.order_num, helper.getLayoutPosition() + "");
 
                 // 是当前播放的音乐
-                if (MusicHelper.getCurPlayingId().equals(item.getId())) {
+                if (MusicPlayer.getCurPlayingId().equals(item.getId())) {
 
                 }
 
@@ -131,11 +132,11 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             FallMusic item = mAdapter.getItem(position);
 
-            if (StringUtils.equals(item.getId(), MusicHelper.getCurPlayingId())) {
+            if (StringUtils.equals(item.getId(), MusicPlayer.getCurPlayingId())) {
                 Router.turnTo(mContext, MusicPlayerActivity.class)
                     .start();
             } else {
-                MusicHelper.playNow(item);
+                MusicPlayer.playNow(item);
             }
         });
 
@@ -166,7 +167,7 @@ public class FallMusicListActivity extends BaseToolbarActivity<MusicListBinding>
         binding.setClicker(click -> {
             switch (click.getId()) {
                 case R.id.next_play:
-                    MusicHelper.addToPlayList(item);
+//                    MusicPlayer.addToPlayList(item);
                     showText("已加入播放列表");
                     dialog.dismiss();
                     break;

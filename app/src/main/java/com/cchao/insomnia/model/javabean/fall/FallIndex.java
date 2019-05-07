@@ -2,23 +2,10 @@ package com.cchao.insomnia.model.javabean.fall;
 
 import java.util.List;
 
+import lombok.Data;
+
+@Data
 public class FallIndex {
-    List<FallImage> fallimages;
+    List<FallImage> fallImages;
     List<FallMusic> music;
-
-    public List<FallImage> getFallimages() {
-        return fallimages;
-    }
-
-    public void setFallimages(List<FallImage> fallimages) {
-        this.fallimages = fallimages;
-    }
-
-    public List<FallMusic> getMusic() {
-        return music;
-    }
-
-    public void setMusic(List<FallMusic> music) {
-        this.music = music;
-    }
 }

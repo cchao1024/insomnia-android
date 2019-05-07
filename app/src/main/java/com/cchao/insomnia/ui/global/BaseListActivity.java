@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.cchao.simplelib.core.RxHelper;
-import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
+import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.databinding.CommonRecyclerBinding;
 import com.cchao.insomnia.model.javabean.RespListBean;
@@ -20,7 +20,7 @@ import io.reactivex.functions.Consumer;
  * @author cchao
  * @version 8/12/18.
  */
-public abstract class BaseListActivity<E> extends BaseToolbarActivity<CommonRecyclerBinding> {
+public abstract class BaseListActivity<E> extends BaseTitleBarActivity<CommonRecyclerBinding> {
 
     protected RecyclerView mRecyclerView;
     protected DataBindQuickAdapter<E> mAdapter;

@@ -4,11 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.cchao.insomnia.api.HttpClientManager;
-import com.cchao.insomnia.manager.MusicHelper;
-import com.cchao.simplelib.Const;
+import com.cchao.insomnia.manager.MusicPlayer;
 import com.cchao.simplelib.LibCore;
-import com.lzx.musiclibrary.manager.MusicLibrary;
-import com.lzx.musiclibrary.utils.BaseUtil;
 
 import okhttp3.OkHttpClient;
 
@@ -29,21 +26,14 @@ public class App extends Application {
     }
 
     private void initMusic() {
-        if (BaseUtil.getCurProcessName(this).equals(getPackageName())) {
-            MusicLibrary musicLibrary = new MusicLibrary.Builder(this)
-                .setUseMediaPlayer(false)
-                .setAutoPlayNext(true)
-                .build();
-            musicLibrary.init();
-            MusicHelper.init();
-        }
+        MusicPlayer.init();
     }
 
     private void initSimpleLib() {
         LibCore.init(this, new LibCore.InfoSupport() {
             @Override
             public OkHttpClient getOkHttpClient() {
-                return HttpClientManager.getProdOkHttpClient();
+                return HttpClientManager.getWrapClient();
             }
 
             @Override
@@ -54,13 +44,6 @@ public class App extends Application {
             @Override
             public String getAppName() {
                 return App.getContext().getPackageName();
-            }
-
-            @Override
-            public LibCore.LibConfig getLibConfig() {
-                return new LibCore.LibConfig()
-                    .setTitleBarStyle(Const.TitleStyle.title)
-                    .setOverrideCookieJar(false);
             }
         });
     }

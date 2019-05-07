@@ -18,7 +18,7 @@ import com.cchao.insomnia.view.adapter.PageAdapter;
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.UiHelper;
-import com.cchao.simplelib.ui.activity.BaseToolbarActivity;
+import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import io.reactivex.Observable;
@@ -27,7 +27,7 @@ import io.reactivex.Observable;
  * @author cchao
  * @version 8/12/18.
  */
-public class FallImageActivity extends BaseToolbarActivity<CommonRecyclerBinding> {
+public class FallImageActivity extends BaseTitleBarActivity<CommonRecyclerBinding> {
 
     RecyclerView mRecycler;
     PageAdapter<FallImage> mAdapter;
@@ -39,6 +39,7 @@ public class FallImageActivity extends BaseToolbarActivity<CommonRecyclerBinding
 
     @Override
     protected void initEventAndData() {
+        setTitleText("图片列表");
         initAdapter();
         onLoadData();
     }
@@ -70,7 +71,7 @@ public class FallImageActivity extends BaseToolbarActivity<CommonRecyclerBinding
                 helper.itemView.getLayoutParams().height = ImageHelper.getScaleHeight(itemWidth
                     , item.getWidth(), item.getHeight());
 
-                ImageLoader.loadImage(imageView, item.getUrl());
+                ImageLoader.loadImage(imageView, item.getSrc());
             }
         });
 
@@ -78,7 +79,7 @@ public class FallImageActivity extends BaseToolbarActivity<CommonRecyclerBinding
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Router.turnTo(mContext, ImageShowActivity.class)
-                    .putExtra(Constants.Extra.IMAGE_URL, mAdapter.getData().get(position).getUrl())
+                    .putExtra(Constants.Extra.IMAGE_URL, mAdapter.getData().get(position).getSrc())
                     .start();
             }
         });

@@ -57,44 +57,44 @@ public class MusicHelper {
         MusicManager.get().addStateObservable(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
-                RxBus.getDefault().postEvent(Constants.Event.Update_Play_Status);
+                RxBus.get().postEvent(Constants.Event.Update_Play_Status);
             }
         });
 
         MusicManager.get().addPlayerEventListener(new OnPlayerEventListener() {
             @Override
             public void onMusicSwitch(SongInfo music) {
-                RxBus.getDefault().postEvent(Constants.Event.Update_Play_Status);
+                RxBus.get().postEvent(Constants.Event.Update_Play_Status);
             }
 
             @Override
             public void onPlayerStart() {
                 String id = MusicManager.get().getCurrPlayingMusic().getSongId();
-                RetrofitHelper.getApis().playCount(id)
+                RetrofitHelper.getApis().play(id)
                     .subscribeOn(Schedulers.io())
                     .subscribe(RxHelper.getNothingObserver());
 
-                RxBus.getDefault().postEvent(Constants.Event.Update_Play_Status);
+                RxBus.get().postEvent(Constants.Event.Update_Play_Status);
             }
 
             @Override
             public void onPlayerPause() {
-                RxBus.getDefault().postEvent(Constants.Event.Update_Play_Status);
+                RxBus.get().postEvent(Constants.Event.Update_Play_Status);
             }
 
             @Override
             public void onPlayCompletion() {
-                RxBus.getDefault().postEvent(Constants.Event.Update_Play_Status);
+                RxBus.get().postEvent(Constants.Event.Update_Play_Status);
             }
 
             @Override
             public void onPlayerStop() {
-                RxBus.getDefault().postEvent(Constants.Event.Update_Play_Status);
+                RxBus.get().postEvent(Constants.Event.Update_Play_Status);
             }
 
             @Override
             public void onError(String errorMsg) {
-                RxBus.getDefault().postEvent(Constants.Event.Update_Play_Status);
+                RxBus.get().postEvent(Constants.Event.Update_Play_Status);
                 UiHelper.showToast(errorMsg);
             }
 
