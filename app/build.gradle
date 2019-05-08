@@ -17,9 +17,20 @@ android {
         enabled = true
     }
 
+
+    signingConfigs {
+        release {
+            storeFile file("../keystore")
+            storePassword "keystore1024"
+            keyAlias "insomnia"
+            keyPassword "insomnia"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

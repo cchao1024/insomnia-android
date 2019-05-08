@@ -18,6 +18,7 @@ import com.cchao.insomnia.model.javabean.RespListBean;
 import com.cchao.insomnia.model.javabean.post.PostListVO;
 import com.cchao.insomnia.util.TimeHelper;
 import com.cchao.insomnia.view.adapter.PageAdapter;
+import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.RxHelper;
@@ -62,6 +63,7 @@ public class PostBoxFragment extends BaseStatefulFragment<PostBoxBinding> implem
             @Override
             protected void convert(DataBindViewHolder helper, PostListVO item) {
                 helper.getBinding().setVariable(BR.item, item);
+                ImageLoader.loadImageCircle(helper.getView(R.id.avatar), item.getPostUserAvatar(), R.drawable.default_portrait);
                 helper.setText(R.id.date, TimeHelper.getStandardDate(item.getUpdateTime()));
                 helper.setOnClickListener(R.id.comment_button, new View.OnClickListener() {
                     @Override

@@ -21,7 +21,8 @@
             android:id="@+id/avatar"
             url="@{item.postUserAvatar}"
             android:layout_width="@dimen/dp_50"
-            android:layout_height="@dimen/dp_50"/>
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginEnd="@dimen/dp_16"/>
 
         <TextView
             android:id="@+id/user_name"
@@ -68,8 +69,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/comment_button"
-            android:layout_alignParentEnd="true">
+            android:layout_alignBottom="@id/comment_button"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="@dimen/dp_5">
 
             <TextView
                 android:id="@+id/like"

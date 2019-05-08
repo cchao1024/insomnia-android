@@ -51,6 +51,10 @@ public interface Apis {
     Observable<RespBean<UserBean>> login(@Path("path") String path, @Field("email") String email
         , @Field("password") String pwd);
 
+    @FormUrlEncoded
+    @POST("/user/update")
+    Observable<RespBean<UserBean>> editUserInfo(@FieldMap Map<String, String> map);
+
     @GET("/fall/index")
     Observable<RespBean<FallIndex>> getIndexData();
 

@@ -15,5 +15,6 @@ public class UserBean {
     String email;
     String nikeName;
     String avatar;
+    int getLike;
     int age;
 }

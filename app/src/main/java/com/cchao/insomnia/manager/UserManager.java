@@ -4,6 +4,7 @@ import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.model.javabean.user.UserBean;
 import com.cchao.simplelib.core.GsonUtil;
 import com.cchao.simplelib.core.PrefHelper;
+import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.util.StringHelper;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class UserManager {
     public static void setUserBean(UserBean userBean) {
         mUserBean = userBean;
         PrefHelper.putString(Constants.Prefs.USER_INFO, GsonUtil.toJson(userBean));
+        RxBus.get().post(userBean);
     }
 
     public static UserBean getUserBean() {
@@ -57,13 +59,6 @@ public class UserManager {
     }
 
     public static boolean isVisitor() {
-        if (isLogin()) {
-            return mUserBean.isVisitor();
-        }
-        throw new NullPointerException();
-    }
-
-    public static boolean isLogin() {
-        return mUserBean != null;
+        return true;
     }
 }

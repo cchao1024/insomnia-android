@@ -4,7 +4,6 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -19,38 +18,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.cchao.insomnia.ui.post.PostBoxFragment;
-import com.cchao.simplelib.core.ImageLoader;
-import com.cchao.simplelib.core.Router;
-import com.cchao.simplelib.core.UiHelper;
-import com.cchao.simplelib.ui.activity.BaseActivity;
-import com.cchao.simplelib.ui.fragment.BaseFragment;
-import com.cchao.simplelib.util.StringHelper;
 import com.cchao.insomnia.databinding.HomeDrawerMenuItemBinding;
 import com.cchao.insomnia.databinding.MainActivityBinding;
+import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.manager.UserManager;
 import com.cchao.insomnia.model.javabean.home.NavItem;
 import com.cchao.insomnia.model.javabean.user.UserBean;
-import com.cchao.insomnia.ui.account.LogInActivity;
+import com.cchao.insomnia.ui.account.EditUserInfoActivity;
+import com.cchao.insomnia.ui.account.UserInfoActivity;
 import com.cchao.insomnia.ui.fall.FallFragment;
+import com.cchao.insomnia.ui.post.PostBoxFragment;
+import com.cchao.simplelib.core.ImageLoader;
+import com.cchao.simplelib.core.Router;
+import com.cchao.simplelib.core.RxBus;
+import com.cchao.simplelib.core.RxHelper;
+import com.cchao.simplelib.core.UiHelper;
+import com.cchao.simplelib.ui.activity.BaseActivity;
+import com.cchao.simplelib.ui.fragment.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
-    private View mLoginText;
-    private View mLoggedView;
     private LinearLayout mDrawerLinear;
     private ImageView mUserPhotoImage;
-    TextView mNikeName;
-    TextView mEmailView;
     //</editor-fold>
 
     final int[] mTabTitleArr = {R.string.tab_name_0, R.string.tab_name_1};
@@ -61,11 +58,22 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.main_activity);
+        mBinding.setClick(this);
+
+        initEvent();
         findViews();
         initToolbar();
         initTabLayout();
         initDrawerLayout();
         initMenu();
+    }
+
+    private void initEvent() {
+        addSubscribe(RxBus.getDefault().toObservable(UserBean.class)
+            .compose(RxHelper.toMain())
+            .subscribe(userBean -> {
+                updateUserViews();
+            }));
     }
 
     private void findViews() {
@@ -147,36 +155,28 @@ public class MainActivity extends BaseActivity {
 
     private void initMenu() {
         mDrawerLinear = findViewById(R.id.home_drawer_linear);
-        mLoginText = findViewById(R.id.login_text);
-        mLoggedView = findViewById(R.id.user_layout);
         mUserPhotoImage = findViewById(R.id.icon_portrait);
-        mNikeName = findViewById(R.id.user_name);
-        mEmailView = findViewById(R.id.user_email);
-
-        findViewById(R.id.login_field).setOnClickListener(view -> {
-            if (!UserManager.isLogin()) {
-                Router.turnTo(mContext, LogInActivity.class).start();
-            }
-            closeDrawer();
-        });
+        updateUserViews();
 
         // 填充左侧item实体
         List<NavItem> menus = new ArrayList<>();
-        menus.add(new NavItem(1001, getString(R.string.app_name), R.drawable.ic_wish_no, NavItem.Margin.top));
-        menus.add(new NavItem(1004, getString(R.string.app_name), R.drawable.ic_wish_no, NavItem.Margin.bottom));
-        menus.add(new NavItem(1111, "", 0));
-        menus.add(new NavItem(2001, getString(R.string.app_name), R.drawable.ic_wish_no, NavItem.Margin.top));
-        menus.add(new NavItem(2002, getString(R.string.app_name), R.drawable.ic_wish_no, NavItem.Margin.bottom));
-        menus.add(new NavItem(2003, getString(R.string.app_name), R.drawable.ic_wish_no, NavItem.Margin.bottom));
+        menus.add(NavItem.of(Constants.Drawer.Wish, R.string.wish_list, R.drawable.drawer_wish, NavItem.Margin.top));
+        menus.add(NavItem.of(Constants.Drawer.TimeDown, R.string.time_down, R.drawable.drawer_time, NavItem.Margin.bottom));
+        // divier
+        menus.add(NavItem.of(Constants.Drawer.Divider, "", 0, NavItem.Margin.none));
+
+        menus.add(NavItem.of(Constants.Drawer.AboutUs, R.string.about_us, R.drawable.drawer_about, NavItem.Margin.top));
+        menus.add(NavItem.of(Constants.Drawer.FeedBack, R.string.feed_back, R.drawable.drawer_feedback, NavItem.Margin.none));
+        menus.add(NavItem.of(Constants.Drawer.Settings, R.string.settings, R.drawable.drawer_settings, NavItem.Margin.bottom));
 
         // 加入到linearLayout
         for (int i = 0; i < menus.size(); i++) {
             NavItem item = menus.get(i);
             View itemView;
             // 分割线
-            if (item.ID == 1111) {
+            if (item.ID == Constants.Drawer.Divider) {
                 itemView = new View(mContext);
-                itemView.setBackgroundColor(UiHelper.getColor(R.color.white));
+                itemView.setBackgroundColor(UiHelper.getColor(R.color.divider_e5));
                 itemView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
                     , UiHelper.dp2px(10)));
                 mDrawerLinear.addView(itemView);
@@ -206,39 +206,57 @@ public class MainActivity extends BaseActivity {
 
     private void clickMenuItem(int menu) {
         switch (menu) {
-            case 1001:
+            case Constants.Drawer.Wish:
+                showText(R.string.developing);
+                break;
+            case Constants.Drawer.FeedBack:
+                showText(R.string.developing);
+                break;
+            case Constants.Drawer.AboutUs:
+                showText(R.string.developing);
+                break;
+            case Constants.Drawer.TimeDown:
+                showText(R.string.developing);
+                break;
+            case Constants.Drawer.Settings:
+                showText(R.string.developing);
+                break;
             default:
                 break;
         }
-
         closeDrawer();
     }
 
     private void closeDrawer() {
-        new Handler().postDelayed(() -> {
+        RxHelper.timerConsumer(250, aLong -> {
             if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
                 mDrawerLayout.closeDrawer(GravityCompat.START);
             }
-        }, 250);
+        });
     }
 
     private void updateUserViews() {
         UserBean userInfoBean = UserManager.getUserBean();
-        mLoginText.setVisibility(View.GONE);
-        mLoggedView.setVisibility(View.GONE);
 
-        // 未登录
-        if (userInfoBean == null) {
-            mLoginText.setVisibility(View.VISIBLE);
-            mUserPhotoImage.setImageResource(R.drawable.default_portrait);
-        } else {
-            mLoggedView.setVisibility(View.VISIBLE);
-            if (StringHelper.isNotEmpty(userInfoBean.getAvatar())) {
-                ImageLoader.loadImage(mUserPhotoImage, userInfoBean.getAvatar(), R.drawable.default_portrait);
-            }
+        ImageLoader.loadImage(mUserPhotoImage, userInfoBean.getAvatar(), R.drawable.default_portrait);
 
-            mNikeName.setText(userInfoBean.getNikeName());
-            mEmailView.setText(userInfoBean.getEmail());
+        mBinding.userName.setText(userInfoBean.getNikeName());
+        mBinding.userEmail.setText(userInfoBean.getEmail());
+        if (UserManager.isVisitor()) {
+            mBinding.userEmail.setText(R.string.no_bind_email);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.login_field:
+                if (UserManager.isVisitor()) {
+                    Router.turnTo(mContext, EditUserInfoActivity.class).start();
+                } else {
+                    Router.turnTo(mContext, UserInfoActivity.class).start();
+                }
+                break;
         }
     }
 }

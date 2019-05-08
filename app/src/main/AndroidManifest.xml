@@ -36,6 +36,8 @@
         <activity android:name=".ui.post.PostDetailActivity"/>
         <activity android:name=".ui.post.AddPostActivity"/>
         <activity android:name=".MainActivity"/>
+        <activity android:name=".ui.account.EditUserInfoActivity"/>
+        <activity android:name=".ui.account.UserInfoActivity"/>
     </application>
 
 </manifest>
