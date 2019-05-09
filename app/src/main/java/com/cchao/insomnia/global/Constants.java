@@ -31,7 +31,8 @@ public class Constants {
 
     public interface Event {
         int Update_Play_Status = 61;
-        int Update_Post_Box = 161;
+        int Update_Post_Box = 10001;
+        int update_count_down = 1002;
     }
 
     public interface Prefs {

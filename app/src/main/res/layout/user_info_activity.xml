@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_family_medium"
-                android:text="@{bean.nikeName}"
+                android:text="@{bean.nickName}"
                 android:textSize="24sp"/>
 
             <TextView

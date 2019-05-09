@@ -3,7 +3,6 @@ package com.cchao.insomnia;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import com.cchao.simplelib.ui.activity.BaseActivity;
 
@@ -27,14 +26,4 @@ public class MainActivityV1 extends BaseActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_coupon:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 }

@@ -1,5 +1,6 @@
 package com.cchao.insomnia;
 
+import android.app.Dialog;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,10 +19,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cchao.insomnia.databinding.HomeDrawerMenuItemBinding;
 import com.cchao.insomnia.databinding.MainActivityBinding;
+import com.cchao.insomnia.databinding.MainTimeDownDialogBinding;
 import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.manager.TimeCountHelper;
 import com.cchao.insomnia.manager.UserManager;
 import com.cchao.insomnia.model.javabean.home.NavItem;
 import com.cchao.insomnia.model.javabean.user.UserBean;
@@ -36,8 +41,12 @@ import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseActivity;
 import com.cchao.simplelib.ui.fragment.BaseFragment;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -47,7 +56,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Toolbar mToolbar;
     private LinearLayout mDrawerLinear;
     private ImageView mUserPhotoImage;
-    //</editor-fold>
+    TextView mCountDownTextView;
 
     final int[] mTabTitleArr = {R.string.tab_name_0, R.string.tab_name_1};
     List<BaseFragment> mFragments = new ArrayList<>();
@@ -73,6 +82,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             .subscribe(userBean -> {
                 updateUserViews();
             }));
+
+        addSubscribe(RxBus.get().toObservable(event -> {
+            switch (event.getCode()) {
+                case Constants.Event.update_count_down:
+                    mCountDownTextView.setText(event.getContent());
+                    break;
+            }
+        }));
     }
 
     private void findViews() {
@@ -112,7 +129,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void initToolbar() {
         //实现侧滑菜单状态栏透明
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(UiHelper.getColor(R.color.colorAccent));
+            getWindow().setStatusBarColor(UiHelper.getColor(R.color.transparent));
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
@@ -139,7 +156,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_coupon:
+            case R.id.action_count:
+                showTimeDownDialog();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -189,13 +207,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 itemView = binding.getRoot();
                 mDrawerLinear.addView(binding.getRoot());
 
-                LinearLayout.LayoutParams layoutParams = ((LinearLayout.LayoutParams)
-                    binding.getRoot().getLayoutParams());
+                LinearLayout.LayoutParams layoutParams = ((LinearLayout.LayoutParams) binding.getRoot().getLayoutParams());
 
                 if (item.getMargin() == NavItem.Margin.top) {
                     layoutParams.setMargins(0, UiHelper.dp2px(8), 0, 0);
                 } else if (item.getMargin() == NavItem.Margin.bottom) {
                     layoutParams.setMargins(0, 0, 0, UiHelper.dp2px(8));
+                }
+
+                // countDown 临时保存 value
+                if (item.ID == Constants.Drawer.TimeDown) {
+                    mCountDownTextView = binding.menuValue;
                 }
             }
 
@@ -215,7 +237,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 showText(R.string.developing);
                 break;
             case Constants.Drawer.TimeDown:
-                showText(R.string.developing);
+                showTimeDownDialog();
                 break;
             case Constants.Drawer.Settings:
                 showText(R.string.developing);
@@ -232,6 +254,60 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 mDrawerLayout.closeDrawer(GravityCompat.START);
             }
         });
+    }
+
+    /**
+     * 计时关闭app
+     */
+    private void showTimeDownDialog() {
+        MainTimeDownDialogBinding binding = DataBindingUtil.inflate(mLayoutInflater
+            , R.layout.main_time_down_dialog, null, false);
+
+        // update event
+        Disposable disposable = RxBus.get().toObserveCode(Constants.Event.update_count_down, event -> {
+            binding.countDownNow.setText(event.getContent());
+        });
+        addSubscribe(disposable);
+        // 没有计时任务就隐藏表
+        if (StringUtils.isEmpty(TimeCountHelper.mCurCountTimeStr)) {
+            binding.countingField.setVisibility(View.GONE);
+        }
+
+        // 弹出对话框
+        Dialog dialog = new AlertDialog.Builder(mContext)
+            .setView(binding.getRoot())
+            .show();
+
+        binding.setClick(view -> {
+            switch (view.getId()) {
+                case R.id.cancel:
+                    TimeCountHelper.cancel();
+                    mCountDownTextView.setText("");
+                    break;
+                case R.id.count_10:
+                    startCount(10, ((TextView) view).getText());
+                    break;
+                case R.id.count_20:
+                    startCount(20 * 60, ((TextView) view).getText());
+                    break;
+                case R.id.count_30:
+                    startCount(30 * 60, ((TextView) view).getText());
+                    break;
+                case R.id.count_45:
+                    startCount(45 * 60, ((TextView) view).getText());
+                    break;
+                case R.id.count_60:
+                    startCount(60 * 60, ((TextView) view).getText());
+                    break;
+            }
+            dialog.dismiss();
+            disposable.dispose();
+        });
+    }
+
+    void startCount(int second, CharSequence content) {
+        TimeCountHelper.startCountDown(second, () -> finishAffinity());
+        showText("应用程序 " + content + "后关闭");
     }
 
     private void updateUserViews() {
