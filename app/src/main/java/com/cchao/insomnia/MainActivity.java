@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -21,8 +22,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.databinding.HomeDrawerMenuItemBinding;
 import com.cchao.insomnia.databinding.MainActivityBinding;
+import com.cchao.insomnia.databinding.MainFeedBackDialogBinding;
 import com.cchao.insomnia.databinding.MainTimeDownDialogBinding;
 import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.manager.TimeCountHelper;
@@ -34,12 +37,14 @@ import com.cchao.insomnia.ui.account.UserInfoActivity;
 import com.cchao.insomnia.ui.fall.FallFragment;
 import com.cchao.insomnia.ui.post.PostBoxFragment;
 import com.cchao.simplelib.core.ImageLoader;
+import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseActivity;
 import com.cchao.simplelib.ui.fragment.BaseFragment;
+import com.cchao.simplelib.util.StringHelper;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -231,7 +236,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 showText(R.string.developing);
                 break;
             case Constants.Drawer.FeedBack:
-                showText(R.string.developing);
+                showFeedBackDialog();
                 break;
             case Constants.Drawer.AboutUs:
                 showText(R.string.developing);
@@ -246,6 +251,54 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
         closeDrawer();
+    }
+
+    private void showFeedBackDialog() {
+        MainFeedBackDialogBinding binding = DataBindingUtil.inflate(mLayoutInflater
+            , R.layout.main_feed_back_dialog, null, false);
+
+        // 弹出对话框
+        Dialog dialog = new AlertDialog.Builder(mContext)
+            .setView(binding.getRoot())
+            .show();
+
+        // 填入邮箱
+        binding.email.setText(UserManager.getUserBean().getEmail());
+        binding.setClick(view -> {
+            switch (view.getId()) {
+                case R.id.submit:
+                    if (StringHelper.isEmpty(binding.content)) {
+                        showText(R.string.feed_back_hint);
+                        return;
+                    }
+
+                    UiHelper.setVisibleElseGone(binding.submit, false);
+                    UiHelper.setVisibleElseGone(binding.progress, true);
+
+                    ArrayMap<String, String> map = new ArrayMap<>();
+                    map.put("content", binding.content.getText().toString());
+                    map.put("email", binding.email.getText().toString());
+
+                    addSubscribe(RetrofitHelper.getApis().feedBack(map)
+                        .compose(RxHelper.toMain())
+                        .subscribe(respBean -> {
+                            showText(respBean.getMsg());
+                            if (respBean.isCodeSuc()) {
+                                dialog.dismiss();
+                            }
+
+                            UiHelper.setVisibleElseGone(binding.submit, true);
+                            UiHelper.setVisibleElseGone(binding.progress, false);
+                        }, throwable -> {
+                            Logs.logException(throwable);
+                            showError();
+
+                            UiHelper.setVisibleElseGone(binding.submit, true);
+                            UiHelper.setVisibleElseGone(binding.progress, false);
+                        }));
+                    break;
+            }
+        });
     }
 
     private void closeDrawer() {
@@ -285,7 +338,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     mCountDownTextView.setText("");
                     break;
                 case R.id.count_10:
-                    startCount(10, ((TextView) view).getText());
+                    startCount(10 * 60, ((TextView) view).getText());
                     break;
                 case R.id.count_20:
                     startCount(20 * 60, ((TextView) view).getText());

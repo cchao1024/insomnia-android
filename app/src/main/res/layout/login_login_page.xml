@@ -45,7 +45,7 @@
 
     <com.cchao.simplelib.view.StateTextView
         android:id="@+id/login_signup_btn"
-        style="@style/CommonApplyBlack"
+        style="@style/ApplyBlack"
         android:layout_marginTop="28dp"
         android:text="@string/sign_up"
         android:textSize="@dimen/sp_16"/>

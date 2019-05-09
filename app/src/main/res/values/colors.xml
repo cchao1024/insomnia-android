@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimaryDark">@color/transparent_color</color>
     <color name="colorAccent">#128bd6</color>
+    <color name="colorAccentDark">#1077ff</color>
     <color name="colorAction">#128bd6</color>
 
 </resources>

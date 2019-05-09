@@ -85,4 +85,8 @@ public interface Apis {
     @FormUrlEncoded
     @POST("/fall/music/play")
     Observable<RespBean> play(@Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("/app/feed_back")
+    Observable<RespBean> feedBack(@FieldMap Map<String, String> map);
 }
