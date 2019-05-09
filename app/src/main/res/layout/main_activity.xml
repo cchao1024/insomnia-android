@@ -50,6 +50,11 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
                     android:background="@color/white"
+                    android:elevation="@dimen/dp_2"
+                    app:tabIndicatorColor="@color/text_333"
+                    app:tabPaddingEnd="@dimen/dp_20"
+                    app:tabPaddingStart="@dimen/dp_20"
+                    app:tabSelectedTextColor="@color/text_333"
                     app:tabTextColor="#666666">
                 </android.support.design.widget.TabLayout>
 

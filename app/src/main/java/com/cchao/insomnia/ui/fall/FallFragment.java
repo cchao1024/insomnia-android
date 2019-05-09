@@ -108,6 +108,7 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
      * 设置音频列表适配器
      */
     private void initMusicAdapter() {
+        mRvMusic.setHasFixedSize(true);
         mRvMusic.setLayoutManager(new GridLayoutManager(mContext, 3));
         mRvMusic.addItemDecoration(new GridSpacingItemDecoration(3, UiHelper.dp2px(10), true));
         mRvMusic.setAdapter(mMusicAdapter = new DataBindQuickAdapter<FallMusic>(R.layout.fall_music_item) {

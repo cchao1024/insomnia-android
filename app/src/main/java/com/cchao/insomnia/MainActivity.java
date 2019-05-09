@@ -143,6 +143,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setTitle(R.string.app_name);
 //        mToolbar.setLogo(R.drawable.ic_main_nav_logo);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
