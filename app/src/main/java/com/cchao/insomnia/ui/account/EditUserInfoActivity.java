@@ -79,7 +79,9 @@ public class EditUserInfoActivity extends BaseTitleBarActivity<UserInfoEditActiv
         map.put("gender", String.valueOf(mDataBind.check0.isChecked() ? 0 : 1));
         map.put("email", mDataBind.email.getText().toString());
         map.put("password", mDataBind.pwd.getText().toString());
-        map.put("avatar", mUploadImageBean.getRelativeUrl());
+        if (StringHelper.isNotEmpty(mUploadImageBean.getRelativeUrl())) {
+            map.put("avatar", mUploadImageBean.getRelativeUrl());
+        }
 
         showProgress();
         addSubscribe(RetrofitHelper.getApis().editUserInfo(map)

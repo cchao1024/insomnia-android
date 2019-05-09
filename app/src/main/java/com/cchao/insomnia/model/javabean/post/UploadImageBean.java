@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class UploadImageBean {
-    String localUri;
-    String relativeUrl;
-    String absoluteUrl;
+    String localUri = "";
+    String relativeUrl = "";
+    String absoluteUrl = "";
 }

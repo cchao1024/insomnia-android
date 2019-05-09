@@ -13,7 +13,7 @@ public class UserBean {
     boolean isVisitor;
     String token;
     String email;
-    String nikeName;
+    String nickName;
     String avatar;
     int getLike;
     int age;

@@ -54,8 +54,8 @@ public class AddPostActivity extends BaseTitleBarActivity<PostAddActivityBinding
         }
         // 加入 图片的相对路径
         List<String> postImageList = new ArrayList<>();
-        for (int i = 0; i < mDataBind.pictureGroup.getChildCount(); i++) {
-            ImageView imageView = (ImageView) mDataBind.pictureGroup.getChildAt(i);
+        for (int i = 0; i < mDataBind.pictureGroup.getChildCount() - 1; i++) {
+            ImageView imageView = mDataBind.pictureGroup.getChildAt(i).findViewById(R.id.image);
             if (imageView.getTag(R.id.bean_tag) != null) {
                 UploadImageBean bean = (UploadImageBean) imageView.getTag(R.id.bean_tag);
                 if (StringHelper.isEmpty(bean.getRelativeUrl())) {
@@ -66,6 +66,7 @@ public class AddPostActivity extends BaseTitleBarActivity<PostAddActivityBinding
             }
         }
 
+        // 发送添加说说 请求
         showProgress();
         addSubscribe(RetrofitHelper.getApis().addPost(mDataBind.edit.getText().toString(), StringUtils.join(postImageList, ","))
             .compose(RxHelper.toMain())
@@ -136,9 +137,7 @@ public class AddPostActivity extends BaseTitleBarActivity<PostAddActivityBinding
         ImageHelper.uploadImage(mDisposable, bean, respBean -> {
             binding.progress.setVisibility(View.GONE);
 
-            RxHelper.timerConsumer(2000, aLong -> {
-                ImageLoader.loadImage(binding.image, respBean.getData().getAbsoluteUrl());
-            });
+            ImageLoader.loadImage(binding.image, localUri, R.drawable.place_holder);
         }, RxHelper.getErrorTextConsumer(this));
     }
 }

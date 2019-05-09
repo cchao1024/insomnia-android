@@ -25,10 +25,13 @@ public class Constants {
         int TIMEOUT = 60 * 1000;
 
         int PAGE_SIZE = 20;
+
+        int MAX_POST_IMAGE=5;
     }
 
     public interface Event {
         int Update_Play_Status = 61;
+        int Update_Post_Box = 161;
     }
 
     public interface Prefs {

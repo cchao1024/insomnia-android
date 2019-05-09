@@ -2,11 +2,12 @@ package com.cchao.insomnia.ui.post;
 
 import android.app.Dialog;
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.cchao.insomnia.R;
@@ -21,10 +22,15 @@ import com.cchao.insomnia.view.adapter.PageAdapter;
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.Router;
+import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.fragment.BaseStatefulFragment;
+import com.cchao.simplelib.util.StringHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.android.flexbox.FlexboxLayout;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -46,14 +52,27 @@ public class PostBoxFragment extends BaseStatefulFragment<PostBoxBinding> implem
     @Override
     protected void initEventAndData() {
         mDataBind.setClicker(this);
+        mDataBind.refreshLayout.setOnRefreshListener(() -> onLoadData());
+        initEvent();
         initAdapter();
         onLoadData();
     }
 
-    private void initAdapter() {
+    private void initEvent() {
+        addSubscribe(RxBus.getDefault().toObserveCode(Constants.Event.Update_Post_Box, commonEvent -> {
+            mDataBind.refreshLayout.setRefreshing(true);
+        }));
+    }
 
+    private void initAdapter() {
         mDataBind.recyclerView.setAdapter(mAdapter = new PageAdapter<PostListVO>
             (R.layout.post_box_item, mDisposable, this) {
+
+            @Override
+            public void solvePage(int page, RespListBean<PostListVO> respBean) {
+                super.solvePage(page, respBean);
+                mDataBind.refreshLayout.setRefreshing(false);
+            }
 
             @Override
             protected Observable<RespListBean<PostListVO>> getLoadObservable(int page) {
@@ -63,14 +82,31 @@ public class PostBoxFragment extends BaseStatefulFragment<PostBoxBinding> implem
             @Override
             protected void convert(DataBindViewHolder helper, PostListVO item) {
                 helper.getBinding().setVariable(BR.item, item);
-                ImageLoader.loadImageCircle(helper.getView(R.id.avatar), item.getPostUserAvatar(), R.drawable.default_portrait);
                 helper.setText(R.id.date, TimeHelper.getStandardDate(item.getUpdateTime()));
+                updateImageBox(helper.getView(R.id.flex_box), item);
                 helper.setOnClickListener(R.id.comment_button, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showCommentDialog(item.getId());
                     }
                 });
+            }
+
+            /**
+             * 每个Item 都有5个 imageview，如果有没有imagePath 就set gone，
+             * @param item bean
+             */
+            private void updateImageBox(FlexboxLayout box, @NonNull PostListVO item) {
+                List<String> imageList = item.getImageList();
+                for (int i = 0; i < Constants.Config.MAX_POST_IMAGE; i++) {
+                    ImageView view = (ImageView) box.getChildAt(i);
+                    UiHelper.setVisibleElseGone(view, i < imageList.size());
+
+                    // 有才显示
+                    if (i < imageList.size()) {
+                        ImageLoader.loadImage(view, imageList.get(i));
+                    }
+                }
             }
         });
 
@@ -91,7 +127,7 @@ public class PostBoxFragment extends BaseStatefulFragment<PostBoxBinding> implem
      *
      * @param id 评论id
      */
-    private void showCommentDialog(long id) {
+    void showCommentDialog(long id) {
         PostDetailCommentBinding binding = DataBindingUtil.inflate(mLayoutInflater
             , R.layout.post_detail_comment, null, false);
 
@@ -102,7 +138,7 @@ public class PostBoxFragment extends BaseStatefulFragment<PostBoxBinding> implem
             .show();
 
         binding.send.setOnClickListener(click -> {
-            if (TextUtils.isEmpty(binding.edit.getText().toString())) {
+            if (StringHelper.isEmpty(binding.edit)) {
                 showText("内容不能为空");
             }
             onSendComment(binding, id, () -> {

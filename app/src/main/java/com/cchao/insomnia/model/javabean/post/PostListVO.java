@@ -1,6 +1,7 @@
 package com.cchao.insomnia.model.javabean.post;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -18,6 +19,6 @@ public class PostListVO {
     String content;
     String postUserName;
     String postUserAvatar;
-    String images;
+    List<String> imageList;
     Date updateTime;
 }
