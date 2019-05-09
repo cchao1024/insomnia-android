@@ -30,7 +30,6 @@ import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.fragment.BaseStatefulFragment;
-import com.cchao.simplelib.util.StringHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.apache.commons.lang3.StringUtils;
@@ -115,11 +114,6 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
             @Override
             protected void convert(DataBindViewHolder helper, FallMusic item) {
                 helper.getBinding().setVariable(BR.item, item);
-                if (StringHelper.isNotEmpty(item.getCover_img())) {
-                    ImageLoader.loadImage(helper.getView(R.id.image), item.getSrc());
-                } else {
-                    ImageLoader.loadImage(helper.getView(R.id.image), Constants.TEST_IMAGE_PATH);
-                }
             }
         });
         mMusicAdapter.setOnItemClickListener((adapter, view, position) -> {
