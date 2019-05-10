@@ -1,6 +1,7 @@
 package com.cchao.insomnia.api;
 
 
+import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.model.javabean.RespBean;
 import com.cchao.insomnia.model.javabean.RespListBean;
 import com.cchao.insomnia.model.javabean.fall.FallImage;
@@ -31,6 +32,8 @@ import retrofit2.http.Path;
  * date  2017/2/24
  **/
 public interface Apis {
+
+    String aboutUs = Constants.Config.API_Host + "app/about_us";
 
     @GET("/app/getLaunch")
     Observable<RespBean<AppLaunch>> appLaunch();

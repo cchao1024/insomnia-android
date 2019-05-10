@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cchao.insomnia.api.Apis;
 import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.databinding.HomeDrawerMenuItemBinding;
 import com.cchao.insomnia.databinding.MainActivityBinding;
@@ -36,6 +37,7 @@ import com.cchao.insomnia.ui.account.EditUserInfoActivity;
 import com.cchao.insomnia.ui.account.UserInfoActivity;
 import com.cchao.insomnia.ui.fall.FallFragment;
 import com.cchao.insomnia.ui.post.PostBoxFragment;
+import com.cchao.simplelib.Const;
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.Router;
@@ -44,6 +46,7 @@ import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseActivity;
 import com.cchao.simplelib.ui.fragment.BaseFragment;
+import com.cchao.simplelib.ui.web.WebViewActivity;
 import com.cchao.simplelib.util.StringHelper;
 
 import org.apache.commons.lang3.StringUtils;
@@ -240,7 +243,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 showFeedBackDialog();
                 break;
             case Constants.Drawer.AboutUs:
-                showText(R.string.developing);
+                Router.turnTo(mContext, WebViewActivity.class)
+                    .putExtra(Const.Extra.Web_View_Tile, getString(R.string.about_us))
+                    .putExtra(Const.Extra.Web_View_Url, Apis.aboutUs)
+                    .start();
                 break;
             case Constants.Drawer.TimeDown:
                 showTimeDownDialog();

@@ -1,7 +1,6 @@
 package com.cchao.insomnia.api;
 
 import com.cchao.insomnia.global.Constants;
-import com.cchao.insomnia.global.GLobalInfo;
 import com.cchao.insomnia.manager.UserManager;
 import com.cchao.simplelib.core.AndroidHelper;
 import com.cchao.simplelib.http.OkHttpHelper;
@@ -20,12 +19,12 @@ import okhttp3.Request;
 public class HttpClientManager {
     public static final String AUTHORIZATION = "Authorization";
 
-    static final Map<String, String> Req_Params = new HashMap<>();
+    public static final Map<String, String> Req_Params = new HashMap<>();
 
     static {
-        Req_Params.put("deviceNo", AndroidHelper.getDeviceNum());
-        Req_Params.put("appBuild", Constants.Config.API_BUILD);
-        Req_Params.put("pageSize", String.valueOf(Constants.Config.PAGE_SIZE));
+        Req_Params.put(Constants.Api_Appand.Device_No, AndroidHelper.getDeviceNum());
+        Req_Params.put(Constants.Api_Appand.App_Build, Constants.Config.API_BUILD);
+        Req_Params.put(Constants.Api_Appand.Page_Size, String.valueOf(Constants.Config.PAGE_SIZE));
     }
 
     public static OkHttpClient getProdOkHttpClient() {

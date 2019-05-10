@@ -64,4 +64,13 @@ public class Constants {
         int TimeDown = 1004;
         int Settings = 1005;
     }
+
+    /**
+     * api 追加的通用参数
+     */
+    public interface Api_Appand {
+        String App_Build = "appBuild";
+        String Device_No = "deviceNo";
+        String Page_Size = "pageSize";
+    }
 }

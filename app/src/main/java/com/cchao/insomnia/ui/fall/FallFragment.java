@@ -20,6 +20,7 @@ import com.cchao.insomnia.model.javabean.fall.FallMusic;
 import com.cchao.insomnia.ui.global.ImageShowActivity;
 import com.cchao.insomnia.util.AnimHelper;
 import com.cchao.insomnia.util.ImageHelper;
+import com.cchao.insomnia.view.GridSpaceDividerDecoration;
 import com.cchao.insomnia.view.GridSpacingItemDecoration;
 import com.cchao.insomnia.view.adapter.DataBindQuickAdapter;
 import com.cchao.insomnia.view.adapter.PageAdapter;
@@ -108,8 +109,8 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
      */
     private void initMusicAdapter() {
         mRvMusic.setHasFixedSize(true);
-        mRvMusic.setLayoutManager(new GridLayoutManager(mContext, 3));
-        mRvMusic.addItemDecoration(new GridSpacingItemDecoration(3, UiHelper.dp2px(10), true));
+        mRvMusic.setLayoutManager(new GridLayoutManager(mContext, 3, GridLayoutManager.HORIZONTAL, false));
+        mRvMusic.addItemDecoration(new GridSpaceDividerDecoration(UiHelper.dp2px(10), 3));
         mRvMusic.setAdapter(mMusicAdapter = new DataBindQuickAdapter<FallMusic>(R.layout.fall_music_item) {
             @Override
             protected void convert(DataBindViewHolder helper, FallMusic item) {

@@ -3,6 +3,7 @@ package com.cchao.insomnia.global;
 import android.app.Application;
 import android.content.Context;
 
+import com.cchao.insomnia.BuildConfig;
 import com.cchao.insomnia.api.HttpClientManager;
 import com.cchao.insomnia.manager.MusicPlayer;
 import com.cchao.simplelib.LibCore;
@@ -44,6 +45,11 @@ public class App extends Application {
             @Override
             public String getAppName() {
                 return App.getContext().getPackageName();
+            }
+
+            @Override
+            public int getAppVersionCode() {
+                return BuildConfig.VERSION_CODE;
             }
         });
     }
