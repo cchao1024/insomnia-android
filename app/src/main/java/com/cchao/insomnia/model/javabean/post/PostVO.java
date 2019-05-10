@@ -18,8 +18,9 @@ public class PostVO {
     String content;
     String postUserName;
     String postUserAvatar;
-    String images;
+    List<String> imageList;
     Date updateTime;
+    Date createTime;
 
     int curPage;
     int totalPage;

@@ -64,7 +64,6 @@ public class FallMusicListActivity extends BaseTitleBarActivity<MusicListBinding
             switch (event.getCode()) {
                 case Constants.Event.Update_Play_Status:
                     updateDiskView();
-
                     for (FallMusic music : mAdapter.getData()) {
                         music.isPlaying.set(StringUtils.equals(music.getId(), MusicPlayer.getCurPlayingId()));
                     }
@@ -139,7 +138,6 @@ public class FallMusicListActivity extends BaseTitleBarActivity<MusicListBinding
                 MusicPlayer.playNow(item);
             }
         });
-
 //        mAdapter.disableLoadMoreIfNotFullPage();
     }
 
@@ -167,22 +165,19 @@ public class FallMusicListActivity extends BaseTitleBarActivity<MusicListBinding
         binding.setClicker(click -> {
             switch (click.getId()) {
                 case R.id.next_play:
-//                    MusicPlayer.addToPlayList(item);
-                    showText("已加入播放列表");
+                    UiHelper.showToast(R.string.developing);
                     dialog.dismiss();
                     break;
                 case R.id.wish:
-                    showText("加入wish");
+                    UiHelper.showToast(R.string.developing);
                     dialog.dismiss();
                     break;
                 case R.id.download:
-                    showText("download");
+                    UiHelper.showToast(R.string.developing);
                     dialog.dismiss();
                     break;
                 case R.id.share:
-                    dialog.dismiss();
-                    break;
-                case R.id.info:
+                    UiHelper.showToast(R.string.developing);
                     dialog.dismiss();
                     break;
             }

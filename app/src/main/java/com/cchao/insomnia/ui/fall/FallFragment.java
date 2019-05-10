@@ -109,8 +109,8 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
      */
     private void initMusicAdapter() {
         mRvMusic.setHasFixedSize(true);
-        mRvMusic.setLayoutManager(new GridLayoutManager(mContext, 3, GridLayoutManager.HORIZONTAL, false));
-        mRvMusic.addItemDecoration(new GridSpaceDividerDecoration(UiHelper.dp2px(10), 3));
+        mRvMusic.setLayoutManager(new GridLayoutManager(mContext, 2, GridLayoutManager.HORIZONTAL, false));
+        mRvMusic.addItemDecoration(new GridSpaceDividerDecoration(UiHelper.dp2px(10), 2));
         mRvMusic.setAdapter(mMusicAdapter = new DataBindQuickAdapter<FallMusic>(R.layout.fall_music_item) {
             @Override
             protected void convert(DataBindViewHolder helper, FallMusic item) {

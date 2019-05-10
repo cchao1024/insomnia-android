@@ -49,4 +49,10 @@
         <item name="normalBackgroundColor">@color/black</item>
         <item name="pressedBackgroundColor">@color/grey800</item>
     </style>
+
+    <style name="divider_eee">
+        <item name="android:layout_height">@dimen/dp_half</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/eee_color</item>
+    </style>
 </resources>

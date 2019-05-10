@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.RetrofitHelper;
@@ -55,9 +54,9 @@ public class AddPostActivity extends BaseTitleBarActivity<PostAddActivityBinding
         // 加入 图片的相对路径
         List<String> postImageList = new ArrayList<>();
         for (int i = 0; i < mDataBind.pictureGroup.getChildCount() - 1; i++) {
-            ImageView imageView = mDataBind.pictureGroup.getChildAt(i).findViewById(R.id.image);
-            if (imageView.getTag(R.id.bean_tag) != null) {
-                UploadImageBean bean = (UploadImageBean) imageView.getTag(R.id.bean_tag);
+            View child = mDataBind.pictureGroup.getChildAt(i);
+            if (child.getTag(R.id.bean_tag) != null) {
+                UploadImageBean bean = (UploadImageBean) child.getTag(R.id.bean_tag);
                 if (StringHelper.isEmpty(bean.getRelativeUrl())) {
                     showText("图片未上传");
                     return;

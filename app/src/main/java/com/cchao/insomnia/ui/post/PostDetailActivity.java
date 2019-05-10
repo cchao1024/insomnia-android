@@ -7,28 +7,32 @@ import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.cchao.insomnia.BR;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.databinding.PostDetailActivityBinding;
 import com.cchao.insomnia.databinding.PostDetailCommentBinding;
-import com.cchao.insomnia.databinding.PostDetailHeadBinding;
 import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.manager.UserManager;
 import com.cchao.insomnia.model.javabean.post.CommentVO;
 import com.cchao.insomnia.model.javabean.post.PostVO;
 import com.cchao.insomnia.model.javabean.post.ReplyVO;
 import com.cchao.insomnia.ui.post.convert.CommentConvert;
+import com.cchao.insomnia.view.adapter.DataBindMultiQuickAdapter;
 import com.cchao.insomnia.view.adapter.DataBindQuickAdapter;
+import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 帖子详情页， recycler view， add详情header，
@@ -39,7 +43,7 @@ import java.util.List;
  */
 public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityBinding> implements View.OnClickListener {
     long mId;
-    DataBindQuickAdapter<CommentConvert> mAdapter;
+    DataBindMultiQuickAdapter<CommentConvert> mAdapter;
     PostVO mPostVO;
 
     @Override
@@ -50,28 +54,37 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
     @Override
     protected void initEventAndData() {
         mId = getIntent().getLongExtra(Constants.Extra.ID, 0);
-        setTitleText("detail");
+        setTitleText(R.string.post_detal);
         mDataBind.setClicker(this);
         initAdapter();
         onLoadData();
     }
 
     private void initAdapter() {
-        mAdapter = new DataBindQuickAdapter<CommentConvert>(R.layout.post_comment_item, null) {
+        mAdapter = new DataBindMultiQuickAdapter<CommentConvert>(null) {
+            @Override
+            public Map<Integer, Integer> getTypeLayoutMap() {
+                Map<Integer, Integer> map = new HashMap<>();
+                map.put(CommentConvert.TYPE_COMMENT, R.layout.post_comment_item);
+                map.put(CommentConvert.TYPE_REPLY, R.layout.post_reply_item);
+                return map;
+            }
+
             @Override
             protected void convert(DataBindViewHolder helper, CommentConvert item) {
                 helper.getBinding().setVariable(BR.item, item);
-                boolean isReply = "reply".equals(item.getContent());
-                UiHelper.setVisibleElseGone(helper.getView(R.id.space), isReply);
+                switch (helper.getItemViewType()) {
+                    case CommentConvert.TYPE_COMMENT:
+                        break;
+                    case CommentConvert.TYPE_REPLY:
+                        helper.setText(R.id.to_user_name, item.getToUserName());
+                        break;
+                }
+                helper.getView(R.id.reply).setOnClickListener(view -> {
+                    showCommentDialog("reply", item.getToId());
+                });
             }
         };
-
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-            }
-        });
 
         mDataBind.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mDataBind.recyclerView.setAdapter(mAdapter);
@@ -113,10 +126,22 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
      */
     private void updateDetail(PostVO data) {
         mPostVO = data;
-        PostDetailHeadBinding binding = DataBindingUtil.inflate(mLayoutInflater, R.layout.post_detail_head
-            , (ViewGroup) mDataBind.getRoot(), false);
-        binding.setItem(data);
-        mAdapter.addHeaderView(binding.getRoot());
+        mDataBind.setItem(data);
+        updateImageBox(mDataBind.flexBox, data.getImageList());
+    }
+
+    /**
+     * 每个Item 都有5个 imageview，如果有没有imagePath 就set gone，
+     */
+    private void updateImageBox(FlexboxLayout box, List<String> imageList) {
+        for (int i = 0; i < Constants.Config.MAX_POST_IMAGE; i++) {
+            ImageView view = (ImageView) box.getChildAt(i);
+            // 有才显示
+            UiHelper.setVisibleElseGone(view, i < imageList.size());
+            if (i < imageList.size()) {
+                ImageLoader.loadImage(view, imageList.get(i));
+            }
+        }
     }
 
     @Override
@@ -126,13 +151,16 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
                 String type = mPostVO.getPostUserId() == mPostVO.getPostUserId() ? "comment" : "reply";
                 showCommentDialog(type, mPostVO.getId());
                 break;
+            case R.id.like:
+                UserManager.giveLike("post", mPostVO.getId());
+                break;
         }
     }
 
     /**
      * 显示评论对话框，用户输入，点发送
      *
-     * @param id id
+     * @param id toId
      */
     private void showCommentDialog(String type, long id) {
         PostDetailCommentBinding binding = DataBindingUtil.inflate(mLayoutInflater
@@ -161,10 +189,11 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
     void onSendComment(PostDetailCommentBinding binding, String type, long id, Runnable callback) {
         UiHelper.setVisibleElseGone(binding.send, false);
         UiHelper.setVisibleElseGone(binding.progress, true);
+
         ArrayMap<String, String> map = new ArrayMap<>();
         map.put("toId", String.valueOf(id));
         map.put("content", binding.edit.getText().toString());
-        map.put("images", "");
+        map.put("imageList", "");
 
         addSubscribe(RetrofitHelper.getApis().addCommentOrReply(type, map)
             .compose(RxHelper.toMain())

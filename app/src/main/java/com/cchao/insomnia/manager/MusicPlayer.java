@@ -51,6 +51,7 @@ public class MusicPlayer {
                 .subscribe(RxHelper.getNothingObserver());
             mMediaPlayer.start();
             RxBus.get().postEvent(Constants.Event.Update_Play_Status, State.Playing);
+            UiHelper.showToast("正在播放 " + mCurMusic.getName());
         });
     }
 
@@ -76,10 +77,14 @@ public class MusicPlayer {
     }
 
     public static void playNow(FallMusic item) {
+        // 相同不处理
+        if (mCurMusic.getSrc().equals(item.getSrc())) {
+            return;
+        }
         mCurMusic = item;
         try {
             if (mMediaPlayer.isPlaying()) {
-                mMediaPlayer.start();
+                mMediaPlayer.reset();
             }
             Logs.logEvent("playNow " + item.getSrc());
             mMediaPlayer.setDataSource(item.getSrc());

@@ -1,6 +1,7 @@
 package com.cchao.insomnia.util;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.widget.ImageView;
 
@@ -10,12 +11,18 @@ import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.model.javabean.RespBean;
 import com.cchao.insomnia.model.javabean.post.UploadImageBean;
+import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
+import com.cchao.simplelib.util.FileUtils;
 import com.yuyh.library.imgsel.ISNav;
 import com.yuyh.library.imgsel.config.ISListConfig;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -97,5 +104,38 @@ public class ImageHelper {
                     respConsumer.accept(respBean);
                 }
             }, error));
+    }
+
+    /**
+     * 保存图片
+     *
+     * @param src     源图片
+     * @param file    要保存到的文件
+     * @param format  格式
+     * @param recycle 是否回收
+     * @return {@code true}: 成功<br>{@code false}: 失败
+     */
+    public static boolean save(Bitmap src, File file, Bitmap.CompressFormat format, boolean recycle) {
+        if (src == null || src.getWidth() == 0 || src.getHeight() == 0) {
+            return false;
+        }
+        if (!FileUtils.createOrExistsFile(file)) {
+            return false;
+        }
+
+        OutputStream os = null;
+        boolean ret = false;
+        try {
+            os = new BufferedOutputStream(new FileOutputStream(file));
+            ret = src.compress(format, 100, os);
+            if (recycle && !src.isRecycled()) {
+                src.recycle();
+            }
+        } catch (IOException e) {
+            Logs.logException(e);
+        } finally {
+            FileUtils.closeIO(os);
+        }
+        return ret;
     }
 }

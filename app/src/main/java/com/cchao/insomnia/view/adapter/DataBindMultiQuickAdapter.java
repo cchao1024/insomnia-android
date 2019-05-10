@@ -6,25 +6,28 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cchao.insomnia.R;
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.List;
+import java.util.Map;
 
 /**
- * databind BaseQuickAdapter
+ * 多样式的 dataBinding的 BaseMultiItemQuickAdapter
  * @author cchao
  * @version 8/11/18.
  */
-public abstract class DataBindQuickAdapter<T> extends BaseQuickAdapter<T, DataBindQuickAdapter.DataBindViewHolder> {
+public abstract class DataBindMultiQuickAdapter<T extends MultiItemEntity> extends BaseMultiItemQuickAdapter<T, DataBindMultiQuickAdapter.DataBindViewHolder> {
 
-    public DataBindQuickAdapter(int layoutResId, List<T> data) {
-        super(layoutResId, data);
+    public DataBindMultiQuickAdapter(List<T> data) {
+        super(data);
+        for (Map.Entry<Integer, Integer> entry : getTypeLayoutMap().entrySet()) {
+            addItemType(entry.getKey(), entry.getValue());
+        }
     }
 
-    public DataBindQuickAdapter(int layoutResId) {
-        super(layoutResId, null);
-    }
+    public abstract Map<Integer, Integer> getTypeLayoutMap();
 
     @Override
     protected View getItemView(int layoutResId, ViewGroup parent) {
@@ -33,7 +36,7 @@ public abstract class DataBindQuickAdapter<T> extends BaseQuickAdapter<T, DataBi
             return super.getItemView(layoutResId, parent);
         }
         View view = binding.getRoot();
-        view.setTag(R.id.BaseQuickAdapter_databinding_support,binding);
+        view.setTag(R.id.BaseQuickAdapter_databinding_support, binding);
         return view;
     }
 

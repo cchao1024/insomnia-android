@@ -40,5 +40,6 @@
     <string name="cancel_count_down">取消计时</string>
     <string name="feed_back_hint">请输入您的建议</string>
     <string name="submit">提交</string>
+    <string name="post_detal">说说详情</string>
 
 </resources>

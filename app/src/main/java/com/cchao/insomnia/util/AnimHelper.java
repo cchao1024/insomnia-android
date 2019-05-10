@@ -26,5 +26,6 @@ public class AnimHelper {
             return;
         }
         view.getAnimation().cancel();
+        view.clearAnimation();
     }
 }

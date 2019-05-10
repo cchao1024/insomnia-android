@@ -32,7 +32,7 @@
             <TextView
                 android:id="@+id/next_play"
                 style="@style/MusicItemMenuText"
-                android:drawableStart="@drawable/ic_play_select"
+                android:drawableStart="@drawable/queue_music"
                 android:onClick="@{clicker::onClick}"
                 android:text="下一首播放"/>
         </LinearLayout>
@@ -40,14 +40,14 @@
         <TextView
             android:id="@+id/wish"
             style="@style/MusicItemMenuText"
-            android:drawableStart="@drawable/ic_play_select"
+            android:drawableStart="@drawable/like_un"
             android:onClick="@{clicker::onClick}"
             android:text="加入收藏"/>
 
         <TextView
             android:id="@+id/download"
             style="@style/MusicItemMenuText"
-            android:drawableStart="@drawable/ic_play_select"
+            android:drawableStart="@drawable/download_cloud"
             android:onClick="@{clicker::onClick}"
             android:text="下载"/>
 
@@ -55,17 +55,9 @@
         <TextView
             android:id="@+id/share"
             style="@style/MusicItemMenuText"
-            android:drawableStart="@drawable/ic_play_select"
+            android:drawableStart="@drawable/share"
             android:onClick="@{clicker::onClick}"
             android:text="分享"/>
-
-        <TextView
-            android:id="@+id/info"
-            style="@style/MusicItemMenuText"
-            android:drawableStart="@drawable/ic_play_select"
-            android:onClick="@{clicker::onClick}"
-            android:text="查看详细信息"/>
-
 
     </android.support.v7.widget.LinearLayoutCompat>
 </layout>

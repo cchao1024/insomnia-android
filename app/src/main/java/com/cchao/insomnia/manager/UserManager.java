@@ -1,14 +1,21 @@
 package com.cchao.insomnia.manager;
 
+import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.model.javabean.user.UserBean;
 import com.cchao.simplelib.core.GsonUtil;
 import com.cchao.simplelib.core.PrefHelper;
 import com.cchao.simplelib.core.RxBus;
+import com.cchao.simplelib.core.RxHelper;
+import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.util.StringHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import io.reactivex.disposables.Disposable;
 
 /**
  * @author cchao
@@ -60,5 +67,19 @@ public class UserManager {
 
     public static boolean isVisitor() {
         return true;
+    }
+
+    public static void giveLike(String type, long id) {
+        Map<String, String> map = new HashMap<>();
+        map.put("type", type);
+        map.put("id", String.valueOf(id));
+        Disposable disposable = RetrofitHelper.getApis().giveLike(map)
+            .compose(RxHelper.toMain())
+            .subscribe(respBean -> {
+                if (respBean.isCodeFail()) {
+                    UiHelper.showToast(respBean.getMsg());
+                    return;
+                }
+            }, RxHelper.getErrorConsumer());
     }
 }

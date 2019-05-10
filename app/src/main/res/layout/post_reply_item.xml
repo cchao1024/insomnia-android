@@ -18,12 +18,6 @@
         android:paddingEnd="@dimen/dp_16"
         android:paddingBottom="@dimen/dp_2">
 
-        <Space
-            android:id="@+id/space"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_0"
-            android:visibility="visible"/>
-
         <ImageView
             android:id="@+id/from_user_avatar"
             android:layout_width="@dimen/dp_30"
@@ -32,22 +26,43 @@
             android:layout_toEndOf="@+id/space"
             bind:url="@{item.fromUserAvatar}"/>
 
-        <TextView
-            android:id="@+id/from_user_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/user_field"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_16"
-            android:layout_toEndOf="@+id/from_user_avatar"
-            android:text="@{`@`+item.fromUserName}"
-            tools:text="@string/app_name"/>
+            android:layout_toEndOf="@+id/from_user_avatar">
+
+            <TextView
+                android:id="@+id/from_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{`@`+item.fromUserName}"
+                android:textSize="@dimen/sp_12"
+                tools:text="@string/app_name"/>
+
+            <TextView
+                android:id="@+id/reply_label"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/sp_12"
+                android:layout_height="wrap_content"
+                android:text="回复了"/>
+
+            <TextView
+                android:id="@+id/to_user_name"
+                android:textSize="@dimen/sp_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/from_user_name"
-            android:layout_alignStart="@+id/from_user_name"
-            android:layout_marginTop="@dimen/dp_8"
+            android:layout_below="@id/user_field"
+            android:layout_alignStart="@+id/user_field"
+            android:layout_marginTop="@dimen/dp_6"
+            android:textSize="@dimen/sp_13"
             android:text="@{item.content}"
             tools:text="@string/app_name"/>
 
@@ -57,10 +72,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/content"
-            android:layout_alignStart="@+id/from_user_name"
+            android:layout_alignStart="@+id/user_field"
             android:layout_marginTop="@dimen/dp_4"
             android:textColor="@color/text_999"
-            android:textSize="@dimen/sp_12"
+            android:textSize="@dimen/sp_11"
             tools:text="@string/app_name"/>
 
         <TextView
@@ -76,7 +91,7 @@
             android:paddingBottom="@dimen/dp_4"
             android:text="回复"
             android:textColor="@color/text_blue"
-            android:textSize="@dimen/sp_12"/>
+            android:textSize="@dimen/sp_11"/>
 
         <TextView
             android:id="@+id/like"

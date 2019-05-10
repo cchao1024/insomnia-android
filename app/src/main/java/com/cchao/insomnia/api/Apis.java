@@ -75,7 +75,7 @@ public interface Apis {
 
     @FormUrlEncoded
     @POST("/post/new")
-    Observable<RespBean> addPost(@Field("content") String content, @Field("images") String images);
+    Observable<RespBean> addPost(@Field("content") String content, @Field("imageList") String images);
 
     @FormUrlEncoded
     @POST("/{type}/new")
@@ -92,4 +92,8 @@ public interface Apis {
     @FormUrlEncoded
     @POST("/app/feed_back")
     Observable<RespBean> feedBack(@FieldMap Map<String, String> map);
+
+    @FormUrlEncoded
+    @POST("/app/give_like")
+    Observable<RespBean> giveLike(@FieldMap Map<String, String> map);
 }

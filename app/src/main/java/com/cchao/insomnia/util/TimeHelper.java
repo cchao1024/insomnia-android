@@ -1,5 +1,6 @@
 package com.cchao.insomnia.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -15,6 +16,21 @@ public class TimeHelper {
         return getStandardDate(date.getTime());
     }
 
+    public static String formatymD(boolean needSeparator, long timeStamp) {
+        String format = "yyyyMMdd";
+        if (needSeparator) {
+            format = "yyyy-MM-dd";
+        }
+        return new SimpleDateFormat(format).format(new Date(timeStamp));
+    }
+
+    public static String formatymDhms(boolean needSeparator, long timeStamp) {
+        String format = "yyyyMMddHHmmss";
+        if (needSeparator) {
+            format = "yyyy-MM-dd HH:mm:ss";
+        }
+        return new SimpleDateFormat(format).format(new Date(timeStamp));
+    }
     /**
      * 返回 格式化过去表达
      *

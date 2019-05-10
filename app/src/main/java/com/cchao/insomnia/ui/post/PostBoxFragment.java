@@ -157,7 +157,7 @@ public class PostBoxFragment extends BaseStatefulFragment<PostBoxBinding> implem
         ArrayMap<String, String> map = new ArrayMap<>();
         map.put("toId", String.valueOf(id));
         map.put("content", binding.edit.getText().toString());
-        map.put("images", "");
+        map.put("imageList", "");
 
         addSubscribe(RetrofitHelper.getApis().addCommentOrReply("comment", map)
             .compose(RxHelper.toMain())
