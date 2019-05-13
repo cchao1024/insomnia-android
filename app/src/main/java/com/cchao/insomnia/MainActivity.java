@@ -36,6 +36,7 @@ import com.cchao.insomnia.model.javabean.user.UserBean;
 import com.cchao.insomnia.ui.account.EditUserInfoActivity;
 import com.cchao.insomnia.ui.account.UserInfoActivity;
 import com.cchao.insomnia.ui.fall.FallFragment;
+import com.cchao.insomnia.ui.play.PlayFragment;
 import com.cchao.insomnia.ui.post.PostBoxFragment;
 import com.cchao.simplelib.Const;
 import com.cchao.simplelib.core.ImageLoader;
@@ -66,7 +67,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ImageView mUserPhotoImage;
     TextView mCountDownTextView;
 
-    final int[] mTabTitleArr = {R.string.tab_name_0, R.string.tab_name_1};
+    final int[] mTabTitleArr = {R.string.tab_name_0, R.string.tab_name_1, R.string.tab_name_1};
     List<BaseFragment> mFragments = new ArrayList<>();
     private MainActivityBinding mBinding;
 
@@ -113,6 +114,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void initTabLayout() {
         mFragments.add(new FallFragment());
         mFragments.add(new PostBoxFragment());
+        mFragments.add(new PlayFragment());
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

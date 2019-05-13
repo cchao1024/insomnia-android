@@ -34,6 +34,7 @@ import retrofit2.http.Path;
 public interface Apis {
 
     String aboutUs = Constants.Config.API_Host + "app/about_us";
+    String sleep478 = Constants.Config.API_Host + "app/sleep_478";
 
     @GET("/app/getLaunch")
     Observable<RespBean<AppLaunch>> appLaunch();

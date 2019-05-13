@@ -38,6 +38,7 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".ui.account.EditUserInfoActivity"/>
         <activity android:name=".ui.account.UserInfoActivity"/>
+        <activity android:name=".ui.play.Play478Activity"/>
     </application>
 
 </manifest>
