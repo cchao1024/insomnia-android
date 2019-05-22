@@ -57,6 +57,11 @@ import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 
+/**
+ * 主页
+ *
+ * @author cchao
+ */
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private TabLayout mTabLayout;
@@ -67,7 +72,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ImageView mUserPhotoImage;
     TextView mCountDownTextView;
 
-    final int[] mTabTitleArr = {R.string.tab_name_0, R.string.tab_name_1, R.string.tab_name_1};
+    final int[] mTabTitleArr = {R.string.tab_name_0, R.string.tab_name_1, R.string.tab_name_2};
     List<BaseFragment> mFragments = new ArrayList<>();
     private MainActivityBinding mBinding;
 
@@ -113,8 +118,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      */
     private void initTabLayout() {
         mFragments.add(new FallFragment());
-        mFragments.add(new PostBoxFragment());
         mFragments.add(new PlayFragment());
+        mFragments.add(new PostBoxFragment());
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

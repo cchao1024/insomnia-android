@@ -39,6 +39,7 @@
         <activity android:name=".ui.account.EditUserInfoActivity"/>
         <activity android:name=".ui.account.UserInfoActivity"/>
         <activity android:name=".ui.play.Play478Activity"/>
+        <activity android:name=".ui.play.CountSheepActivity"/>
     </application>
 
 </manifest>

@@ -133,7 +133,7 @@ public class AddPostActivity extends BaseTitleBarActivity<PostAddActivityBinding
         bean.setLocalUri(localUri);
         binding.getRoot().setTag(R.id.bean_tag, bean);
 
-        ImageHelper.uploadImage(mDisposable, bean, respBean -> {
+        ImageHelper.uploadImage(mDisposable,"user_post", bean, respBean -> {
             binding.progress.setVisibility(View.GONE);
 
             ImageLoader.loadImage(binding.image, localUri, R.drawable.place_holder);

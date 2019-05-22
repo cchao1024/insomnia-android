@@ -25,6 +25,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * description
@@ -47,8 +48,8 @@ public interface Apis {
     Observable<RespBean> resetPwdByEmail(@Field("email") String email);
 
     @Multipart
-    @POST("/file/uploadImage")
-    Observable<RespBean<UploadImageBean>> uploadImage(@Part MultipartBody.Part file);
+    @POST("/file/upload")
+    Observable<RespBean<UploadImageBean>> uploadImage(@Query("type") String type, @Part MultipartBody.Part file);
 
     @FormUrlEncoded
     @POST("/user/{path}")

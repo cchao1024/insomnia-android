@@ -82,14 +82,14 @@ public class ImageHelper {
         ISNav.getInstance().toListActivity(context, config, Constants.RequestCode.TAKE_IMAGE);
     }
 
-    public static void uploadImage(CompositeDisposable compositeDisposable, UploadImageBean bean
+    public static void uploadImage(CompositeDisposable compositeDisposable, String type, UploadImageBean bean
         , Consumer<RespBean<UploadImageBean>> respConsumer, Consumer<? super Throwable> error) {
 
         File file = new File(bean.getLocalUri());
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
         // api 上传
-        compositeDisposable.add(RetrofitHelper.getApis().uploadImage(body)
+        compositeDisposable.add(RetrofitHelper.getApis().uploadImage(type, body)
             .compose(RxHelper.toMain())
             .subscribe(respBean -> {
                 if (respBean.isCodeFail()) {

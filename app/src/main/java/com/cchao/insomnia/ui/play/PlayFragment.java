@@ -33,6 +33,9 @@ public class PlayFragment extends SimpleLazyFragment<PlayFragmentBinding> implem
             case R.id.sleep_478:
                 Router.turnTo(mContext, Play478Activity.class).start();
                 break;
+            case R.id.count_sheep:
+                Router.turnTo(mContext, CountSheepActivity.class).start();
+                break;
         }
     }
 }

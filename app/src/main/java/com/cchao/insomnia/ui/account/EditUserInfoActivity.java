@@ -122,7 +122,7 @@ public class EditUserInfoActivity extends BaseTitleBarActivity<UserInfoEditActiv
         mUploadImageBean.setLocalUri(localUri);
 
         showProgress();
-        ImageHelper.uploadImage(mDisposable, mUploadImageBean, respBean -> {
+        ImageHelper.uploadImage(mDisposable, "user_avatar", mUploadImageBean, respBean -> {
             hideProgress();
 
             ImageLoader.loadImageCircle(mDataBind.avatar, localUri, R.drawable.default_portrait);
