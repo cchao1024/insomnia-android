@@ -29,6 +29,13 @@ public class Constants {
         int MAX_POST_IMAGE=5;
     }
 
+    public interface Type {
+        int FALL_IMAGE = 1;
+        int FALL_MUSIC = 2;
+        int UP_IMAGE = 3;
+        int UP_MUSIC = 4;
+    }
+
     public interface Event {
         int Update_Play_Status = 61;
         int Update_Post_Box = 10001;

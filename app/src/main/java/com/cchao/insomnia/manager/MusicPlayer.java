@@ -30,11 +30,11 @@ public class MusicPlayer {
         String Init = "Init";
     }
 
-    public static String getCurPlayingId() {
+    public static long getCurPlayingId() {
         if (mCurMusic != null) {
             return mCurMusic.getId();
         }
-        return "";
+        return 0;
     }
 
     public static void init() {
@@ -46,7 +46,7 @@ public class MusicPlayer {
 
         mMediaPlayer.setOnPreparedListener(mediaPlayer -> {
             // 请求+播放计数
-            RetrofitHelper.getApis().play(mCurMusic.getId())
+            RetrofitHelper.getApis().play(String.valueOf(mCurMusic.getId()))
                 .subscribeOn(Schedulers.io())
                 .subscribe(RxHelper.getNothingObserver());
             mMediaPlayer.start();
@@ -57,6 +57,10 @@ public class MusicPlayer {
 
     public static boolean isPlaying() {
         return mMediaPlayer.isPlaying();
+    }
+
+    public static boolean isCurPlaying(FallMusic fallMusic) {
+        return fallMusic.getId()==getCurPlayingId();
     }
 
     public static void clickDisk() {

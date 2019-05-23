@@ -8,6 +8,7 @@ import com.cchao.simplelib.core.PrefHelper;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
+import com.cchao.simplelib.ui.interfaces.BaseView;
 import com.cchao.simplelib.util.StringHelper;
 
 import java.util.ArrayList;
@@ -69,17 +70,28 @@ public class UserManager {
         return true;
     }
 
-    public static void giveLike(String type, long id) {
+    public static void addLike(String type, long id) {
         Map<String, String> map = new HashMap<>();
-        map.put("type", type);
         map.put("id", String.valueOf(id));
-        Disposable disposable = RetrofitHelper.getApis().giveLike(map)
+        Disposable disposable = RetrofitHelper.getApis().like(type, map)
             .compose(RxHelper.toMain())
             .subscribe(respBean -> {
                 if (respBean.isCodeFail()) {
                     UiHelper.showToast(respBean.getMsg());
                     return;
                 }
+            }, RxHelper.getErrorConsumer());
+    }
+
+    public static void addWish(long id, BaseView baseView) {
+        Map<String, String> map = new HashMap<>();
+        map.put("id", String.valueOf(id));
+        baseView.showProgress();
+        Disposable disposable = RetrofitHelper.getApis().addWish(id)
+            .compose(RxHelper.toMain())
+            .subscribe(respBean -> {
+                baseView.hideProgress();
+                UiHelper.showToast(respBean.getMsg());
             }, RxHelper.getErrorConsumer());
     }
 }

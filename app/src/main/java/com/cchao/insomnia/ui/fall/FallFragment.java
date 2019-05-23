@@ -20,6 +20,7 @@ import com.cchao.insomnia.model.javabean.fall.FallMusic;
 import com.cchao.insomnia.ui.global.ImageShowActivity;
 import com.cchao.insomnia.util.AnimHelper;
 import com.cchao.insomnia.util.ImageHelper;
+import com.cchao.insomnia.view.Dialogs;
 import com.cchao.insomnia.view.GridSpaceDividerDecoration;
 import com.cchao.insomnia.view.GridSpacingItemDecoration;
 import com.cchao.insomnia.view.adapter.DataBindQuickAdapter;
@@ -32,8 +33,6 @@ import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.fragment.BaseStatefulFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-
-import org.apache.commons.lang3.StringUtils;
 
 import io.reactivex.Observable;
 
@@ -115,11 +114,15 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
             @Override
             protected void convert(DataBindViewHolder helper, FallMusic item) {
                 helper.getBinding().setVariable(BR.item, item);
+                helper.getBinding().getRoot().findViewById(R.id.more)
+                    .setOnClickListener(click -> {
+                        Dialogs.showMusicItemMenu(mLayoutInflater, item, FallFragment.this);
+                    });
             }
         });
         mMusicAdapter.setOnItemClickListener((adapter, view, position) -> {
             FallMusic item = mMusicAdapter.getItem(position);
-            if (StringUtils.equals(item.getId(), MusicPlayer.getCurPlayingId())) {
+            if (MusicPlayer.isCurPlaying(item)) {
 //                    Router.turnTo(mContext, MusicPlayerActivity.class)
 //                        .start();
                 MusicPlayer.pause();
@@ -167,6 +170,7 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
         mImageAdapter.setOnItemClickListener((adapter, view, position) -> {
             Router.turnTo(mContext, ImageShowActivity.class)
                 .putExtra(Constants.Extra.IMAGE_URL, mImageAdapter.getData().get(position).getSrc())
+                .putExtra(Constants.Extra.ID, mImageAdapter.getData().get(position).getId())
                 .start();
         });
         mImageAdapter.addHeaderView(mHeadBinding.getRoot());

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.databinding.ImageShowActivityBinding;
 import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.manager.UserManager;
 import com.cchao.insomnia.util.ImageHelper;
 import com.cchao.simplelib.core.GlideApp;
 import com.cchao.simplelib.core.Logs;
@@ -28,6 +29,7 @@ public class ImageShowActivity extends BaseTitleBarActivity<ImageShowActivityBin
 
     PhotoView mPhotoView;
     String mImageUrl;
+    long id;
 
     @Override
     protected int getLayout() {
@@ -36,11 +38,19 @@ public class ImageShowActivity extends BaseTitleBarActivity<ImageShowActivityBin
 
     @Override
     protected void initEventAndData() {
+        id = getIntent().getLongExtra(Constants.Extra.ID, 0);
         setTitleText("浏览大图");
+        // 加入收藏
+        addTitleMenuItem(R.drawable.wish_button, view -> {
+            UserManager.addWish(id, this);
+        });
+
+        // download
         addTitleMenuItem(R.drawable.download_cloud, view -> {
             showText(R.string.developing);
 //            saveImage(mPhotoView);
         });
+
         mImageUrl = getIntent().getStringExtra(Constants.Extra.IMAGE_URL);
         mPhotoView = mDataBind.photoView;
         onLoadData();

@@ -64,7 +64,7 @@
             app:srcCompat="@drawable/ic_play_select"/>
 
         <ImageView
-            android:id="@+id/more_option"
+            android:id="@+id/more"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_20"
             android:layout_gravity="center_vertical"

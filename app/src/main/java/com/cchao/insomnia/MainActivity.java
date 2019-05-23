@@ -35,6 +35,7 @@ import com.cchao.insomnia.model.javabean.home.NavItem;
 import com.cchao.insomnia.model.javabean.user.UserBean;
 import com.cchao.insomnia.ui.account.EditUserInfoActivity;
 import com.cchao.insomnia.ui.account.UserInfoActivity;
+import com.cchao.insomnia.ui.account.WishListActivity;
 import com.cchao.insomnia.ui.fall.FallFragment;
 import com.cchao.insomnia.ui.play.PlayFragment;
 import com.cchao.insomnia.ui.post.PostBoxFragment;
@@ -244,7 +245,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void clickMenuItem(int menu) {
         switch (menu) {
             case Constants.Drawer.Wish:
-                showText(R.string.developing);
+                Router.turnTo(mContext, WishListActivity.class).start();
                 break;
             case Constants.Drawer.FeedBack:
                 showFeedBackDialog();

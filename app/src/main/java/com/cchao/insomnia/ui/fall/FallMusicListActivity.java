@@ -1,7 +1,5 @@
 package com.cchao.insomnia.ui.fall;
 
-import android.databinding.DataBindingUtil;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +8,6 @@ import android.view.View;
 import com.cchao.insomnia.BR;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.RetrofitHelper;
-import com.cchao.insomnia.databinding.MusicItemMenuListBinding;
 import com.cchao.insomnia.databinding.MusicListBinding;
 import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.manager.MusicPlayer;
@@ -18,14 +15,13 @@ import com.cchao.insomnia.model.javabean.RespListBean;
 import com.cchao.insomnia.model.javabean.fall.FallMusic;
 import com.cchao.insomnia.ui.music.MusicPlayerActivity;
 import com.cchao.insomnia.util.AnimHelper;
+import com.cchao.insomnia.view.Dialogs;
 import com.cchao.insomnia.view.adapter.PageAdapter;
 import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
 import com.lzx.musiclibrary.manager.MusicManager;
-
-import org.apache.commons.lang3.StringUtils;
 
 import io.reactivex.Observable;
 
@@ -65,7 +61,7 @@ public class FallMusicListActivity extends BaseTitleBarActivity<MusicListBinding
                 case Constants.Event.Update_Play_Status:
                     updateDiskView();
                     for (FallMusic music : mAdapter.getData()) {
-                        music.isPlaying.set(StringUtils.equals(music.getId(), MusicPlayer.getCurPlayingId()));
+                        music.isPlaying.set(music.getId() == MusicPlayer.getCurPlayingId());
                     }
                     break;
             }
@@ -117,13 +113,13 @@ public class FallMusicListActivity extends BaseTitleBarActivity<MusicListBinding
                 helper.setText(R.id.order_num, helper.getLayoutPosition() + "");
 
                 // 是当前播放的音乐
-                if (MusicPlayer.getCurPlayingId().equals(item.getId())) {
+                if (MusicPlayer.getCurPlayingId() == item.getId()) {
 
                 }
 
                 // 弹出 menu对话框
-                helper.getView(R.id.more_option).setOnClickListener(v -> {
-                    showItemMenu(item);
+                helper.getView(R.id.more).setOnClickListener(v -> {
+                    Dialogs.showMusicItemMenu(mLayoutInflater, item, FallMusicListActivity.this);
                 });
             }
         });
@@ -131,7 +127,7 @@ public class FallMusicListActivity extends BaseTitleBarActivity<MusicListBinding
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             FallMusic item = mAdapter.getItem(position);
 
-            if (StringUtils.equals(item.getId(), MusicPlayer.getCurPlayingId())) {
+            if (item.getId() == MusicPlayer.getCurPlayingId()) {
                 Router.turnTo(mContext, MusicPlayerActivity.class)
                     .start();
             } else {
@@ -152,38 +148,5 @@ public class FallMusicListActivity extends BaseTitleBarActivity<MusicListBinding
     protected void onDestroy() {
         super.onDestroy();
         AnimHelper.cancel(mDataBind.musicDisk);
-    }
-
-    /**
-     * 弹出更多的选项
-     */
-    void showItemMenu(FallMusic item) {
-        BottomSheetDialog dialog = new BottomSheetDialog(this);
-        MusicItemMenuListBinding binding = DataBindingUtil.inflate(mLayoutInflater
-            , R.layout.music_item_menu_list, null, false);
-        binding.name.setText("歌曲：" + item.getName());
-        binding.setClicker(click -> {
-            switch (click.getId()) {
-                case R.id.next_play:
-                    UiHelper.showToast(R.string.developing);
-                    dialog.dismiss();
-                    break;
-                case R.id.wish:
-                    UiHelper.showToast(R.string.developing);
-                    dialog.dismiss();
-                    break;
-                case R.id.download:
-                    UiHelper.showToast(R.string.developing);
-                    dialog.dismiss();
-                    break;
-                case R.id.share:
-                    UiHelper.showToast(R.string.developing);
-                    dialog.dismiss();
-                    break;
-            }
-        });
-
-        dialog.setContentView(binding.getRoot());
-        dialog.show();
     }
 }

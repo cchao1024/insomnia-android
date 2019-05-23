@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class FallMusic {
 
-    private String id;
+    private long id;
     private String name;
     private String src;
     private String singer;

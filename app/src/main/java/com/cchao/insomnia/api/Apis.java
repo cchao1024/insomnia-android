@@ -12,6 +12,7 @@ import com.cchao.insomnia.model.javabean.post.PostListVO;
 import com.cchao.insomnia.model.javabean.post.PostVO;
 import com.cchao.insomnia.model.javabean.post.UploadImageBean;
 import com.cchao.insomnia.model.javabean.user.UserBean;
+import com.cchao.insomnia.model.javabean.user.WishItem;
 
 import java.util.Map;
 
@@ -96,6 +97,14 @@ public interface Apis {
     Observable<RespBean> feedBack(@FieldMap Map<String, String> map);
 
     @FormUrlEncoded
-    @POST("/app/give_like")
-    Observable<RespBean> giveLike(@FieldMap Map<String, String> map);
+    @POST("/{path}/like")
+    Observable<RespBean> like(@Path("path") String path, @FieldMap Map<String, String> map);
+
+    @FormUrlEncoded
+    @POST("/wish/list")
+    Observable<RespListBean<WishItem>> wishList(@Field("page") int page);
+
+    @FormUrlEncoded
+    @POST("/wish/add")
+    Observable<RespBean> addWish(@Field("id") long id);
 }

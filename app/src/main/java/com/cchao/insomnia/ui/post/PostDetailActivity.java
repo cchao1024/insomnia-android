@@ -21,7 +21,6 @@ import com.cchao.insomnia.model.javabean.post.PostVO;
 import com.cchao.insomnia.model.javabean.post.ReplyVO;
 import com.cchao.insomnia.ui.post.convert.CommentConvert;
 import com.cchao.insomnia.view.adapter.DataBindMultiQuickAdapter;
-import com.cchao.insomnia.view.adapter.DataBindQuickAdapter;
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.RxHelper;
@@ -152,7 +151,7 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
                 showCommentDialog(type, mPostVO.getId());
                 break;
             case R.id.like:
-                UserManager.giveLike("post", mPostVO.getId());
+                UserManager.addLike("post", mPostVO.getId());
                 break;
         }
     }

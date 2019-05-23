@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.cchao.simplelib.core.UiHelper;
 import com.cchao.insomnia.BR;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.view.adapter.DataBindQuickAdapter;
+import com.cchao.simplelib.core.UiHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzx.musiclibrary.aidl.model.SongInfo;
 import com.lzx.musiclibrary.manager.MusicManager;
@@ -33,6 +33,7 @@ public class PLayListFragment extends DialogFragment {
         super.onStart();
         initRecycler();
     }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -56,6 +57,7 @@ public class PLayListFragment extends DialogFragment {
 
         return dialog;
     }
+
     private void initRecycler() {
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 

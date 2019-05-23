@@ -80,6 +80,7 @@ public class FallImageActivity extends BaseTitleBarActivity<CommonRecyclerBindin
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Router.turnTo(mContext, ImageShowActivity.class)
                     .putExtra(Constants.Extra.IMAGE_URL, mAdapter.getData().get(position).getSrc())
+                    .putExtra(Constants.Extra.ID, mAdapter.getData().get(position).getId())
                     .start();
             }
         });
