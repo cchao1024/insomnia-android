@@ -48,6 +48,7 @@ public class Constants {
         String USER_EMAIL = "user_email";
         String LOGIN_TIPS = "login_tips";
         String MUSIC_PLAY_MODE = "music_play_mode";
+        String INIT_TIME_STAMP = "INIT_TIME_STAMP";
         String WISH_LIST = "wish_list";
     }
 

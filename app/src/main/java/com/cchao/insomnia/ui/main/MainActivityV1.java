@@ -1,9 +1,10 @@
-package com.cchao.insomnia;
+package com.cchao.insomnia.ui.main;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import com.cchao.insomnia.R;
 import com.cchao.simplelib.ui.activity.BaseActivity;
 
 public class MainActivityV1 extends BaseActivity {

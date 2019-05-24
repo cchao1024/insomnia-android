@@ -27,6 +27,8 @@ public class UserInfoActivity extends BaseTitleBarActivity<UserInfoActivityBindi
         mDataBind.setClick(this);
         mDataBind.setBean(UserManager.getUserBean());
         ImageLoader.loadImageCircle(mDataBind.avatar, UserManager.getUserBean().getAvatar(), R.drawable.default_portrait);
+//        int genderDrawable=UserManager.getUserBean().getGender()==1?R.drawable.user_info_gender
+//        mDataBind.name.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,,0);
     }
 
     @Override
@@ -39,6 +41,9 @@ public class UserInfoActivity extends BaseTitleBarActivity<UserInfoActivityBindi
         switch (view.getId()) {
             case R.id.edit_user_info:
                 Router.turnTo(mContext, EditUserInfoActivity.class).start();
+                break;
+            case R.id.title_background:
+                showText(R.string.developing);
                 break;
         }
     }

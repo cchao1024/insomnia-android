@@ -114,10 +114,14 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
             @Override
             protected void convert(DataBindViewHolder helper, FallMusic item) {
                 helper.getBinding().setVariable(BR.item, item);
-                helper.getBinding().getRoot().findViewById(R.id.more)
-                    .setOnClickListener(click -> {
-                        Dialogs.showMusicItemMenu(mLayoutInflater, item, FallFragment.this);
-                    });
+                helper.getView(R.id.more).setOnClickListener(click -> {
+                    Dialogs.showMusicItemMenu(mLayoutInflater, item, FallFragment.this);
+                });
+
+                helper.getConvertView().setOnLongClickListener(v -> {
+                    Dialogs.showMusicItemMenu(mLayoutInflater, item, FallFragment.this);
+                    return true;
+                });
             }
         });
         mMusicAdapter.setOnItemClickListener((adapter, view, position) -> {

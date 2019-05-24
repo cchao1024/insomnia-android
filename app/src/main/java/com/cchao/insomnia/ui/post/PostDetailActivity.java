@@ -26,6 +26,7 @@ import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
+import com.cchao.simplelib.util.CallBacks;
 import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
         setTitleText(R.string.post_detal);
         mDataBind.setClicker(this);
         initAdapter();
+        switchView(LOADING);
         onLoadData();
     }
 
@@ -63,7 +65,7 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
         mAdapter = new DataBindMultiQuickAdapter<CommentConvert>(null) {
             @Override
             public Map<Integer, Integer> getTypeLayoutMap() {
-                Map<Integer, Integer> map = new HashMap<>();
+                Map<Integer, Integer> map = new HashMap<>(4);
                 map.put(CommentConvert.TYPE_COMMENT, R.layout.post_comment_item);
                 map.put(CommentConvert.TYPE_REPLY, R.layout.post_reply_item);
                 return map;
@@ -84,14 +86,13 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
                 });
             }
         };
-
         mDataBind.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mDataBind.recyclerView.setAdapter(mAdapter);
+        mAdapter.setEmptyView(R.layout.post_empty, mDataBind.recyclerView);
     }
 
     @Override
     protected void onLoadData() {
-        switchView(LOADING);
         addSubscribe(RetrofitHelper.getApis().getPostDetail(mId)
             .compose(RxHelper.toMain())
             .subscribe(respBean -> {
@@ -127,12 +128,28 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
         mPostVO = data;
         mDataBind.setItem(data);
         updateImageBox(mDataBind.flexBox, data.getImageList());
+        // 点赞
+        mDataBind.like.setCallBack(new CallBacks.Bool() {
+            @Override
+            public void onCallBack(boolean bool) {
+                UserManager.addLike("post", mPostVO.getId(), bool12 -> {
+                    UserManager.addLike("post", mPostVO.getId()
+                        , bool1 -> {
+                            if (bool1) {
+                                mPostVO.setLiked(true);
+                                mPostVO.setLikeCount(mPostVO.getLikeCount() + 1);
+                            }
+                            mDataBind.like.updateToggle(mPostVO.isLiked(), mPostVO.getLikeCount());
+                        });
+                });
+            }
+        });
     }
 
     /**
      * 每个Item 都有5个 imageview，如果有没有imagePath 就set gone，
      */
-    private void updateImageBox(FlexboxLayout box, List<String> imageList) {
+    void updateImageBox(FlexboxLayout box, List<String> imageList) {
         for (int i = 0; i < Constants.Config.MAX_POST_IMAGE; i++) {
             ImageView view = (ImageView) box.getChildAt(i);
             // 有才显示
@@ -149,9 +166,6 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
             case R.id.bottom_action:
                 String type = mPostVO.getPostUserId() == mPostVO.getPostUserId() ? "comment" : "reply";
                 showCommentDialog(type, mPostVO.getId());
-                break;
-            case R.id.like:
-                UserManager.addLike("post", mPostVO.getId());
                 break;
         }
     }
@@ -177,6 +191,8 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
             }
             onSendComment(binding, type, id, () -> {
                 dialog.dismiss();
+                showProgress();
+                onLoadData();
             });
         });
     }

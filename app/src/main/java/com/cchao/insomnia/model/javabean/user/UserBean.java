@@ -16,5 +16,6 @@ public class UserBean {
     String nickName;
     String avatar;
     int getLike;
+    int gender;
     int age;
 }

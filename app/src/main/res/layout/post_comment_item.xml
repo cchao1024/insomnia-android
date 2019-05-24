@@ -78,16 +78,13 @@
             android:textColor="@color/text_blue"
             android:textSize="@dimen/sp_12"/>
 
-        <TextView
+        <com.cchao.insomnia.view.WishView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/dp_8"
-            android:drawableTop="@drawable/post_like_disable"
-            android:gravity="center"
-            android:text="@{String.valueOf(item.likeCount)}"
-            android:textSize="@dimen/sp_12"
-            tools:text="1"/>
+            app:wish_direction="top"/>
     </RelativeLayout>
 </layout>

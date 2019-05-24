@@ -21,14 +21,16 @@
         <ImageView
             android:id="@+id/title_background"
             android:layout_width="match_parent"
-            android:layout_height="180dp"/>
+            android:layout_height="180dp"
+            android:background="@drawable/user_main_login_bg"
+            android:onClick="@{click::onClick}"/>
 
         <ImageView
             android:id="@+id/avatar"
-            android:layout_width="@dimen/dp_60"
-            android:layout_height="@dimen/dp_60"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_80"
             android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="140dp"
             app:srcCompat="@drawable/default_portrait"/>
 
         <com.cchao.simplelib.view.StateTextView
@@ -38,7 +40,7 @@
             android:layout_alignBottom="@id/avatar"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/dp_32"
-            android:layout_marginBottom="@dimen/dp_4"
+            android:layout_marginBottom="@dimen/dp_22"
             android:onClick="@{click::onClick}"
             android:paddingStart="@dimen/dp_20"
             android:paddingEnd="@dimen/dp_20"
@@ -52,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/avatar"
             android:layout_alignStart="@+id/avatar"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_14"
             android:orientation="vertical">
 
             <TextView
@@ -61,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_family_medium"
                 android:text="@{bean.nickName}"
-                android:textSize="24sp"/>
+                android:textSize="26sp"/>
 
             <TextView
                 android:id="@+id/email"
@@ -69,6 +71,14 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_family_medium"
                 android:text="@{bean.email}"
+                android:textColor="@color/text_666"/>
+
+            <TextView
+                android:id="@+id/age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_4"
+                android:text="@{bean.age+` 岁`}"
                 android:textColor="@color/text_666"/>
 
             <LinearLayout

@@ -139,17 +139,14 @@ public class WishListActivity extends BaseTitleBarActivity<CommonRecyclerBinding
                         return;
                     }
                     helper.getBinding().setVariable(BR.item, itemMusic);
-                    helper.getBinding().getRoot().findViewById(R.id.more)
+                    helper.getView(R.id.more)
                         .setOnClickListener(click -> {
                             Dialogs.showMusicItemMenu(mLayoutInflater, itemMusic, WishListActivity.this);
                         });
 
-                    // click
-                    if (MusicPlayer.isCurPlaying(itemMusic)) {
-                        MusicPlayer.pause();
-                    } else {
-                        MusicPlayer.playNow(itemMusic);
-                    }
+                    helper.getConvertView().setOnClickListener(click -> {
+                        MusicPlayer.playOrPause(itemMusic);
+                    });
                     break;
             }
         }

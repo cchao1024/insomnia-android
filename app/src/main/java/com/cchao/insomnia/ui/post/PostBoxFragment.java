@@ -15,9 +15,11 @@ import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.databinding.PostBoxBinding;
 import com.cchao.insomnia.databinding.PostDetailCommentBinding;
 import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.manager.UserManager;
 import com.cchao.insomnia.model.javabean.RespListBean;
 import com.cchao.insomnia.model.javabean.post.PostListVO;
 import com.cchao.insomnia.util.TimeHelper;
+import com.cchao.insomnia.view.WishView;
 import com.cchao.insomnia.view.adapter.PageAdapter;
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Logs;
@@ -26,6 +28,7 @@ import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.fragment.BaseStatefulFragment;
+import com.cchao.simplelib.util.CallBacks;
 import com.cchao.simplelib.util.StringHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.flexbox.FlexboxLayout;
@@ -88,6 +91,19 @@ public class PostBoxFragment extends BaseStatefulFragment<PostBoxBinding> implem
                     @Override
                     public void onClick(View v) {
                         showCommentDialog(item.getId());
+                    }
+                });
+                ((WishView) helper.getView(R.id.like)).setCallBack(new CallBacks.Bool() {
+                    @Override
+                    public void onCallBack(boolean bool) {
+                        UserManager.addLike("post", item.getId()
+                            , bool1 -> {
+                                if (bool1) {
+                                    item.setLiked(true);
+                                    item.setLikeCount(item.getLikeCount() + 1);
+                                }
+                                ((WishView) helper.getView(R.id.like)).updateToggle(item.isLiked(), item.getLikeCount());
+                            });
                     }
                 });
             }

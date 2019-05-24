@@ -6,6 +6,4 @@
     android:layout_height="@dimen/dp_60"
     app:backgroundTint="@color/colorAction"
     app:rippleColor="@color/blue500"
-    app:srcCompat="@drawable/post_comment_action_button">
-
-</android.support.design.widget.FloatingActionButton>
+    app:srcCompat="@drawable/post_comment_action_button"/>

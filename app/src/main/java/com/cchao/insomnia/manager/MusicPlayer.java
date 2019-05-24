@@ -80,6 +80,14 @@ public class MusicPlayer {
         }
     }
 
+    public static void playOrPause(FallMusic item) {
+        if (getCurPlayingId() == item.getId()) {
+            pause();
+        }else {
+            playNow(item);
+        }
+    }
+
     public static void playNow(FallMusic item) {
         // 相同不处理
         if (mCurMusic.getSrc().equals(item.getSrc())) {

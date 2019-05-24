@@ -14,10 +14,10 @@ import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
 import com.cchao.simplelib.ui.web.WebViewActivity;
 
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
+ * 478
  * @author cchao
  * @version 2019-05-13.
  */
@@ -33,12 +33,12 @@ public class Play478Activity extends BaseTitleBarActivity<Play478ActivityBinding
     @Override
     protected void initEventAndData() {
         setTitleText(R.string.play_478);
-        addTitleMenuItem(R.drawable.action_down, new View.OnClickListener() {
+        addTitleMenuItem(R.drawable.action_question, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Router.turnTo(mContext, WebViewActivity.class)
                     .putExtra(Const.Extra.Web_View_Tile, getString(R.string.play_478))
-                    .putExtra(Const.Extra.Web_View_Url, Apis.aboutUs)
+                    .putExtra(Const.Extra.Web_View_Url, Apis.sleep478)
                     .start();
             }
         });
@@ -116,7 +116,7 @@ public class Play478Activity extends BaseTitleBarActivity<Play478ActivityBinding
         switch (view.getId()) {
             case R.id.action_button:
                 if (mIsPlaying) {
-                    mAnimatorSet.end();
+                    finish();
                 } else {
                     startPlay();
                 }

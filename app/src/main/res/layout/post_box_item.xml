@@ -120,15 +120,11 @@
                     android:layout_height="@dimen/dp_1"
                     android:layout_weight="1"/>
 
-                <TextView
+                <com.cchao.insomnia.view.WishView
                     android:id="@+id/like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/post_like_disable"
-                    android:drawablePadding="@dimen/dp_8"
-                    android:gravity="center_vertical"
-                    android:text="@{String.valueOf(item.likeCount)}"
-                    android:textColor="@color/text_666"
+                    app:wish_direction="left"
                     tools:text="1"/>
 
                 <TextView

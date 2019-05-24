@@ -1,5 +1,7 @@
 package com.cchao.insomnia.manager;
 
+import android.text.TextUtils;
+
 import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.model.javabean.user.UserBean;
@@ -9,6 +11,7 @@ import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.interfaces.BaseView;
+import com.cchao.simplelib.util.CallBacks;
 import com.cchao.simplelib.util.StringHelper;
 
 import java.util.ArrayList;
@@ -67,15 +70,25 @@ public class UserManager {
     }
 
     public static boolean isVisitor() {
-        return true;
+        return TextUtils.isEmpty(mUserBean.getEmail());
     }
 
-    public static void addLike(String type, long id) {
+    /**
+     * 点赞
+     *
+     * @param type     [post,comment,reply]
+     * @param id id
+     * @param callBack 回到 bool 成功与否
+     */
+    public static void addLike(String type, long id, CallBacks.Bool callBack) {
         Map<String, String> map = new HashMap<>();
         map.put("id", String.valueOf(id));
         Disposable disposable = RetrofitHelper.getApis().like(type, map)
             .compose(RxHelper.toMain())
             .subscribe(respBean -> {
+                if (callBack != null) {
+                    callBack.onCallBack(respBean.isCodeSuc());
+                }
                 if (respBean.isCodeFail()) {
                     UiHelper.showToast(respBean.getMsg());
                     return;

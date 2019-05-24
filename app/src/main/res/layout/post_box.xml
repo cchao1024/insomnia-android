@@ -23,15 +23,14 @@
                 android:layout_height="match_parent"/>
         </android.support.v4.widget.SwipeRefreshLayout>
 
-        <android.support.design.widget.FloatingActionButton
+        <include
             android:id="@+id/bottom_action"
-            android:layout_width="@dimen/dp_60"
-            android:layout_height="@dimen/dp_60"
+            layout="@layout/post_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/dp_20"
-            android:onClick="@{clicker::onClick}"
-            app:backgroundTint="@color/colorAction"
-            app:rippleColor="@color/blue500"
-            app:srcCompat="@drawable/post_comment_action_button"/>
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_32"
+            android:onClick="@{clicker::onClick}"/>
     </FrameLayout>
 </layout>

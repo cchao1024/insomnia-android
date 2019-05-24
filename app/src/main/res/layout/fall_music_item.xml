@@ -44,8 +44,7 @@
                     android:drawableStart="@drawable/play_count"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/dp_0"
-                    android:paddingEnd="@dimen/dp_4"
-                    android:text="@{item.play_count}"
+                    android:text="@{String.valueOf(item.play_count)}"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_12"
                     tools:text="12"/>
@@ -54,8 +53,7 @@
                     android:id="@+id/more"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:paddingStart="@dimen/dp_4"
-                    android:onClick="@{click::onClick}"
+                    android:paddingStart="@dimen/dp_5"
                     android:paddingEnd="@dimen/dp_5"
                     app:srcCompat="@drawable/music_item_more"/>
             </LinearLayout>

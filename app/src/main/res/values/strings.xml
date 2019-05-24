@@ -3,8 +3,8 @@
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
     <string name="tab_name_0">睡不着</string>
-    <string name="tab_name_1">数绵羊</string>
-    <string name="tab_name_2">说说</string>
+    <string name="tab_name_1">说说</string>
+    <string name="tab_name_2">数绵羊</string>
     <string name="music">音乐</string>
     <string name="sleep_image">图</string>
     <string name="sleep_music">音乐</string>
@@ -44,5 +44,6 @@
     <string name="start">开始</string>
     <string name="play_478">4-7-8呼吸法</string>
     <string name="stop">停止</string>
+    <string name="age">年龄</string>
 
 </resources>

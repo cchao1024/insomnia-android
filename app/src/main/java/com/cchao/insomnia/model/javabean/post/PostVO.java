@@ -15,6 +15,7 @@ public class PostVO {
     long id;
     long postUserId;
     int likeCount;
+    boolean isLiked;
     String content;
     String postUserName;
     String postUserAvatar;

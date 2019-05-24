@@ -11,7 +11,7 @@ public class FallMusic {
     private String name;
     private String src;
     private String singer;
-    private String play_count;
+    private int play_count;
     private String cover_img;
 
     public ObservableBoolean isPlaying = new ObservableBoolean(false);

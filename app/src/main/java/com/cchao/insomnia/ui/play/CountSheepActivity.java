@@ -4,10 +4,13 @@ import android.view.View;
 
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.databinding.CountSheepActivityBinding;
+import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
 
 import org.apache.commons.lang3.RandomUtils;
+
+import java.util.Locale;
 
 /**
  * @author cchao
@@ -26,7 +29,6 @@ public class CountSheepActivity extends BaseTitleBarActivity<CountSheepActivityB
     protected void initEventAndData() {
         setTitleText("数绵羊");
         mDataBind.setClick(this);
-        changeLayout();
     }
 
     @Override
@@ -36,8 +38,8 @@ public class CountSheepActivity extends BaseTitleBarActivity<CountSheepActivityB
 
     @Override
     public void onBackPressed() {
-        int second = (int) (System.currentTimeMillis() - mStartTimeStamp) / 1000;
-        String averSecond = String.format("0.2f%", second * 1.0f / mCountNum);
+        int second = (int) ((System.currentTimeMillis() - mStartTimeStamp) / 1000);
+        String averSecond = String.format(Locale.getDefault(), "%.2f", second * 1.0f / mCountNum);
         String msg = "你一共数了" + mCountNum + "只绵羊\n共耗时 " + second + " 秒" + "\n平均每只耗时 " + averSecond + " 秒";
         UiHelper.showConfirmDialog(mContext, msg, (dialogInterface, i) -> {
             dialogInterface.dismiss();
@@ -62,6 +64,20 @@ public class CountSheepActivity extends BaseTitleBarActivity<CountSheepActivityB
         int viewWidth = UiHelper.dp2px(60);
         int x = RandomUtils.nextInt(viewWidth, UiHelper.getScreenWidth() - viewWidth);
         int y = RandomUtils.nextInt(viewWidth, UiHelper.getScreenHeight() - viewWidth - UiHelper.dp2px(100));
-        mDataBind.sheep.layout(x, y, x + viewWidth, y + viewWidth);
+
+        // 先透明下 200毫秒后 又显示
+        int alphaDuration = 200;
+        int hideDuration = 100;
+        mDataBind.sheep.animate().alpha(0.5f).setDuration(alphaDuration).withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                UiHelper.setVisibleElseGone(mDataBind.sheep, false);
+            }
+        }).start();
+        mDataBind.sheep.animate().alpha(1f).setDuration(alphaDuration).setStartDelay(alphaDuration + hideDuration).start();
+        RxHelper.timerConsumer(alphaDuration + hideDuration, aLong -> {
+            UiHelper.setVisibleElseGone(mDataBind.sheep, true);
+            mDataBind.sheep.layout(x, y, x + viewWidth, y + viewWidth);
+        });
     }
 }

@@ -1,4 +1,4 @@
-package com.cchao.insomnia;
+package com.cchao.insomnia.ui.main;
 
 import android.app.Dialog;
 import android.databinding.DataBindingUtil;
@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.Apis;
 import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.databinding.HomeDrawerMenuItemBinding;
@@ -42,6 +43,7 @@ import com.cchao.insomnia.ui.post.PostBoxFragment;
 import com.cchao.simplelib.Const;
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Logs;
+import com.cchao.simplelib.core.PrefHelper;
 import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
@@ -119,8 +121,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      */
     private void initTabLayout() {
         mFragments.add(new FallFragment());
-        mFragments.add(new PlayFragment());
         mFragments.add(new PostBoxFragment());
+        mFragments.add(new PlayFragment());
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -385,6 +387,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         mBinding.userName.setText(userInfoBean.getNickName());
         mBinding.userEmail.setText(userInfoBean.getEmail());
+        int day = (int) ((System.currentTimeMillis() - PrefHelper.getLong(Constants.Prefs.INIT_TIME_STAMP)) / 1000 * 60 * 60 * 24);
+        mBinding.hasRunning.setText("已陪伴您" + day + "天");
         if (UserManager.isVisitor()) {
             mBinding.userEmail.setText(R.string.no_bind_email);
         }

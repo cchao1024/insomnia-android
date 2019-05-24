@@ -88,21 +88,21 @@
                     android:orientation="vertical">
 
                     <!-- 登录信息 -->
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/login_field"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:background="@drawable/user_main_login_bg"
-                        android:gravity="center_vertical"
                         android:onClick="@{click::onClick}"
                         android:paddingStart="@dimen/dp_16"
-                        android:paddingTop="@dimen/dp_24"
                         android:paddingEnd="@dimen/dp_16">
 
                         <ImageView
                             android:id="@+id/icon_portrait"
                             android:layout_width="55dp"
                             android:layout_height="55dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="@dimen/dp_40"
                             android:padding="@dimen/dp_2"
                             app:srcCompat="@drawable/user_login_avatar"/>
 
@@ -110,7 +110,10 @@
                             android:id="@+id/user_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/icon_portrait"
                             android:layout_marginStart="@dimen/dp_12"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:layout_toEndOf="@id/icon_portrait"
                             android:orientation="vertical">
 
                             <TextView
@@ -130,8 +133,16 @@
                                 android:text="@string/log_in"
                                 android:textColor="@color/divider_b6"
                                 android:textSize="@dimen/sp_12"/>
+
+                            <TextView
+                                android:id="@+id/has_running"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_12"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_12"/>
                         </LinearLayout>
-                    </LinearLayout>
+                    </RelativeLayout>
 
                     <!-- 抽屉menu -->
                     <LinearLayout
