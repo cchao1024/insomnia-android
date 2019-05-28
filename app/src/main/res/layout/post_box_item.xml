@@ -120,11 +120,12 @@
                     android:layout_height="@dimen/dp_1"
                     android:layout_weight="1"/>
 
-                <com.cchao.insomnia.view.WishView
+                <com.cchao.insomnia.view.wish.WishView
                     android:id="@+id/like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:wish_direction="left"
+                    app:wish_num="@{item.likeCount}"
                     tools:text="1"/>
 
                 <TextView

@@ -21,8 +21,10 @@ import com.cchao.insomnia.model.javabean.post.PostVO;
 import com.cchao.insomnia.model.javabean.post.ReplyVO;
 import com.cchao.insomnia.ui.post.convert.CommentConvert;
 import com.cchao.insomnia.view.adapter.DataBindMultiQuickAdapter;
+import com.cchao.insomnia.view.wish.WishView;
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Logs;
+import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
@@ -84,6 +86,17 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
                 helper.getView(R.id.reply).setOnClickListener(view -> {
                     showCommentDialog("reply", item.getToId());
                 });
+                ((WishView) helper.getView(R.id.like)).setCallBack(new CallBacks.Bool() {
+                    @Override
+                    public void onCallBack(boolean bool) {
+                        item.addLike(new Runnable() {
+                            @Override
+                            public void run() {
+                                ((WishView) helper.getView(R.id.like)).updateToggle(item.getMSourceBean().isLiked(), item.getLikeCount());
+                            }
+                        });
+                    }
+                });
             }
         };
         mDataBind.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -132,15 +145,13 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
         mDataBind.like.setCallBack(new CallBacks.Bool() {
             @Override
             public void onCallBack(boolean bool) {
-                UserManager.addLike("post", mPostVO.getId(), bool12 -> {
-                    UserManager.addLike("post", mPostVO.getId()
-                        , bool1 -> {
-                            if (bool1) {
-                                mPostVO.setLiked(true);
-                                mPostVO.setLikeCount(mPostVO.getLikeCount() + 1);
-                            }
-                            mDataBind.like.updateToggle(mPostVO.isLiked(), mPostVO.getLikeCount());
-                        });
+                UserManager.addLike("post", mPostVO.getId(), bool1 -> {
+                    if (bool1) {
+                        mPostVO.setLiked(true);
+                        mPostVO.setLikeCount(mPostVO.getLikeCount() + 1);
+                    }
+                    mDataBind.like.updateToggle(mPostVO.isLiked(), mPostVO.getLikeCount());
+                    RxBus.get().postEvent(Constants.Event.update_post_like_count, mPostVO);
                 });
             }
         });

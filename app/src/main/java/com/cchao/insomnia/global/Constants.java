@@ -40,6 +40,8 @@ public class Constants {
         int Update_Play_Status = 61;
         int Update_Post_Box = 10001;
         int update_count_down = 1002;
+        int update_post_like_count = 1003;
+        int update_post_comment_count = 1004;
     }
 
     public interface Prefs {

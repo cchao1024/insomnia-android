@@ -1,4 +1,4 @@
-package com.cchao.insomnia.view;
+package com.cchao.insomnia.view.wish;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -73,16 +73,19 @@ public class WishView extends RelativeLayout {
     public WishView setDrawablePair(Drawable likedDrawable, Drawable unLikeDrawable) {
         mLikedDrawable = likedDrawable;
         mUnLikeDrawable = unLikeDrawable;
+        updateToggle(mIsLiked, mLikeNum);
         return this;
     }
 
     public WishView setDirection(int direction) {
         mDirection = direction;
+        updateToggle(mIsLiked, mLikeNum);
         return this;
     }
 
     public WishView setNum(int num) {
         mLikeNum = num;
+        updateToggle(mIsLiked, mLikeNum);
         return this;
     }
 

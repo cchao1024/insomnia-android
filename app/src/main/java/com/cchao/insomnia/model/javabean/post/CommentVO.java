@@ -10,7 +10,7 @@ import lombok.Data;
  * @version 2019-03-11
  */
 @Data
-public class CommentVO {
+public class CommentVO extends Replyable{
 
     long id;
     long postId;
@@ -22,7 +22,6 @@ public class CommentVO {
     String commentUserName;
     String commentUserAvatar;
 
-    int likeCount;
     String content;
     String images;
     Date updateTime;

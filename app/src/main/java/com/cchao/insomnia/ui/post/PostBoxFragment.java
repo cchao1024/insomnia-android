@@ -18,15 +18,16 @@ import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.manager.UserManager;
 import com.cchao.insomnia.model.javabean.RespListBean;
 import com.cchao.insomnia.model.javabean.post.PostListVO;
+import com.cchao.insomnia.model.javabean.post.PostVO;
 import com.cchao.insomnia.util.TimeHelper;
-import com.cchao.insomnia.view.WishView;
 import com.cchao.insomnia.view.adapter.PageAdapter;
+import com.cchao.insomnia.view.wish.WishView;
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.Router;
-import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
+import com.cchao.simplelib.model.event.CommonEvent;
 import com.cchao.simplelib.ui.fragment.BaseStatefulFragment;
 import com.cchao.simplelib.util.CallBacks;
 import com.cchao.simplelib.util.StringHelper;
@@ -56,15 +57,26 @@ public class PostBoxFragment extends BaseStatefulFragment<PostBoxBinding> implem
     protected void initEventAndData() {
         mDataBind.setClicker(this);
         mDataBind.refreshLayout.setOnRefreshListener(() -> onLoadData());
-        initEvent();
         initAdapter();
         onLoadData();
     }
 
-    private void initEvent() {
-        addSubscribe(RxBus.getDefault().toObserveCode(Constants.Event.Update_Post_Box, commonEvent -> {
-            mDataBind.refreshLayout.setRefreshing(true);
-        }));
+    @Override
+    public void onEvent(CommonEvent event) {
+        switch (event.getCode()) {
+            case Constants.Event.update_post_comment_count:
+            case Constants.Event.update_post_like_count:
+                PostVO eventPost = event.getBean();
+                for (int i = 0; i < mAdapter.getData().size(); i++) {
+                    if (eventPost.getId() == mAdapter.getItem(i).getId()) {
+                        PostListVO postListVO = mAdapter.getItem(i);
+                        postListVO.setLikeCount(eventPost.getLikeCount());
+                        postListVO.setReviewCount(postListVO.getReviewCount() + 1);
+                        mAdapter.setData(i, postListVO);
+                    }
+                }
+                break;
+        }
     }
 
     private void initAdapter() {

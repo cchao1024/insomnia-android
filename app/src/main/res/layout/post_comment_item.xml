@@ -18,19 +18,13 @@
         android:paddingEnd="@dimen/dp_16"
         android:paddingBottom="@dimen/dp_2">
 
-        <Space
-            android:id="@+id/space"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_0"
-            android:visibility="visible"/>
 
         <ImageView
             android:id="@+id/from_user_avatar"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
             android:layout_marginStart="@dimen/dp_16"
-            android:layout_toEndOf="@+id/space"
-            bind:url="@{item.fromUserAvatar}"/>
+            bind:circleUrl="@{item.fromUserAvatar}"/>
 
         <TextView
             android:id="@+id/from_user_name"
@@ -78,13 +72,14 @@
             android:textColor="@color/text_blue"
             android:textSize="@dimen/sp_12"/>
 
-        <com.cchao.insomnia.view.WishView
+        <com.cchao.insomnia.view.wish.WishView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/dp_8"
+            app:wish_num="@{item.likeCount}"
             app:wish_direction="top"/>
     </RelativeLayout>
 </layout>

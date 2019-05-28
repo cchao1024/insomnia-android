@@ -10,12 +10,10 @@ import lombok.Data;
  * @version 2019-03-11
  */
 @Data
-public class PostVO {
+public class PostVO extends Replyable{
 
     long id;
     long postUserId;
-    int likeCount;
-    boolean isLiked;
     String content;
     String postUserName;
     String postUserAvatar;

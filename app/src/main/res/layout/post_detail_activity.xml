@@ -70,13 +70,14 @@
                     android:textSize="@dimen/sp_20"
                     tools:text="@string/app_name"/>
 
-                <com.cchao.insomnia.view.WishView
+                <com.cchao.insomnia.view.wish.WishView
                     android:id="@+id/like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/dp_8"
-                    app:wish_direction="top"/>
+                    app:wish_direction="top"
+                    app:wish_num="@{item.likeCount}"/>
 
                 <com.google.android.flexbox.FlexboxLayout
                     android:id="@+id/flex_box"
@@ -142,6 +143,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_100"
             android:onClick="@{clicker::onClick}"/>
     </RelativeLayout>
 </layout>
