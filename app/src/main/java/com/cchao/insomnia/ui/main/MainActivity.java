@@ -40,7 +40,9 @@ import com.cchao.insomnia.ui.account.WishListActivity;
 import com.cchao.insomnia.ui.fall.FallFragment;
 import com.cchao.insomnia.ui.play.PlayFragment;
 import com.cchao.insomnia.ui.post.PostBoxFragment;
+import com.cchao.insomnia.view.Dialogs;
 import com.cchao.simplelib.Const;
+import com.cchao.simplelib.LibCore;
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.PrefHelper;
@@ -263,6 +265,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case Constants.Drawer.Settings:
                 showText(R.string.developing);
+                if (LibCore.getInfo().isDebug()) {
+                    Dialogs.showDebug(mLayoutInflater);
+                }
                 break;
             default:
                 break;
@@ -387,10 +392,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         mBinding.userName.setText(userInfoBean.getNickName());
         mBinding.userEmail.setText(userInfoBean.getEmail());
-        int day = (int) ((System.currentTimeMillis() - PrefHelper.getLong(Constants.Prefs.INIT_TIME_STAMP)) / 1000 * 60 * 60 * 24);
-        mBinding.hasRunning.setText("已陪伴您" + day + "天");
+        int day = (int) ((System.currentTimeMillis() - PrefHelper.getLong(Constants.Prefs.INIT_TIME_STAMP)) / (1000 * 60 * 60 * 24L));
+        mBinding.hasRunning.setText(getString(R.string.app_name) + " 已经陪伴了你" + day + "个夜晚");
         if (UserManager.isVisitor()) {
             mBinding.userEmail.setText(R.string.no_bind_email);
+        }
+    }
+
+    long mExitTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            showText("再按一次退出程序");
+            mExitTime = System.currentTimeMillis();
+        } else {
+            super.onBackPressed();
         }
     }
 

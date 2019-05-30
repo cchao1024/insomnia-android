@@ -78,7 +78,7 @@ public interface Apis {
 
     @FormUrlEncoded
     @POST("/post/new")
-    Observable<RespBean> addPost(@Field("content") String content, @Field("imageList") String images);
+    Observable<RespBean> addPost(@Field("content") String content, @Field("images") String images);
 
     @FormUrlEncoded
     @POST("/{type}/new")

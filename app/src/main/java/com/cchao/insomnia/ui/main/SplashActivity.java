@@ -3,6 +3,7 @@ package com.cchao.insomnia.ui.main;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.manager.GlobalHelper;
+import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.PrefHelper;
 import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.RxHelper;
@@ -21,15 +22,23 @@ public class SplashActivity extends BaseStatefulActivity {
     @Override
     protected void initEventAndData() {
         GlobalHelper.syncAppInfo(appLaunchRespBean -> {
-            RxHelper.timerConsumer(1000, consumer -> {
-                Router.turnTo(mContext, MainActivity.class).start();
-                finish();
-            });
+            toMainPage();
+        }, throwable -> {
+            Logs.logException(throwable);
+            showText("同步信息失败");
+            toMainPage();
         });
 
         if (!PrefHelper.contains(Constants.Prefs.INIT_TIME_STAMP)) {
-            PrefHelper.putLong(Constants.Prefs.INIT_TIME_STAMP,System.currentTimeMillis());
+            PrefHelper.putLong(Constants.Prefs.INIT_TIME_STAMP, System.currentTimeMillis());
         }
+    }
+
+    void toMainPage() {
+        RxHelper.timerConsumer(1000, consumer -> {
+            Router.turnTo(mContext, MainActivity.class).start();
+            finish();
+        });
     }
 
     @Override

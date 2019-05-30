@@ -4,7 +4,9 @@ import android.view.View;
 
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.databinding.UserInfoActivityBinding;
+import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.manager.UserManager;
+import com.cchao.insomnia.ui.global.ImageShowActivity;
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
@@ -44,6 +46,11 @@ public class UserInfoActivity extends BaseTitleBarActivity<UserInfoActivityBindi
                 break;
             case R.id.title_background:
                 showText(R.string.developing);
+                break;
+            case R.id.avatar:
+                Router.turnTo(mContext, ImageShowActivity.class)
+                    .putExtra(Constants.Extra.IMAGE_URL, UserManager.getUserBean().getAvatar())
+                    .start();
                 break;
         }
     }

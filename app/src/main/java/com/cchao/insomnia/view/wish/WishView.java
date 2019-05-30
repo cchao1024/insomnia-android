@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.databinding.WishViewBinding;
+import com.cchao.insomnia.manager.UserManager;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.util.CallBacks;
 
@@ -30,8 +31,8 @@ public class WishView extends RelativeLayout {
     CallBacks.Bool mCallBack;
     int mDirection = DIRECT_TOP;
     int mLikeNum = 0;
-    Drawable mLikedDrawable = UiHelper.getDrawable(R.drawable.like_ed);
-    Drawable mUnLikeDrawable = UiHelper.getDrawable(R.drawable.like_un);
+    Drawable mLikedDrawable = UiHelper.getDrawable(R.drawable.ic_wish_ed);
+    Drawable mUnLikeDrawable = UiHelper.getDrawable(R.drawable.ic_wish_grey);
 
     public WishView(Context context) {
         this(context, null);
@@ -120,7 +121,7 @@ public class WishView extends RelativeLayout {
         return this;
     }
 
-    public WishView setCallBack(CallBacks.Bool callBack) {
+    public WishView setWishCallBack(CallBacks.Bool callBack) {
         mCallBack = callBack;
         return this;
     }

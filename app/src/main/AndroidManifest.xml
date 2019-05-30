@@ -37,7 +37,7 @@
         <activity android:name=".ui.post.AddPostActivity"/>
         <activity android:name=".ui.main.MainActivity"/>
         <activity android:name=".ui.account.EditUserInfoActivity"/>
-        <activity android:name=".ui.account.UserInfoActivity"/>
+        <activity android:name=".ui.account.UserInfoActivity" android:theme="@style/ThemeTranStatusBar"/>
         <activity android:name=".ui.play.Play478Activity"/>
         <activity android:name=".ui.play.CountSheepActivity"/>
         <activity android:name=".ui.account.WishListActivity"/>

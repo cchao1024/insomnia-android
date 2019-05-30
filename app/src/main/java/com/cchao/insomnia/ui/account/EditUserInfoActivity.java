@@ -42,8 +42,10 @@ public class EditUserInfoActivity extends BaseTitleBarActivity<UserInfoEditActiv
     @Override
     protected void initEventAndData() {
         setTitleText(R.string.edit_user_info);
+        mDataBind.setUser(UserManager.getUserBean());
         if (UserManager.isVisitor()) {
             setTitleText(R.string.bind_visitor_info);
+            mDataBind.email.setText("");
         }
 
         addTitleMenuItem(R.drawable.action_down, v -> {

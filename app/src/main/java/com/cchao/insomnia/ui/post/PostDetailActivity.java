@@ -70,29 +70,39 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
                 Map<Integer, Integer> map = new HashMap<>(4);
                 map.put(CommentConvert.TYPE_COMMENT, R.layout.post_comment_item);
                 map.put(CommentConvert.TYPE_REPLY, R.layout.post_reply_item);
+                map.put(CommentConvert.TYPE_REPLY_Back, R.layout.post_reply_item);
                 return map;
             }
 
             @Override
             protected void convert(DataBindViewHolder helper, CommentConvert item) {
+                UserManager.processIsWish(item);
                 helper.getBinding().setVariable(BR.item, item);
                 switch (helper.getItemViewType()) {
                     case CommentConvert.TYPE_COMMENT:
                         break;
                     case CommentConvert.TYPE_REPLY:
+                        UiHelper.setVisibleElseGone(helper.getView(R.id.reply_label), false);
+                        UiHelper.setVisibleElseGone(helper.getView(R.id.to_user_name), false);
+                        break;
+                    case CommentConvert.TYPE_REPLY_Back:
+                        UiHelper.setVisibleElseGone(helper.getView(R.id.reply_label), true);
+                        UiHelper.setVisibleElseGone(helper.getView(R.id.to_user_name), true);
                         helper.setText(R.id.to_user_name, item.getToUserName());
                         break;
                 }
+
                 helper.getView(R.id.reply).setOnClickListener(view -> {
-                    showCommentDialog("reply", item.getToId());
+                    showCommentDialog("reply", item.getCommentId(), item.getReplyId());
                 });
-                ((WishView) helper.getView(R.id.like)).setCallBack(new CallBacks.Bool() {
+                WishView wishView = helper.getView(R.id.like);
+                wishView.setWishCallBack(new CallBacks.Bool() {
                     @Override
                     public void onCallBack(boolean bool) {
                         item.addLike(new Runnable() {
                             @Override
                             public void run() {
-                                ((WishView) helper.getView(R.id.like)).updateToggle(item.getMSourceBean().isLiked(), item.getLikeCount());
+                                wishView.updateToggle(item.getMSourceBean().isLiked(), item.getMSourceBean().getLikeCount());
                             }
                         });
                     }
@@ -109,6 +119,7 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
         addSubscribe(RetrofitHelper.getApis().getPostDetail(mId)
             .compose(RxHelper.toMain())
             .subscribe(respBean -> {
+                hideProgress();
                 if (respBean.isCodeFail()) {
                     showText(respBean.getMsg());
                     switchView(NET_ERROR);
@@ -123,26 +134,30 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
     private void convertData(List<CommentVO> list) {
         List<CommentConvert> result = new ArrayList<>();
 
+        // 遍历处理数据
         for (CommentVO commentVO : list) {
             result.add(CommentConvert.fromCommentVo(commentVO));
-
             // 遍历reply
             for (ReplyVO replyVO : commentVO.getList()) {
                 result.add(CommentConvert.fromReplyVO(replyVO));
             }
         }
-        mAdapter.addData(result);
+        mAdapter.setNewData(result);
+        mAdapter.loadMoreEnd();
     }
 
     /**
      * 更新detail
      */
     private void updateDetail(PostVO data) {
+        UserManager.processIsWish(data);
         mPostVO = data;
         mDataBind.setItem(data);
         updateImageBox(mDataBind.flexBox, data.getImageList());
+
         // 点赞
-        mDataBind.like.setCallBack(new CallBacks.Bool() {
+        mDataBind.like.updateToggle(mPostVO.isLiked(), mPostVO.getLikeCount());
+        mDataBind.like.setWishCallBack(new CallBacks.Bool() {
             @Override
             public void onCallBack(boolean bool) {
                 UserManager.addLike("post", mPostVO.getId(), bool1 -> {
@@ -175,8 +190,7 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bottom_action:
-                String type = mPostVO.getPostUserId() == mPostVO.getPostUserId() ? "comment" : "reply";
-                showCommentDialog(type, mPostVO.getId());
+                showCommentDialog("comment", mPostVO.getId(), 0);
                 break;
         }
     }
@@ -184,9 +198,11 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
     /**
      * 显示评论对话框，用户输入，点发送
      *
-     * @param id toId
+     * @param type    为 comment 时 toId 表示 postId，
+     *                为 reply 是 toId 表示 commentId
+     * @param replyId 不为空 为 回复用户
      */
-    private void showCommentDialog(String type, long id) {
+    private void showCommentDialog(String type, long toId, long replyId) {
         PostDetailCommentBinding binding = DataBindingUtil.inflate(mLayoutInflater
             , R.layout.post_detail_comment, null, false);
 
@@ -199,8 +215,9 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
         binding.send.setOnClickListener(click -> {
             if (TextUtils.isEmpty(binding.edit.getText().toString())) {
                 showText("内容不能为空");
+                return;
             }
-            onSendComment(binding, type, id, () -> {
+            onSendComment(binding, type, toId, replyId, () -> {
                 dialog.dismiss();
                 showProgress();
                 onLoadData();
@@ -212,14 +229,15 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
      * 发送评论，
      * 如果toUserId == PostUserId 则为评论，否则为回复
      */
-    void onSendComment(PostDetailCommentBinding binding, String type, long id, Runnable callback) {
+    void onSendComment(PostDetailCommentBinding binding, String type, long id, long replyId, Runnable callback) {
         UiHelper.setVisibleElseGone(binding.send, false);
         UiHelper.setVisibleElseGone(binding.progress, true);
 
         ArrayMap<String, String> map = new ArrayMap<>();
         map.put("toId", String.valueOf(id));
+        map.put("replyId", String.valueOf(replyId));
         map.put("content", binding.edit.getText().toString());
-        map.put("imageList", "");
+        map.put("images", "");
 
         addSubscribe(RetrofitHelper.getApis().addCommentOrReply(type, map)
             .compose(RxHelper.toMain())

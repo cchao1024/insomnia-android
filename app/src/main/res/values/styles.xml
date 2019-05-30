@@ -3,9 +3,11 @@
     <style name="AppTheme" parent="@style/BaseTheme">
         <item name="android:textColorSecondary">@color/text_333</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ThemeTranStatusBar" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
 
     <style name="ClickableImageView">
         <item name="android:layout_height">wrap_content</item>

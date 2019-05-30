@@ -15,6 +15,8 @@ public class ReplyVO extends Replyable{
     long postId;
     long commentId;
     long commentUserId;
+    long toUserId;
+    long toReplyId;
     long replyUserId;
     String replyUserName;
     String replyUserAvatar;

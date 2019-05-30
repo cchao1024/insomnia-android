@@ -4,7 +4,11 @@ import android.text.TextUtils;
 
 import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.model.javabean.post.PostListVO;
+import com.cchao.insomnia.model.javabean.post.PostVO;
 import com.cchao.insomnia.model.javabean.user.UserBean;
+import com.cchao.insomnia.ui.post.convert.CommentConvert;
+import com.cchao.simplelib.LibCore;
 import com.cchao.simplelib.core.GsonUtil;
 import com.cchao.simplelib.core.PrefHelper;
 import com.cchao.simplelib.core.RxBus;
@@ -12,7 +16,6 @@ import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.interfaces.BaseView;
 import com.cchao.simplelib.util.CallBacks;
-import com.cchao.simplelib.util.StringHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,21 +38,36 @@ public class UserManager {
         mUserBean = GsonUtil.fromJson(PrefHelper.getString(Constants.Prefs.USER_INFO), UserBean.class);
     }
 
-    public static boolean isInWishList(String id) {
-        if (StringHelper.isEmpty(id)) {
-            return false;
+    public static void processIsWish(Object object) {
+        if (object instanceof PostListVO) {
+            if (isInWishList(((PostListVO) object).getId())) {
+                ((PostListVO) object).setLiked(true);
+            }
+        } else if (object instanceof CommentConvert) {
+            if (isInWishList(((CommentConvert) object).getId())) {
+                ((CommentConvert) object).getMSourceBean().setLiked(true);
+            }
+        } else if (object instanceof PostVO) {
+            if (isInWishList(((PostVO) object).getId())) {
+                ((PostVO) object).setLiked(true);
+            }
         }
+    }
+
+    public static boolean isInWishList(long id) {
         for (String s : mWishList) {
-            if (id.equalsIgnoreCase(s)) {
+            if (String.valueOf(id).equalsIgnoreCase(s)) {
                 return true;
             }
         }
         return false;
     }
 
-    public static void toggleWish(String id) {
-        mWishList.add(id);
-        PrefHelper.putString(Constants.Prefs.WISH_LIST, GsonUtil.toJson(mWishList));
+    public static void toggleWish(long id) {
+        if (!isInWishList(id)) {
+            mWishList.add(String.valueOf(id));
+            PrefHelper.putString(Constants.Prefs.WISH_LIST, GsonUtil.toJson(mWishList));
+        }
     }
 
     public static void setUserBean(UserBean userBean) {
@@ -57,6 +75,19 @@ public class UserManager {
         PrefHelper.putString(Constants.Prefs.USER_INFO, GsonUtil.toJson(userBean));
         RxBus.get().post(userBean);
     }
+
+    /**
+     * 仅用于 debug模式
+     */
+    public static void setToken(String token) {
+        if (!LibCore.isDebug()) {
+            UiHelper.showToast("仅用于 debug模式");
+            return;
+        }
+        mUserBean.setToken(token);
+        setUserBean(mUserBean);
+    }
+
 
     public static UserBean getUserBean() {
         return mUserBean;
@@ -77,7 +108,7 @@ public class UserManager {
      * 点赞
      *
      * @param type     [post,comment,reply]
-     * @param id id
+     * @param id       id
      * @param callBack 回到 bool 成功与否
      */
     public static void addLike(String type, long id, CallBacks.Bool callBack) {
@@ -94,6 +125,7 @@ public class UserManager {
                     return;
                 }
             }, RxHelper.getErrorConsumer());
+        UserManager.toggleWish(id);
     }
 
     public static void addWish(long id, BaseView baseView) {

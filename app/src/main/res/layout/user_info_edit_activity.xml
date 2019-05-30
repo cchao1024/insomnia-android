@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="user"
+            type="com.cchao.insomnia.model.javabean.user.UserBean"/>
+
+        <variable
             name="click"
             type="android.view.View.OnClickListener"/>
     </data>
@@ -18,6 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:paddingStart="@dimen/dp_16"
             android:paddingEnd="@dimen/dp_16">
 
@@ -61,7 +67,8 @@
                         android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/user_name"/>
+                        android:hint="@string/user_name"
+                        android:text="@{user.nickName}"/>
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
@@ -86,7 +93,7 @@
                         android:id="@+id/check_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
+                        android:checked="@{user.gender==1}"
                         android:text="@string/man"/>
 
                     <CheckBox
@@ -94,6 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_16"
+                        android:checked="@{user.gender==0}"
                         android:text="@string/woman"/>
                 </LinearLayout>
             </LinearLayout>
@@ -118,7 +126,8 @@
                         android:id="@+id/age"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/age"/>
+                        android:hint="@string/age"
+                        android:text="@{String.valueOf(user.age)}"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
@@ -143,7 +152,8 @@
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/user_email"/>
+                        android:hint="@string/user_email"
+                        android:text="@{user.email}"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 

@@ -131,16 +131,16 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_4"
                                 android:text="@string/log_in"
-                                android:textColor="@color/divider_b6"
+                                android:textColor="@color/white_eeeeee"
                                 android:textSize="@dimen/sp_12"/>
 
                             <TextView
                                 android:id="@+id/has_running"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dp_12"
+                                android:layout_marginTop="@dimen/dp_20"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/sp_12"/>
+                                android:textSize="@dimen/sp_10"/>
                         </LinearLayout>
                     </RelativeLayout>
 

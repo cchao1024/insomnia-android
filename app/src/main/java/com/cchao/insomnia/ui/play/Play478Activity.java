@@ -18,6 +18,7 @@ import io.reactivex.functions.Consumer;
 
 /**
  * 478
+ *
  * @author cchao
  * @version 2019-05-13.
  */
@@ -37,7 +38,7 @@ public class Play478Activity extends BaseTitleBarActivity<Play478ActivityBinding
             @Override
             public void onClick(View view) {
                 Router.turnTo(mContext, WebViewActivity.class)
-                    .putExtra(Const.Extra.Web_View_Tile, getString(R.string.play_478))
+                    .putExtra(Const.Extra.Web_View_Tile, getString(R.string.desc))
                     .putExtra(Const.Extra.Web_View_Url, Apis.sleep478)
                     .start();
             }
@@ -86,27 +87,12 @@ public class Play478Activity extends BaseTitleBarActivity<Play478ActivityBinding
             @Override
             public void accept(Long aLong) throws Exception {
                 mDataBind.stepTips.setText("屏住呼吸 7s");
-/*                mDataBind.progressBar.setVisibility(View.VISIBLE);
-                mDataBind.progressBar.setMax(100);
-                long startTime = System.currentTimeMillis();
-                disposable = Observable.interval(10, TimeUnit.MILLISECONDS)
-                    .compose(RxHelper.toMain())
-                    .subscribe(consumer -> {
-                        int progress = (int) ((System.currentTimeMillis() - startTime) / 7000.0 * 100);
-                        mDataBind.progressBar.setProgress(progress);
-                        if (progress > 100) {
-                            disposable.dispose();
-                        }
-                    });
-                addSubscribe(disposable);*/
             }
         });
         RxHelper.timerConsumer(4000 + 7000, new Consumer<Long>() {
             @Override
             public void accept(Long aLong) throws Exception {
                 mDataBind.stepTips.setText("呼气 8s");
-//                mDataBind.progressBar.setVisibility(View.GONE);
-//                mDataBind.progressBar.setProgress(0);
             }
         });
     }

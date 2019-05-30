@@ -19,7 +19,7 @@ public class GlobalHelper {
     /**
      * 启动同步获取app信息
      */
-    public static void syncAppInfo(Consumer<RespBean<AppLaunch>> consumer) {
+    public static void syncAppInfo(Consumer<RespBean<AppLaunch>> consumer,Consumer<Throwable> throwableConsumer) {
         Disposable disposable = RetrofitHelper.getApis().appLaunch()
             .compose(RxHelper.toMain())
             .subscribe(respBean -> {
@@ -27,6 +27,6 @@ public class GlobalHelper {
                 if (consumer != null) {
                     consumer.accept(respBean);
                 }
-            },RxHelper.getErrorConsumer());
+            }, throwableConsumer);
     }
 }

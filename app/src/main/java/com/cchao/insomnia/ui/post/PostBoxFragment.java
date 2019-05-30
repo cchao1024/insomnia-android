@@ -96,16 +96,12 @@ public class PostBoxFragment extends BaseStatefulFragment<PostBoxBinding> implem
 
             @Override
             protected void convert(DataBindViewHolder helper, PostListVO item) {
+                UserManager.processIsWish(item);
                 helper.getBinding().setVariable(BR.item, item);
                 helper.setText(R.id.date, TimeHelper.getStandardDate(item.getUpdateTime()));
                 updateImageBox(helper.getView(R.id.flex_box), item);
-                helper.setOnClickListener(R.id.comment_button, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showCommentDialog(item.getId());
-                    }
-                });
-                ((WishView) helper.getView(R.id.like)).setCallBack(new CallBacks.Bool() {
+                helper.setOnClickListener(R.id.comment_button, v -> showCommentDialog(item.getId()));
+                ((WishView) helper.getView(R.id.like)).setWishCallBack(new CallBacks.Bool() {
                     @Override
                     public void onCallBack(boolean bool) {
                         UserManager.addLike("post", item.getId()
@@ -183,9 +179,9 @@ public class PostBoxFragment extends BaseStatefulFragment<PostBoxBinding> implem
         UiHelper.setVisibleElseGone(binding.progress, true);
 
         ArrayMap<String, String> map = new ArrayMap<>();
-        map.put("toId", String.valueOf(id));
+        map.put("commentId", String.valueOf(id));
         map.put("content", binding.edit.getText().toString());
-        map.put("imageList", "");
+        map.put("images", "");
 
         addSubscribe(RetrofitHelper.getApis().addCommentOrReply("comment", map)
             .compose(RxHelper.toMain())

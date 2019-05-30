@@ -6,7 +6,6 @@ import android.view.View;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.databinding.MusicPlayActivityBinding;
 import com.cchao.insomnia.global.Constants;
-import com.cchao.insomnia.manager.MusicPlayer;
 import com.cchao.insomnia.manager.UserManager;
 import com.cchao.simplelib.core.CollectionHelper;
 import com.cchao.simplelib.core.ImageLoader;
@@ -133,7 +132,7 @@ public class MusicPlayerActivity extends BaseTitleBarActivity<MusicPlayActivityB
         mDataBind.setSong(songInfo);
         mDataBind.duration.setText(hhmm);
 
-        mDataBind.wish.setImageResource(UserManager.isInWishList(songInfo.getSongId())
+        mDataBind.wish.setImageResource(UserManager.isInWishList(Long.parseLong(songInfo.getSongId()))
             ? R.drawable.ic_wish_ed : R.drawable.ic_wish_no);
         mTaskManager.scheduleSeekBarUpdate();
         ImageLoader.loadImage(mDataBind.musicAlbum, Constants.TEST_IMAGE_PATH);
@@ -197,8 +196,8 @@ public class MusicPlayerActivity extends BaseTitleBarActivity<MusicPlayActivityB
                 break;
             case R.id.wish:
                 String id = getCurSong().getSongId();
-                UserManager.toggleWish(id);
-                mDataBind.wish.setImageResource(UserManager.isInWishList(id)
+                UserManager.toggleWish(Long.parseLong(id));
+                mDataBind.wish.setImageResource(UserManager.isInWishList(Long.parseLong(id))
                     ? R.drawable.ic_wish_ed : R.drawable.ic_wish_no);
                 break;
             case R.id.play_list:

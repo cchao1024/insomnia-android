@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_16"
             android:layout_toEndOf="@+id/from_user_avatar"
+            android:textColor="@color/user_name_color"
             android:text="@{`@`+item.fromUserName}"
             tools:text="@string/app_name"/>
 
@@ -41,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/from_user_name"
             android:layout_alignStart="@+id/from_user_name"
+            android:layout_marginEnd="@dimen/dp_50"
             android:layout_marginTop="@dimen/dp_8"
             android:text="@{item.content}"
             tools:text="@string/app_name"/>
@@ -54,7 +56,7 @@
             android:layout_alignStart="@+id/from_user_name"
             android:layout_marginTop="@dimen/dp_4"
             android:textColor="@color/text_999"
-            android:textSize="@dimen/sp_12"
+            android:textSize="@dimen/sp_11"
             tools:text="@string/app_name"/>
 
         <TextView
@@ -78,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_6"
             app:wish_num="@{item.likeCount}"
             app:wish_direction="top"/>
     </RelativeLayout>

@@ -6,9 +6,8 @@ package com.cchao.insomnia.view.wish;
  */
 public class BindingAdapter {
 
-    @android.databinding.BindingAdapter(value = {"wish_num"})
-    public static void setWishNum(WishView view, int num) {
-        view.setNum(num);
+    @android.databinding.BindingAdapter(value = {"wish_num", "wish_toggle"}, requireAll = false)
+    public static void setWishNum(WishView view, int num, boolean liked) {
+        view.updateToggle(liked, num);
     }
-
 }

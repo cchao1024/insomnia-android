@@ -40,10 +40,13 @@ public class ImageShowActivity extends BaseTitleBarActivity<ImageShowActivityBin
     protected void initEventAndData() {
         id = getIntent().getLongExtra(Constants.Extra.ID, 0);
         setTitleText("浏览大图");
-        // 加入收藏
-        addTitleMenuItem(R.drawable.wish_button, view -> {
-            UserManager.addWish(id, this);
-        });
+
+        if (id != 0) {
+            // 加入收藏
+            addTitleMenuItem(R.drawable.wish_button, view -> {
+                UserManager.addWish(id, this);
+            });
+        }
 
         // download
         addTitleMenuItem(R.drawable.download_cloud, view -> {

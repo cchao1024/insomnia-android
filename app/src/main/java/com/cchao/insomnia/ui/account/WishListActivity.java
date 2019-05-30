@@ -98,6 +98,10 @@ public class WishListActivity extends BaseTitleBarActivity<CommonRecyclerBinding
                 } else {
                     mAdapter.loadMoreComplete();
                 }
+                // 为空
+                if (page == 1 && respBean.getData().size() == 0) {
+                    switchView(EMPTY);
+                }
             }, RxHelper.getSwitchErrorConsumer(this)));
     }
 

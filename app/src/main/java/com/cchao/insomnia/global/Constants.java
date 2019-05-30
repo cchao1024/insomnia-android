@@ -44,6 +44,13 @@ public class Constants {
         int update_post_comment_count = 1004;
     }
 
+    public interface Token {
+        String daodao = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6IjEwMDBlZWVAcXEuY29tIiwiZXhwIjoxNTY3NzYwMDg2LCJ1c2VySWQiOjV9.QxPQtx2veDSH5F8ltrpRJ4gu33uU0jg281DrpMH7fFg";
+        String anye = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6Ijk5OTk5OUBxcS5jb20iLCJleHAiOjE1Njc3NjAyMDMsInVzZXJJZCI6NH0.uYdVyy0oB8m_UPLj2sNAAJrkOUHCvUfrFpGk5j39Ya0";
+        String dongshan = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6Ijg4ODg4OEBxcS5jb20iLCJleHAiOjE1Njc3NjAzNjYsInVzZXJJZCI6M30.SRDM9fBaLlYtZPoTxOAyCFFF_sJmnRk9XmE6UEPXiYU";
+        String y360 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6IjM2MDY2NkB5YWhvby5jb20iLCJleHAiOjE1Njc4MjU4NjEsInVzZXJJZCI6Mjl9.Hj8dlt_djw9DHdG7LqojonQQlpX5ulfxaC_5cmFyh_g";
+    }
+
     public interface Prefs {
         String USER_INFO = "user_info";
         String USER_NAME = "user_name";
@@ -63,7 +70,7 @@ public class Constants {
 
     public interface Extra {
         String IMAGE_URL = "image_url";
-        String ID = "toId";
+        String ID = "commentId";
     }
 
     public interface Drawer {

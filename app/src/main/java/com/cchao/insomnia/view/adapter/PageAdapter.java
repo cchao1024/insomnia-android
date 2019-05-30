@@ -86,7 +86,7 @@ public abstract class PageAdapter<T> extends DataBindQuickAdapter<T> {
             addData(data);
         }
         // 是否最后一页
-        if (mCurPage == respBean.getTotalPage()) {
+        if (mCurPage >= respBean.getTotalPage()) {
             loadMoreEnd();
         } else {
             loadMoreComplete();
