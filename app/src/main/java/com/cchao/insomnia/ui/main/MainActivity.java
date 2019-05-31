@@ -30,6 +30,7 @@ import com.cchao.insomnia.databinding.MainActivityBinding;
 import com.cchao.insomnia.databinding.MainFeedBackDialogBinding;
 import com.cchao.insomnia.databinding.MainTimeDownDialogBinding;
 import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.manager.MusicPlayer;
 import com.cchao.insomnia.manager.TimeCountHelper;
 import com.cchao.insomnia.manager.UserManager;
 import com.cchao.insomnia.model.javabean.home.NavItem;
@@ -407,6 +408,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             showText("再按一次退出程序");
             mExitTime = System.currentTimeMillis();
         } else {
+            MusicPlayer.getmMediaPlayer().reset();
             super.onBackPressed();
         }
     }

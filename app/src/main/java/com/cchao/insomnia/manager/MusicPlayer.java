@@ -5,10 +5,12 @@ import android.media.MediaPlayer;
 import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.model.javabean.fall.FallMusic;
+import com.cchao.simplelib.LibCore;
 import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
+import com.danikula.videocache.HttpProxyCacheServer;
 
 import java.io.IOException;
 
@@ -20,6 +22,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class MusicPlayer {
 
+    private static HttpProxyCacheServer proxy;
     private static MediaPlayer mMediaPlayer = new MediaPlayer();
     private static FallMusic mCurMusic;
 
@@ -28,6 +31,10 @@ public class MusicPlayer {
         String Playing = "Playing";
         String Pause = "Pause";
         String Init = "Init";
+    }
+
+    public static MediaPlayer getmMediaPlayer() {
+        return mMediaPlayer;
     }
 
     public static long getCurPlayingId() {
@@ -60,7 +67,7 @@ public class MusicPlayer {
     }
 
     public static boolean isCurPlaying(FallMusic fallMusic) {
-        return fallMusic.getId()==getCurPlayingId();
+        return fallMusic.getId() == getCurPlayingId();
     }
 
     public static void clickDisk() {
@@ -83,14 +90,14 @@ public class MusicPlayer {
     public static void playOrPause(FallMusic item) {
         if (getCurPlayingId() == item.getId()) {
             pause();
-        }else {
+        } else {
             playNow(item);
         }
     }
 
     public static void playNow(FallMusic item) {
         // 相同不处理
-        if (mCurMusic.getSrc().equals(item.getSrc())) {
+        if (mCurMusic != null && mCurMusic.getSrc().equals(item.getSrc())) {
             return;
         }
         mCurMusic = item;
@@ -99,12 +106,30 @@ public class MusicPlayer {
                 mMediaPlayer.reset();
             }
             Logs.logEvent("playNow " + item.getSrc());
-            mMediaPlayer.setDataSource(item.getSrc());
+            mMediaPlayer.setDataSource(getPlaySrc(item));
             mMediaPlayer.setLooping(true);
             mMediaPlayer.prepareAsync();
             RxBus.get().postEvent(Constants.Event.Update_Play_Status, State.Prepare);
         } catch (IOException e) {
             Logs.logException(e);
         }
+    }
+
+    private static String getPlaySrc(FallMusic fallMusic) {
+        return getProxy().getProxyUrl(fallMusic.getSrc());
+    }
+
+    /**
+     * 缓存代理
+     */
+    public static HttpProxyCacheServer getProxy() {
+        if (proxy == null) {
+            proxy = new HttpProxyCacheServer.Builder(LibCore.getContext())
+                // 1 Gb for cache
+                .maxCacheSize(1024 * 1024 * 1024)
+                .maxCacheFilesCount(40)
+                .build();
+        }
+        return proxy;
     }
 }

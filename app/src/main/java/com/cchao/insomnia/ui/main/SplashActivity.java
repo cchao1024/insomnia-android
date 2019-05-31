@@ -26,7 +26,7 @@ public class SplashActivity extends BaseStatefulActivity {
         }, throwable -> {
             Logs.logException(throwable);
             showText("同步信息失败");
-            toMainPage();
+            finish();
         });
 
         if (!PrefHelper.contains(Constants.Prefs.INIT_TIME_STAMP)) {

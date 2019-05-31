@@ -82,6 +82,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/dp_6"
             app:wish_num="@{item.likeCount}"
+            app:wish_toggle="@{item.MSourceBean.liked}"
             app:wish_direction="top"/>
     </RelativeLayout>
 </layout>
