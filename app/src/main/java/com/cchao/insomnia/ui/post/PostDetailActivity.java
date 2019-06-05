@@ -19,11 +19,13 @@ import com.cchao.insomnia.manager.UserManager;
 import com.cchao.insomnia.model.javabean.post.CommentVO;
 import com.cchao.insomnia.model.javabean.post.PostVO;
 import com.cchao.insomnia.model.javabean.post.ReplyVO;
+import com.cchao.insomnia.ui.global.ImageShowActivity;
 import com.cchao.insomnia.ui.post.convert.CommentConvert;
 import com.cchao.insomnia.view.adapter.DataBindMultiQuickAdapter;
 import com.cchao.insomnia.view.wish.WishView;
 import com.cchao.simplelib.core.ImageLoader;
 import com.cchao.simplelib.core.Logs;
+import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
@@ -183,6 +185,11 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
             if (i < imageList.size()) {
                 ImageLoader.loadImage(view, imageList.get(i));
             }
+            // 点击跳转大图
+            int finalI = i;
+            view.setOnClickListener(v -> Router.turnTo(mContext, ImageShowActivity.class)
+                .putExtra(Constants.Extra.IMAGE_URL, imageList.get(finalI))
+                .start());
         }
     }
 
