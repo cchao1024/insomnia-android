@@ -80,7 +80,6 @@ Insomnia-server
     │   │   └── ImageShowActivity.java
     │   ├── main
     │   │   ├── MainActivity.java
-    │   │   ├── MainActivityV1.java
     │   │   └── SplashActivity.java
     │   ├── music
     │   │   ├── MusicListActivity.java
@@ -110,12 +109,12 @@ Insomnia-server
 
 ```
 # 页面截图
-<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/1.jpg"  width="400" height="400">
-<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/2.jpg"  width="400" height="400">
-<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/3.jpg"  width="400" height="400">
-<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/4.jpg"  width="400" height="400">
-<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/5.jpg"  width="400" height="400">
-<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/6.jpg"  width="400" height="400">
+<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/1.jpg"  width="300" height="400">
+<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/2.jpg"  width="300" height="400">
+<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/3.jpg"  width="300" height="400">
+<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/4.jpg"  width="300" height="400">
+<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/5.jpg"  width="300" height="400">
+<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/6.jpg"  width="300" height="400">
 
 # Download
 下载二维码
