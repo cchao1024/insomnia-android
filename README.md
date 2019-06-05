@@ -1,19 +1,20 @@
 # Insomnia-android
-Insomnia-android 是全栈项目 ** Insomnia ** 的 Android 端代码。
+Insomnia-android 是全栈项目 **Insomnia** 的 Android 端代码。
 项目深度依赖 笔者另一开源库 [simpleLib](https://github.com/cchao1024/simpleLib) 开发
 
-基于
+基于 
 
 * [data-binding](https://developer.android.com/topic/libraries/data-binding)
 * [RxJava](https://github.com/ReactiveX/RxJava)
 * [glide](https://github.com/bumptech/glide)
 * [okHttp](https://github.com/square/okhttp)
-* [Gson](https://github.com/google/gson)
+* [Gson](https://github.com/google/gson)   等主流框架。
 
-等主流框架。
-
-> [insomnia-server springBoot后端项目](https://github.com/cchao1024/insomnia-server)
- [simpleLib android基础类库](https://github.com/cchao1024/insomnia-server)
+## 其他关联项目
+ * [insomnia-server 基于SpringBoot的服务端代码](https://github.com/cchao1024/insomnia-server)
+ * [insomnia-android Android 客户端](https://github.com/cchao1024/insomnia-android)
+ * [simpleLib Android 基础类库](https://github.com/cchao1024/insomnia-server)
+ 
 # 主体功能
 
 ```
@@ -38,16 +39,84 @@ Insomnia-server
     └─- 回复/点赞他人评论及回复  
 ```
 
+# 项目结构划分
+
+```java
+
+└── insomnia
+    ├── api
+    │   ├── Apis.java
+    │   ├── HttpClientManager.java
+    │   └── RetrofitHelper.java
+    ├── global
+    │   ├── App.java
+    │   ├── Constants.java
+    ├── manager
+    │   ├── GlobalHelper.java
+    │   ├── MusicPlayer.java
+    │   └── UserManager.java
+    ├── model
+    │   └── javabean
+    │       ├── RespBean.java
+    │       ├── RespListBean.java
+    │       ├── fall
+    │       ├── global
+    │       ├── home
+    │       ├── post
+    │       └── user
+    ├── ui
+    │   ├── BindingAdapters.java
+    │   ├── account
+    │   │   ├── EditUserInfoActivity.java
+    │   │   ├── LogInActivity.java
+    │   │   ├── UserInfoActivity.java
+    │   │   └── WishListActivity.java
+    │   ├── fall
+    │   │   ├── FallFragment.java
+    │   │   ├── FallImageActivity.java
+    │   │   └── FallMusicListActivity.java
+    │   ├── global
+    │   │   ├── BaseListActivity.java
+    │   │   └── ImageShowActivity.java
+    │   ├── main
+    │   │   ├── MainActivity.java
+    │   │   ├── MainActivityV1.java
+    │   │   └── SplashActivity.java
+    │   ├── music
+    │   │   ├── MusicListActivity.java
+    │   │   └── PLayListFragment.java
+    │   └── post
+    │       ├── AddPostActivity.java
+    │       ├── PostBoxFragment.java
+    │       ├── PostDetailActivity.java
+    │       └── convert
+    ├── util
+    │   ├── AnimHelper.java
+    │   ├── ImageHelper.java
+    └── view
+        ├── Dialogs.java
+        ├── adapter
+        │   ├── DataBindMultiQuickAdapter.java
+        │   ├── DataBindQuickAdapter.java
+        │   ├── EmailFilterAdapter.java
+        │   └── PageAdapter.java
+        ├── imagewatcher
+        │   ├── ImageWatcher.java
+        │   ├── MaterialProgressView.java
+        │   └── ViewState.java
+        └── wish
+            ├── BindingAdapter.java
+            └── WishView.java
+
+```
 # 页面截图
-
-![](https://github.com/cchao1024/insomnia-android/blob/master/document/1.jpg)
-![](https://github.com/cchao1024/insomnia-android/blob/master/document/2.jpg)
-![](https://github.com/cchao1024/insomnia-android/blob/master/document/3.jpg)
-![](https://github.com/cchao1024/insomnia-android/blob/master/document/4.jpg)
-![](https://github.com/cchao1024/insomnia-android/blob/master/document/5.jpg)
-![](https://github.com/cchao1024/insomnia-android/blob/master/document/6.jpg)
-
+<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/1.jpg"  width="400" height="400">
+<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/2.jpg"  width="400" height="400">
+<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/3.jpg"  width="400" height="400">
+<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/4.jpg"  width="400" height="400">
+<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/5.jpg"  width="400" height="400">
+<img src="https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/6.jpg"  width="400" height="400">
 
 # Download
 下载二维码
-![](https://github.com/cchao1024/insomnia-android/blob/master/document/fir.jpg)
+![](https://raw.githubusercontent.com/cchao1024/insomnia-android/develop/document/fir.jpg)
