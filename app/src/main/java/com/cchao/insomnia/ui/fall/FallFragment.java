@@ -6,7 +6,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cchao.insomnia.BR;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.RetrofitHelper;
@@ -25,7 +27,7 @@ import com.cchao.insomnia.view.GridSpaceDividerDecoration;
 import com.cchao.insomnia.view.GridSpacingItemDecoration;
 import com.cchao.insomnia.view.adapter.DataBindQuickAdapter;
 import com.cchao.insomnia.view.adapter.PageAdapter;
-import com.cchao.simplelib.core.ImageLoader;
+import com.cchao.simplelib.core.GlideApp;
 import com.cchao.simplelib.core.Logs;
 import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.RxBus;
@@ -168,7 +170,15 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
                 helper.itemView.getLayoutParams().height = ImageHelper
                     .getScaleHeight(itemWidth, item.getWidth(), item.getHeight());
 
-                ImageLoader.loadImage(helper.getView(R.id.image), item.getSrc());
+//                ImageLoader.loadImage(helper.getView(R.id.image), item.getSrc());
+
+                GlideApp.with(helper.getView(R.id.image).getContext())
+                    .asGif()
+                    .load(item.getSrc())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.place_holder)
+                    .fitCenter()
+                    .into((ImageView) helper.getView(R.id.image));
             }
         });
         mImageAdapter.setOnItemClickListener((adapter, view, position) -> {

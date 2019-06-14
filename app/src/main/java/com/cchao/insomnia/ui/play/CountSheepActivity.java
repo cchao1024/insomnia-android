@@ -14,12 +14,14 @@ import java.util.Locale;
 
 /**
  * 数绵羊
+ *
  * @author cchao
  * @version 2019-05-22.
  */
 public class CountSheepActivity extends BaseTitleBarActivity<CountSheepActivityBinding> implements View.OnClickListener {
     int mCountNum;
     long mStartTimeStamp = System.currentTimeMillis();
+    boolean mHasBackPress;
 
     @Override
     protected int getLayout() {
@@ -39,6 +41,11 @@ public class CountSheepActivity extends BaseTitleBarActivity<CountSheepActivityB
 
     @Override
     public void onBackPressed() {
+        if (mHasBackPress) {
+            super.onBackPressed();
+            return;
+        }
+        mHasBackPress = true;
         long millisSecond = (System.currentTimeMillis() - mStartTimeStamp);
         int second = (int) (millisSecond / 1000);
         String averSecond = String.format(Locale.getDefault(), "%.2f", millisSecond * 1.0f / mCountNum / 1000f);
