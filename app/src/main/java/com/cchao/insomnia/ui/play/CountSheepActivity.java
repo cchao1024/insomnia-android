@@ -13,6 +13,7 @@ import org.apache.commons.lang3.RandomUtils;
 import java.util.Locale;
 
 /**
+ * 数绵羊
  * @author cchao
  * @version 2019-05-22.
  */
@@ -38,9 +39,10 @@ public class CountSheepActivity extends BaseTitleBarActivity<CountSheepActivityB
 
     @Override
     public void onBackPressed() {
-        int second = (int) ((System.currentTimeMillis() - mStartTimeStamp) / 1000);
-        String averSecond = String.format(Locale.getDefault(), "%.2f", second * 1.0f / mCountNum);
-        String msg = "你一共数了" + mCountNum + "只绵羊\n共耗时 " + second + " 秒" + "\n平均每只耗时 " + averSecond + " 秒";
+        long millisSecond = (System.currentTimeMillis() - mStartTimeStamp);
+        int second = (int) (millisSecond / 1000);
+        String averSecond = String.format(Locale.getDefault(), "%.2f", millisSecond * 1.0f / mCountNum / 1000f);
+        String msg = "你一共数了 " + mCountNum + " 只绵羊\n共耗时 " + second + " 秒" + "\n 平均每只耗时 " + averSecond + " 秒";
         UiHelper.showConfirmDialog(mContext, msg, (dialogInterface, i) -> {
             dialogInterface.dismiss();
             super.onBackPressed();
@@ -66,8 +68,8 @@ public class CountSheepActivity extends BaseTitleBarActivity<CountSheepActivityB
         int y = RandomUtils.nextInt(viewWidth, UiHelper.getScreenHeight() - viewWidth - UiHelper.dp2px(100));
 
         // 先透明下 200毫秒后 又显示
-        int alphaDuration = 200;
-        int hideDuration = 100;
+        int alphaDuration = 100;
+        int hideDuration = 40;
         mDataBind.sheep.animate().alpha(0.5f).setDuration(alphaDuration).withEndAction(new Runnable() {
             @Override
             public void run() {

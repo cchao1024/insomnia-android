@@ -145,6 +145,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         });
         mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setOffscreenPageLimit(mFragments.size());
     }
 
     private void initToolbar() {
