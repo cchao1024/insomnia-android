@@ -4,6 +4,7 @@ import android.os.CountDownTimer;
 
 import com.cchao.insomnia.global.Constants;
 import com.cchao.simplelib.core.RxBus;
+import com.cchao.simplelib.core.UiHelper;
 
 /**
  * 倒计时关闭管理
@@ -25,8 +26,11 @@ public class TimeCountHelper {
             @Override
             public void onTick(long millisUntilFinished) {
                 int convertTime = (int) (millisUntilFinished / 1000) - 1;
-                if (convertTime < 0) {
+                if (convertTime <= 0) {
                     mCountDownTimer.cancel();
+                    if (finishCallBack != null) {
+                        UiHelper.runOnUiThread(finishCallBack);
+                    }
                     return;
                 }
 
@@ -51,7 +55,7 @@ public class TimeCountHelper {
             public void onFinish() {
                 cancel();
                 if (finishCallBack != null) {
-                    finishCallBack.run();
+                    UiHelper.runOnUiThread(finishCallBack);
                 }
             }
         };
