@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * databind BaseQuickAdapter
+ *
  * @author cchao
  * @version 8/11/18.
  */
@@ -33,7 +34,7 @@ public abstract class DataBindQuickAdapter<T> extends BaseQuickAdapter<T, DataBi
             return super.getItemView(layoutResId, parent);
         }
         View view = binding.getRoot();
-        view.setTag(R.id.BaseQuickAdapter_databinding_support,binding);
+        view.setTag(R.id.BaseQuickAdapter_databinding_support, binding);
         return view;
     }
 

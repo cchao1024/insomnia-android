@@ -19,8 +19,7 @@
             android:propertyName="alpha"
             android:valueFrom="1"
             android:valueTo="0.8"
-            android:valueType="floatType">
-        </objectAnimator>
+            android:valueType="floatType"></objectAnimator>
     </set>
 
     <objectAnimator
@@ -28,8 +27,7 @@
         android:propertyName="alpha"
         android:valueFrom="0.8"
         android:valueTo="0.8"
-        android:valueType="floatType">
-    </objectAnimator>
+        android:valueType="floatType"></objectAnimator>
 
     <set android:ordering="together">
         <objectAnimator
@@ -49,7 +47,6 @@
             android:propertyName="alpha"
             android:valueFrom="0.8"
             android:valueTo="1"
-            android:valueType="floatType">
-        </objectAnimator>
+            android:valueType="floatType"></objectAnimator>
     </set>
 </set>

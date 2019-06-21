@@ -10,7 +10,7 @@ import lombok.Data;
  * @version 2019-03-11
  */
 @Data
-public class CommentVO extends Replyable{
+public class CommentVO extends Replyable {
 
     long id;
     long postId;

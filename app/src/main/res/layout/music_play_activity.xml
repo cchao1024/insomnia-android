@@ -162,8 +162,7 @@
                 style="@style/ClickableImageView"
                 android:layout_marginStart="@dimen/dp_15"
                 android:onClick="@{clicker::onClick}"
-                app:srcCompat="@drawable/ic_play_list"
-                />
+                app:srcCompat="@drawable/ic_play_list"/>
         </LinearLayout>
     </LinearLayout>
 </layout>

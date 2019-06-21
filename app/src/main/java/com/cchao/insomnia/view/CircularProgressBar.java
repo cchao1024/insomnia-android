@@ -37,7 +37,7 @@ public class CircularProgressBar extends View {
          * @param progress 当前进度
          * @param rate     当前进度与总进度的商 即：rate = (float)progress / duration
          */
-         void onChange(int duration, int progress, float rate);
+        void onChange(int duration, int progress, float rate);
     }
 
     private OnProgressChangeListener mOnChangeListener;

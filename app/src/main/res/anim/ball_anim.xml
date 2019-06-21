@@ -7,8 +7,7 @@
         android:propertyName="translationX"
         android:valueFrom="-500"
         android:valueTo="0"
-        android:valueType="floatType">
-    </objectAnimator>
+        android:valueType="floatType"></objectAnimator>
 
     <set android:ordering="together">
         <objectAnimator
@@ -16,37 +15,32 @@
             android:propertyName="scaleXBy"
             android:valueFrom="100"
             android:valueTo="200"
-            android:valueType="floatType">
-        </objectAnimator>
+            android:valueType="floatType"></objectAnimator>
         <objectAnimator
             android:duration="3000"
             android:propertyName="scaleYBy"
             android:valueFrom="100"
             android:valueTo="200"
-            android:valueType="floatType">
-        </objectAnimator>
+            android:valueType="floatType"></objectAnimator>
     </set>
     <objectAnimator
         android:duration="1500"
         android:propertyName="alpha"
         android:valueFrom="1"
         android:valueTo="0.9"
-        android:valueType="floatType">
-    </objectAnimator>
+        android:valueType="floatType"></objectAnimator>
     <set android:ordering="together">
         <objectAnimator
             android:duration="3000"
             android:propertyName="scaleXBy"
             android:valueFrom="200"
             android:valueTo="100"
-            android:valueType="floatType">
-        </objectAnimator>
+            android:valueType="floatType"></objectAnimator>
         <objectAnimator
             android:duration="3000"
             android:propertyName="scaleYBy"
             android:valueFrom="200"
             android:valueTo="100"
-            android:valueType="floatType">
-        </objectAnimator>
+            android:valueType="floatType"></objectAnimator>
     </set>
 </set>

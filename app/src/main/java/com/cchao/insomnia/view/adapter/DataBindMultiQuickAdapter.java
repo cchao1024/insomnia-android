@@ -15,6 +15,7 @@ import java.util.Map;
 
 /**
  * 多样式的 dataBinding的 BaseMultiItemQuickAdapter
+ *
  * @author cchao
  * @version 8/11/18.
  */

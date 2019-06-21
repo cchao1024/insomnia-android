@@ -142,7 +142,7 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
         }
 
         if (i == null || imageGroupList == null || urlList == null || imageGroupList.size() < 1 ||
-                urlList.size() < imageGroupList.size()) {
+            urlList.size() < imageGroupList.size()) {
             String info = "i[" + i + "]";
             info += "#imageGroupList " + (imageGroupList == null ? "null" : "size : " + imageGroupList.size());
             info += "#urlList " + (urlList == null ? "null" : "size :" + urlList.size());
@@ -276,7 +276,7 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
         if (mTouchMode == TOUCH_MODE_EXIT) {
             handleExitTouchResult();
         } else if (mTouchMode == TOUCH_MODE_SCALE_ROTATE
-                || mTouchMode == TOUCH_MODE_LOCK) {
+            || mTouchMode == TOUCH_MODE_LOCK) {
             handleScaleRotateTouchResult();
         } else if (mTouchMode == TOUCH_MODE_DRAG) {
             handleDragTouchResult();
@@ -345,7 +345,7 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
         if (mTouchMode == TOUCH_MODE_SLIDE) {
             try {
                 vPager.onTouchEvent(e2);
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
             }
         } else if (mTouchMode == TOUCH_MODE_SCALE_ROTATE) {
             handleScaleRotateGesture(e2);
@@ -561,7 +561,7 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
         if (vsCurrent.scaleY <= vsDefault.scaleY && vsCurrent.scaleX <= vsDefault.scaleX) {
             final float expectedScale = (MAX_SCALE - vsDefault.scaleX) * 0.4f + vsDefault.scaleX;
             animSourceViewStateTransform(iSource,
-                    ViewState.write(iSource, ViewState.STATE_TEMP).scaleX(expectedScale).scaleY(expectedScale));
+                ViewState.write(iSource, ViewState.STATE_TEMP).scaleX(expectedScale).scaleY(expectedScale));
         } else {
             animSourceViewStateTransform(iSource, vsDefault);
         }
@@ -644,7 +644,7 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
             return;// 如果没有变化跳过动画实行时间的触摸锁定
         }
         animSourceViewStateTransform(iSource,
-                ViewState.write(iSource, ViewState.STATE_TEMP).translationX(endTranslateX).translationY(endTranslateY));
+            ViewState.write(iSource, ViewState.STATE_TEMP).translationX(endTranslateX).translationY(endTranslateY));
     }
 
     @Override
@@ -784,7 +784,7 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
                     int bmpMirrorWidth = bmpMirror.getBounds().width();
                     int bmpMirrorHeight = bmpMirror.getBounds().height();
                     ViewState vsThumb = ViewState.write(imageView, ViewState.STATE_THUMB).width(bmpMirrorWidth).height(bmpMirrorHeight)
-                            .translationX((mWidth - bmpMirrorWidth) / 2).translationY((mHeight - bmpMirrorHeight) / 2);
+                        .translationX((mWidth - bmpMirrorWidth) / 2).translationY((mHeight - bmpMirrorHeight) / 2);
                     imageView.setImageDrawable(bmpMirror);
 
                     if (isFindEnterImagePicture) {
@@ -822,7 +822,7 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
                     notifyItemChangedState(pos, false, false);
 
                     ViewState vsDefault = ViewState.write(imageView, ViewState.STATE_DEFAULT).width(sourceDefaultWidth).height(sourceDefaultHeight)
-                            .translationX(sourceDefaultTranslateX).translationY(sourceDefaultTranslateY);
+                        .translationX(sourceDefaultTranslateX).translationY(sourceDefaultTranslateY);
                     if (isPlayEnterAnimation) {
                         animSourceViewStateTransform(imageView, vsDefault);
                     } else {
@@ -1076,6 +1076,7 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
             mImageWatcher.hintMode = hintMode;
             return this;
         }
+
         public Helper setImageId(int id) {
             VIEW_IMAGE_WATCHER_ID = id;
             return this;

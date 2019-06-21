@@ -8,6 +8,7 @@ import com.cchao.insomnia.api.HttpClientManager;
 import com.cchao.insomnia.manager.MusicPlayer;
 import com.cchao.simplelib.LibCore;
 
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.OkHttpClient;
 
 /**
@@ -23,6 +24,7 @@ public class App extends Application {
         super.onCreate();
         App.mInstance = this;
         initSimpleLib();
+        initJpush();
         initMusic();
     }
 
@@ -52,6 +54,11 @@ public class App extends Application {
                 return BuildConfig.VERSION_CODE;
             }
         });
+    }
+
+    private void initJpush() {
+        JPushInterface.setDebugMode(BuildConfig.DEBUG);
+        JPushInterface.init(this);
     }
 
     public static Context getContext() {

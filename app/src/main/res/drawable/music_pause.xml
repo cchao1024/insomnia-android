@@ -11,8 +11,7 @@
         <group
             android:translateX="47.000000"
             android:translateY="410.000000">
-            <group
-                android:translateX="108.000000">
+            <group android:translateX="108.000000">
                 <path
                     android:name="Shape"
                     android:fillColor="#DDF9FF"

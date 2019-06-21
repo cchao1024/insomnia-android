@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.databinding.WishViewBinding;
-import com.cchao.insomnia.manager.UserManager;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.util.CallBacks;
 

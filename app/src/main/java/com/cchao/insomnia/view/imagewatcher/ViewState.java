@@ -112,7 +112,7 @@ public class ViewState {
                         view.setRotation((vsCurrent.rotation + (vsResult.rotation - vsCurrent.rotation) * p) % 360);
                         view.setAlpha((vsCurrent.alpha + (vsResult.alpha - vsCurrent.alpha) * p));
                         if (vsCurrent.width != vsResult.width && vsCurrent.height != vsResult.height
-                                && vsResult.width != 0 && vsResult.height != 0) {
+                            && vsResult.width != 0 && vsResult.height != 0) {
                             view.getLayoutParams().width = (int) (vsCurrent.width + (vsResult.width - vsCurrent.width) * p);
                             view.getLayoutParams().height = (int) (vsCurrent.height + (vsResult.height - vsCurrent.height) * p);
                             view.requestLayout();

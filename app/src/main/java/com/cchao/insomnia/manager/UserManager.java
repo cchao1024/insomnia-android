@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.jpush.android.api.JPushInterface;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -73,6 +74,7 @@ public class UserManager {
     public static void setUserBean(UserBean userBean) {
         mUserBean = userBean;
         PrefHelper.putString(Constants.Prefs.USER_INFO, GsonUtil.toJson(userBean));
+        JPushInterface.setAlias(LibCore.getContext(), 123, String.valueOf(mUserBean.getId()));
         RxBus.get().post(userBean);
     }
 

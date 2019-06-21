@@ -10,6 +10,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class UserBean {
+    Long id;
     boolean isVisitor;
     String token;
     String email;
