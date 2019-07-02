@@ -31,7 +31,7 @@
             android:id="@+id/reload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="上传失败，点击重试"
+            android:text="@string/upload_fail"
             android:visibility="gone"/>
     </RelativeLayout>
 </layout>

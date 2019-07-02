@@ -41,7 +41,7 @@ public class FallMusicListActivity extends BaseTitleBarActivity<MusicListBinding
 
     @Override
     protected void initEventAndData() {
-        setTitleText("音乐列表");
+        setTitleText(getString(R.string.music_list));
         initAdapter();
         initEvent();
         onLoadData();

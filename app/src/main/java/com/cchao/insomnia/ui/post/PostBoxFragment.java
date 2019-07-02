@@ -157,13 +157,13 @@ public class PostBoxFragment extends BaseStatefulFragment<PostBoxBinding> implem
 
         // 弹出对话框
         Dialog dialog = new AlertDialog.Builder(mContext)
-            .setTitle("元芳，你怎么看")
+            .setTitle(R.string.what_you_think)
             .setView(binding.getRoot())
             .show();
 
         binding.send.setOnClickListener(click -> {
             if (StringHelper.isEmpty(binding.edit)) {
-                showText("内容不能为空");
+                showText(getString(R.string.can_not_empty_content));
             }
             onSendComment(binding, id, () -> {
                 dialog.dismiss();

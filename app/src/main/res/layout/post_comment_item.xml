@@ -70,7 +70,7 @@
             android:paddingTop="@dimen/dp_4"
             android:paddingEnd="@dimen/dp_14"
             android:paddingBottom="@dimen/dp_4"
-            android:text="回复"
+            android:text="@string/reply"
             android:textColor="@color/text_blue"
             android:textSize="@dimen/sp_12"/>
 

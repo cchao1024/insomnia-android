@@ -39,7 +39,7 @@ public class ImageShowActivity extends BaseTitleBarActivity<ImageShowActivityBin
     @Override
     protected void initEventAndData() {
         id = getIntent().getLongExtra(Constants.Extra.ID, 0);
-        setTitleText("浏览大图");
+        setTitleText(getString(R.string.display_image));
 
         if (id != 0) {
             // 加入收藏
@@ -92,7 +92,7 @@ public class ImageShowActivity extends BaseTitleBarActivity<ImageShowActivityBin
             }).compose(RxHelper.toMain())
                 .subscribe(s -> {
                     if (s) {
-                        showText("save to " + rootPath);
+                        showText(getString(R.string.save_to) + rootPath);
                     }
                 }, RxHelper.getErrorTextConsumer(this)));
         } catch (Exception exception) {

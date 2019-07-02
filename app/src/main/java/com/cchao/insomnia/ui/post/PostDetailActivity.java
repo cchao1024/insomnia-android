@@ -58,7 +58,7 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
     @Override
     protected void initEventAndData() {
         mId = getIntent().getLongExtra(Constants.Extra.ID, 0);
-        setTitleText(R.string.post_detal);
+        setTitleText(R.string.post_detail);
         mDataBind.setClicker(this);
         initAdapter();
         switchView(LOADING);
@@ -215,13 +215,13 @@ public class PostDetailActivity extends BaseTitleBarActivity<PostDetailActivityB
 
         // 弹出对话框
         Dialog dialog = new AlertDialog.Builder(mContext)
-            .setTitle("元芳，你怎么看")
+            .setTitle(getString(R.string.what_you_think))
             .setView(binding.getRoot())
             .show();
 
         binding.send.setOnClickListener(click -> {
             if (TextUtils.isEmpty(binding.edit.getText().toString())) {
-                showText("内容不能为空");
+                showText(R.string.can_not_empty_content);
                 return;
             }
             onSendComment(binding, type, toId, replyId, () -> {

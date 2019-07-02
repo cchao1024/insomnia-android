@@ -2,6 +2,7 @@ package com.cchao.insomnia.manager;
 
 import android.text.TextUtils;
 
+import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.model.javabean.post.PostListVO;
@@ -83,7 +84,7 @@ public class UserManager {
      */
     public static void setToken(String token) {
         if (!LibCore.isDebug()) {
-            UiHelper.showToast("仅用于 debug模式");
+            UiHelper.showToast(R.string.only_for_debug);
             return;
         }
         mUserBean.setToken(token);

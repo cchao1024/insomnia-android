@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_family_medium"
                 android:padding="@dimen/dp_16"
-                android:text="发送"
+                android:text="@string/send"
                 android:textColor="@color/text_blue"/>
 
             <ProgressBar

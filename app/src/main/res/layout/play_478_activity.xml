@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_40"
-                android:text="点击开始体验 4-7-8 睡觉法"
+                android:text="@string/start_play_478"
                 android:textColor="@color/text_666"
                 android:textSize="@dimen/sp_18"/>
 

@@ -39,7 +39,7 @@ public class FallImageActivity extends BaseTitleBarActivity<CommonRecyclerBindin
 
     @Override
     protected void initEventAndData() {
-        setTitleText("图片列表");
+        setTitleText(getString(R.string.image_list));
         initAdapter();
         onLoadData();
     }

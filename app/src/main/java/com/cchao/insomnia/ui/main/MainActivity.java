@@ -384,7 +384,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     void startCount(int second, CharSequence content) {
         TimeCountHelper.startCountDown(second, () -> System.exit(0));
-        showText("应用程序 " + content + " 后关闭");
+        showText(String.format(getString(R.string.exit_after_second), content));
     }
 
     private void updateUserViews() {
@@ -406,10 +406,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onBackPressed() {
         if ((System.currentTimeMillis() - mExitTime) > 2000) {
-            showText("再按一次退出程序");
+            showText(getString(R.string.exit_again));
             mExitTime = System.currentTimeMillis();
         } else {
-            MusicPlayer.getmMediaPlayer().reset();
+            MusicPlayer.getMediaPlayer().reset();
             super.onBackPressed();
         }
     }

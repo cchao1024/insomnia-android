@@ -40,11 +40,35 @@
     <string name="cancel_count_down">取消计时</string>
     <string name="feed_back_hint">请输入您的建议</string>
     <string name="submit">提交</string>
-    <string name="post_detal">说说详情</string>
+    <string name="post_detail">说说详情</string>
     <string name="start">开始</string>
     <string name="play_478">4-7-8呼吸法</string>
     <string name="stop">停止</string>
     <string name="age">年龄</string>
     <string name="desc">说明</string>
+    <string name="image_list">图片列表</string>
+    <string name="exit_again">再按一次退出程序</string>
+    <string name="music_list">音乐列表</string>
+    <string name="syn_info_fail">同步信息失败</string>
+    <string name="what_you_think">你怎么看</string>
+    <string name="can_not_empty_content">内容不能为空</string>
+    <string name="display_image">浏览大图</string>
+    <string name="save_to">save to</string>
+    <string name="reply">reply</string>
+    <string name="only_for_debug">仅用于 debug模式</string>
+    <string name="music_play_error">播放出现异常</string>
+    <string name="playing">正在播放</string>
+    <string name="exit_after_second">应用程序 %1$s 后关闭</string>
+    <string name="send">发送</string>
+    <string name="comment">评论</string>
+    <string name="empty_comment">暂无评论</string>
+    <string name="music_colon">歌曲：</string>
+    <string name="next_play">下一首播放</string>
+    <string name="add_wish">加入收藏</string>
+    <string name="download">下载</string>
+    <string name="share">分享</string>
+    <string name="start_play_478">点击开始体验 4-7-8 睡觉法</string>
+    <string name="has_reply">回复了</string>
+    <string name="upload_fail">上传失败，点击重试</string>
 
 </resources>

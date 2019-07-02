@@ -118,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dp_10"
-                    android:text="评论"
+                    android:text="@string/comment"
                     android:textColor="@color/text_blue"
                     android:textSize="@dimen/sp_12"/>
 

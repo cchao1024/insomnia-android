@@ -28,7 +28,7 @@ public class SplashActivity extends BaseStatefulActivity<SplashActivityBinding> 
             toMainPage();
         }, throwable -> {
             Logs.logException(throwable);
-            showText("同步信息失败");
+            showText(getString(R.string.syn_info_fail));
             finish();
         });
 

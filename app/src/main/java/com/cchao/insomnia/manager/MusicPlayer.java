@@ -2,6 +2,7 @@ package com.cchao.insomnia.manager;
 
 import android.media.MediaPlayer;
 
+import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.RetrofitHelper;
 import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.model.javabean.fall.FallMusic;
@@ -33,7 +34,7 @@ public class MusicPlayer {
         String Init = "Init";
     }
 
-    public static MediaPlayer getmMediaPlayer() {
+    public static MediaPlayer getMediaPlayer() {
         return mMediaPlayer;
     }
 
@@ -46,7 +47,7 @@ public class MusicPlayer {
 
     public static void init() {
         mMediaPlayer.setOnErrorListener((mediaPlayer, i, i1) -> {
-            UiHelper.showToast("播放出现异常");
+            UiHelper.showToast(R.string.music_play_error);
             RxBus.get().postEvent(Constants.Event.Update_Play_Status, State.Init);
             return false;
         });
@@ -58,7 +59,7 @@ public class MusicPlayer {
                 .subscribe(RxHelper.getNothingObserver());
             mMediaPlayer.start();
             RxBus.get().postEvent(Constants.Event.Update_Play_Status, State.Playing);
-            UiHelper.showToast("正在播放 " + mCurMusic.getName());
+            UiHelper.showToast(UiHelper.getString(R.string.playing) + mCurMusic.getName());
         });
     }
 
