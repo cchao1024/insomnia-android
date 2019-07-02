@@ -16,7 +16,8 @@ public class Constants {
 
     public interface Config {
 
-        String API_Host = "http://127.0.0.1:8080/";
+//        String API_Host = "http://127.0.0.1:8080/";
+        String API_Host = "http://47.240.35.14:8080/";
 
         // 接口API版本
         String API_BUILD = String.valueOf(BuildConfig.VERSION_CODE);

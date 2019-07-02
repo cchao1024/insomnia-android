@@ -362,7 +362,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     mCountDownTextView.setText("");
                     break;
                 case R.id.count_10:
-                    startCount(5, ((TextView) view).getText());
+                    startCount(10 * 60, ((TextView) view).getText());
                     break;
                 case R.id.count_20:
                     startCount(20 * 60, ((TextView) view).getText());
