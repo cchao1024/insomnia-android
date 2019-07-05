@@ -16,7 +16,7 @@ public class Constants {
 
     public interface Config {
 
-//        String API_Host = "http://127.0.0.1:8080/";
+        //        String API_Host = "http://127.0.0.1:8080/";
         String API_Host = "http://47.240.35.14:8080/";
 
         // 接口API版本
@@ -66,6 +66,14 @@ public class Constants {
     public interface ApiResp {
         String CODE_SUC = "00";
         String CODE = "code";
+
+    }
+
+    // 播放模式
+    public interface Play_Mode {
+        String SINGLE_LOOP = "单曲循环";
+        String RANDOM = "随机";
+        String LIST_LOOP = "列表循环";
 
     }
 

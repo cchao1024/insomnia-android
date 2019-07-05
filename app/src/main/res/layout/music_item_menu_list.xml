@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_30"
                 android:layout_marginStart="@dimen/dp_8"
-                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
                 android:gravity="center_vertical"
                 android:text="@string/music_colon"
                 android:textColor="@color/text_666"
@@ -34,7 +34,7 @@
                 style="@style/MusicItemMenuText"
                 android:drawableStart="@drawable/queue_music"
                 android:onClick="@{clicker::onClick}"
-                android:text="@string/next_play"/>
+                android:text="@string/add_play_list"/>
         </LinearLayout>
 
         <TextView

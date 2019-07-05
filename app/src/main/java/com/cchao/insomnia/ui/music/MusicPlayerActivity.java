@@ -27,7 +27,7 @@ import java.util.TimeZone;
  */
 public class MusicPlayerActivity extends BaseTitleBarActivity<MusicPlayActivityBinding> implements View.OnClickListener {
 
-    PLayListFragment mPLayListFragment;
+    PlayListFragment mPlayListFragment;
     TimerTaskManager mTaskManager = new TimerTaskManager();
     OnPlayerEventListener mOnPlayerEventListener;
     SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("mm:ss");
@@ -202,10 +202,10 @@ public class MusicPlayerActivity extends BaseTitleBarActivity<MusicPlayActivityB
                 break;
             case R.id.play_list:
                 showText("play_list");
-                if (mPLayListFragment == null) {
-                    mPLayListFragment = new PLayListFragment();
+                if (mPlayListFragment == null) {
+                    mPlayListFragment = new PlayListFragment();
                 }
-                mPLayListFragment.show(getSupportFragmentManager(), "PLayListFragment");
+                mPlayListFragment.show(getSupportFragmentManager(), "PlayListFragment");
                 break;
         }
     }

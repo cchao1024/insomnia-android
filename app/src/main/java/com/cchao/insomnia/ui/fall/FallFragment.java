@@ -98,9 +98,6 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
     private void initEvent() {
         addSubscribe(RxBus.get().toObservable(event -> {
             switch (event.getCode()) {
-                case Constants.Event.Update_Play_Status:
-                    updateDiskView(event.getContent());
-                    break;
             }
         }));
     }
@@ -128,13 +125,7 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
         });
         mMusicAdapter.setOnItemClickListener((adapter, view, position) -> {
             FallMusic item = mMusicAdapter.getItem(position);
-            if (MusicPlayer.isCurPlaying(item)) {
-//                    Router.turnTo(mContext, MusicPlayerActivity.class)
-//                        .start();
-                MusicPlayer.pause();
-            } else {
-                MusicPlayer.playNow(item);
-            }
+            MusicPlayer.playOrPause(item);
         });
     }
 
@@ -190,33 +181,6 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
         mImageAdapter.addHeaderView(mHeadBinding.getRoot());
     }
 
-    /**
-     * 更新光盘转动
-     *
-     * @param state
-     */
-    void updateDiskView(String state) {
-        boolean visible = false;
-        boolean startRotate = false;
-        switch (state) {
-            case MusicPlayer.State.Playing:
-                visible = true;
-                startRotate = true;
-                break;
-            case MusicPlayer.State.Pause:
-                visible = true;
-                startRotate = false;
-                break;
-        }
-
-        if (startRotate) {
-            AnimHelper.startRotate(mMusicDisk);
-        } else {
-            AnimHelper.cancel(mMusicDisk);
-        }
-        UiHelper.setVisibleElseGone(mMusicDisk, visible);
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -235,7 +199,7 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
                     .start();
                 break;
             case R.id.music_disk:
-                MusicPlayer.clickDisk();
+//                MusicPlayer.clickDisk();
 //                Router.turnTo(mContext, MusicPlayerActivity.class).start();
                 break;
             default:

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="click"
+            type="android.view.View.OnClickListener"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/dp_0"
+        android:paddingTop="@dimen/dp_10"
+        android:background="#aaffffff"
+        android:paddingEnd="@dimen/common_margin"
+        android:paddingBottom="@dimen/common_margin">
+
+        <ImageView
+            android:id="@+id/disk"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/music_disk_bg"
+            android:elevation="@dimen/dp_4"
+            android:onClick="@{click::onClick}"
+            android:padding="@dimen/dp_14"
+            app:srcCompat="@drawable/ic_disk"/>
+
+        <LinearLayout
+            android:id="@+id/controller_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_toStartOf="@id/disk"
+            android:divider="@drawable/music_disck_divider"
+            android:gravity="center"
+            android:showDividers="middle|end"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/play_list"
+                style="@style/ClickableImageView"
+                android:layout_marginStart="@dimen/dp_15"
+                android:onClick="@{click::onClick}"
+                app:srcCompat="@drawable/ic_play_list"
+                app:tint="@color/colorAction"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/play_pre"
+                style="@style/ClickableImageView"
+                android:onClick="@{click::onClick}"
+                app:srcCompat="@drawable/ic_play_last"
+                app:tint="@color/colorAction"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/play_pause"
+                style="@style/ClickableImageView"
+                android:onClick="@{click::onClick}"
+                app:srcCompat="@drawable/music_play"
+                app:tint="@color/colorAction"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/play_next"
+                style="@style/ClickableImageView"
+                android:onClick="@{click::onClick}"
+                app:srcCompat="@drawable/ic_play_next"
+                app:tint="@color/colorAction"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

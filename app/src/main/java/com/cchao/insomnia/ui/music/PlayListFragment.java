@@ -1,5 +1,6 @@
 package com.cchao.insomnia.ui.music;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -13,20 +14,21 @@ import android.view.WindowManager;
 
 import com.cchao.insomnia.BR;
 import com.cchao.insomnia.R;
+import com.cchao.insomnia.manager.MusicPlayer;
+import com.cchao.insomnia.model.javabean.fall.FallMusic;
 import com.cchao.insomnia.view.adapter.DataBindQuickAdapter;
 import com.cchao.simplelib.core.UiHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.lzx.musiclibrary.aidl.model.SongInfo;
-import com.lzx.musiclibrary.manager.MusicManager;
 
 /**
  * @author cchao
  * @version 9/8/18.
  */
-public class PLayListFragment extends DialogFragment {
+public class PlayListFragment extends DialogFragment {
 
     RecyclerView mRecycler;
-    DataBindQuickAdapter<SongInfo> mAdapter;
+    DataBindQuickAdapter<FallMusic> mAdapter;
+    Activity mActivity;
 
     @Override
     public void onStart() {
@@ -34,16 +36,21 @@ public class PLayListFragment extends DialogFragment {
         initRecycler();
     }
 
+    public PlayListFragment setActivity(Activity activity) {
+        mActivity = activity;
+        return this;
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        View view = getActivity().getLayoutInflater().inflate(R.layout.music_play_list_fragment, null);
+        View view = mActivity.getLayoutInflater().inflate(R.layout.music_play_list_fragment, null);
         mRecycler = view.findViewById(R.id.recycler_view);
 
 
         // 不带style的构建的dialog宽度无法铺满屏幕
-        //     Dialog dialog = new Dialog(getActivity());
-        Dialog dialog = new Dialog(getActivity(), R.style.BottomDialog);
+        //     Dialog dialog = new Dialog(mActivity);
+        Dialog dialog = new Dialog(mActivity, R.style.BottomDialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(view);
         dialog.setCanceledOnTouchOutside(true);
@@ -61,26 +68,24 @@ public class PLayListFragment extends DialogFragment {
     private void initRecycler() {
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        DividerItemDecoration divider = new DividerItemDecoration(getActivity()
+        DividerItemDecoration divider = new DividerItemDecoration(mActivity
             , DividerItemDecoration.VERTICAL);
         divider.setDrawable(UiHelper.getDrawable(R.drawable.music_list_divider));
         mRecycler.addItemDecoration(divider);
 
-        mRecycler.setAdapter(mAdapter = new DataBindQuickAdapter<SongInfo>
-            (R.layout.play_list_item, MusicManager.get().getPlayList()) {
-
+        mRecycler.setAdapter(mAdapter = new DataBindQuickAdapter<FallMusic>(R.layout.play_list_item, MusicPlayer.mPlayList) {
             @Override
-            protected void convert(DataBindViewHolder helper, SongInfo item) {
+            protected void convert(DataBindViewHolder helper, FallMusic item) {
                 helper.getBinding().setVariable(BR.item, item);
                 helper.getView(R.id.remove).setOnClickListener(v -> {
-                    MusicManager.get().deleteSongInfoOnPlayList(item, false);
+                    MusicPlayer.removeFromPlayList(item);
                 });
             }
         });
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                MusicManager.get().playMusicByInfo(mAdapter.getItem(position));
+                MusicPlayer.playNow(mAdapter.getItem(position));
             }
         });
     }

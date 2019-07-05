@@ -14,6 +14,9 @@ import com.cchao.simplelib.core.UiHelper;
 import com.danikula.videocache.HttpProxyCacheServer;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 import io.reactivex.schedulers.Schedulers;
 
@@ -23,9 +26,16 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class MusicPlayer {
 
+
     private static HttpProxyCacheServer proxy;
     private static MediaPlayer mMediaPlayer = new MediaPlayer();
     private static FallMusic mCurMusic;
+    public static List<FallMusic> mPlayList = new ArrayList<>();
+    static Stack<FallMusic> mPlayHistory = new Stack<>();
+    static int mPlayIndex = 0;
+
+    static String mPlayMode = Constants.Play_Mode.RANDOM;
+    public static String mCurState = State.Init;
 
     public interface State {
         String Prepare = "prepare";
@@ -48,7 +58,7 @@ public class MusicPlayer {
     public static void init() {
         mMediaPlayer.setOnErrorListener((mediaPlayer, i, i1) -> {
             UiHelper.showToast(R.string.music_play_error);
-            RxBus.get().postEvent(Constants.Event.Update_Play_Status, State.Init);
+            updateState(State.Init);
             return false;
         });
 
@@ -58,8 +68,29 @@ public class MusicPlayer {
                 .subscribeOn(Schedulers.io())
                 .subscribe(RxHelper.getNothingObserver());
             mMediaPlayer.start();
-            RxBus.get().postEvent(Constants.Event.Update_Play_Status, State.Playing);
+            if (!mPlayHistory.empty() && !isCurPlaying(mPlayHistory.peek())) {
+                mPlayHistory.push(mCurMusic);
+            }
+            // 非单曲循环 赋值 index
+            if (!mPlayMode.equals(Constants.Play_Mode.SINGLE_LOOP)) {
+                for (int i = 0; i < mPlayList.size(); i++) {
+                    if (mCurMusic == mPlayList.get(i)) {
+                        mPlayIndex = i;
+                    }
+                }
+            }
+            updateState(State.Playing);
             UiHelper.showToast(UiHelper.getString(R.string.playing) + mCurMusic.getName());
+        });
+
+        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                // 非单曲循环
+                if (!mPlayMode.equals(Constants.Play_Mode.SINGLE_LOOP)) {
+                    playNext();
+                }
+            }
         });
     }
 
@@ -71,21 +102,27 @@ public class MusicPlayer {
         return fallMusic.getId() == getCurPlayingId();
     }
 
-    public static void clickDisk() {
-        if (mMediaPlayer.isPlaying()) {
-            pause();
-        } else {
-            if (mCurMusic != null) {
-                mMediaPlayer.start();
-            }
-        }
-    }
-
     public static void pause() {
         if (mMediaPlayer.isPlaying()) {
             mMediaPlayer.pause();
-            RxBus.get().postEvent(Constants.Event.Update_Play_Status, State.Pause);
+            updateState(State.Pause);
         }
+    }
+
+    public static void playOrPause() {
+        if (isPlaying()) {
+            pause();
+        } else if (mCurState.equals(State.Pause)) {
+            mMediaPlayer.start();
+            updateState(State.Playing);
+        } else {
+            playNext();
+        }
+    }
+
+    private static void updateState(String curState) {
+        RxBus.get().postEvent(Constants.Event.Update_Play_Status, curState);
+        mCurState = curState;
     }
 
     public static void playOrPause(FallMusic item) {
@@ -96,24 +133,60 @@ public class MusicPlayer {
         }
     }
 
-    public static void playNow(FallMusic item) {
-        // 相同不处理
-        if (mCurMusic != null && mCurMusic.getSrc().equals(item.getSrc())) {
+    public static void removeFromPlayList(FallMusic item) {
+        if (mCurMusic == item) {
+            UiHelper.showToast("当前音频正在播放");
             return;
         }
-        mCurMusic = item;
+        mPlayHistory.remove(item);
+        mPlayList.remove(item);
+    }
+
+    public static void playNext() {
+        if (mPlayMode.equals(Constants.Play_Mode.SINGLE_LOOP)) {
+            return;
+        }
+        if (mPlayList.size() <= 1) {
+            return;
+        }
+        // 随机播放
+        FallMusic item = mPlayList.get((mPlayIndex + 1) % mPlayList.size());
+        if (mPlayMode.equals(Constants.Play_Mode.RANDOM)) {
+            item = mPlayList.get((mPlayIndex * 17 + 1) % mPlayList.size());
+        }
+        prepareAsync(item);
+    }
+
+    public static void playPre() {
+        if (mPlayMode.equals(Constants.Play_Mode.SINGLE_LOOP)) {
+            return;
+        }
+        prepareAsync(mPlayHistory.pop());
+    }
+
+    private static void prepareAsync(FallMusic item) {
         try {
-            if (mMediaPlayer.isPlaying()) {
-                mMediaPlayer.reset();
-            }
-            Logs.logEvent("playNow " + item.getSrc());
+            mMediaPlayer.reset();
             mMediaPlayer.setDataSource(getPlaySrc(item));
-            mMediaPlayer.setLooping(true);
-            mMediaPlayer.prepareAsync();
-            RxBus.get().postEvent(Constants.Event.Update_Play_Status, State.Prepare);
         } catch (IOException e) {
             Logs.logException(e);
         }
+        mMediaPlayer.setLooping(mPlayMode.equals(Constants.Play_Mode.SINGLE_LOOP));
+        mMediaPlayer.prepareAsync();
+        mCurMusic = item;
+    }
+
+    public static void playNow(FallMusic item) {
+        if (isPlaying() && item == mCurMusic) {
+            return;
+        }
+        if (!mPlayList.contains(item)) {
+            mPlayList.add(item);
+        }
+
+        Logs.logEvent("playNow " + item.getSrc());
+        prepareAsync(item);
+        updateState(State.Prepare);
     }
 
     private static String getPlaySrc(FallMusic fallMusic) {
