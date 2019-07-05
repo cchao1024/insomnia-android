@@ -13,15 +13,12 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:clickable">true</item>
-        <item name="android:background">?android:selectableItemBackground</item>
     </style>
 
     <style name="MusicController">
-        <item name="android:layout_height">@dimen/dp_70</item>
-        <item name="android:layout_width">@dimen/dp_70</item>
+        <item name="android:layout_height">@dimen/dp_36</item>
+        <item name="android:layout_width">@dimen/dp_36</item>
         <item name="android:clickable">true</item>
-        <item name="android:elevation" tools:targetApi="lollipop">@dimen/dp_4</item>
-        <item name="android:background">@color/white</item>
     </style>
 
     <style name="BottomDialog" parent="@style/AppTheme">
