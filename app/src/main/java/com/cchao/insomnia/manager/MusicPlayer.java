@@ -30,6 +30,7 @@ public class MusicPlayer {
     private static HttpProxyCacheServer proxy;
     private static MediaPlayer mMediaPlayer = new MediaPlayer();
     private static FallMusic mCurMusic;
+    private static FallMusic mPreMusic;
     public static List<FallMusic> mPlayList = new ArrayList<>();
     static Stack<FallMusic> mPlayHistory = new Stack<>();
     static int mPlayIndex = 0;
@@ -51,6 +52,12 @@ public class MusicPlayer {
     public static long getCurPlayingId() {
         if (mCurMusic != null) {
             return mCurMusic.getId();
+        }
+        return 0;
+    }
+    public static long getPrePlayingId() {
+        if (mPreMusic != null) {
+            return mPreMusic.getId();
         }
         return 0;
     }
@@ -133,9 +140,18 @@ public class MusicPlayer {
         }
     }
 
+    public static void clearAndStop() {
+        updateState(State.Init);
+        mPlayList.clear();
+        mPlayHistory.clear();
+        mCurMusic = null;
+        mMediaPlayer.stop();
+        mMediaPlayer.reset();
+    }
+
     public static void removeFromPlayList(FallMusic item) {
-        if (mCurMusic == item) {
-            UiHelper.showToast("当前音频正在播放");
+        if (mCurMusic == item && mPlayList.size() <= 1) {
+            clearAndStop();
             return;
         }
         mPlayHistory.remove(item);
@@ -173,6 +189,7 @@ public class MusicPlayer {
         }
         mMediaPlayer.setLooping(mPlayMode.equals(Constants.Play_Mode.SINGLE_LOOP));
         mMediaPlayer.prepareAsync();
+        mPreMusic = mCurMusic;
         mCurMusic = item;
     }
 

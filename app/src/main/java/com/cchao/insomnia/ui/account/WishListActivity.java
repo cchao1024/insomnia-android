@@ -1,20 +1,19 @@
 package com.cchao.insomnia.ui.account;
 
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.cchao.insomnia.BR;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.api.RetrofitHelper;
-import com.cchao.insomnia.databinding.CommonRecyclerBinding;
+import com.cchao.insomnia.databinding.WishListActivityBinding;
 import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.manager.MusicPlayer;
 import com.cchao.insomnia.model.javabean.fall.FallImage;
 import com.cchao.insomnia.model.javabean.fall.FallMusic;
 import com.cchao.insomnia.model.javabean.user.WishItem;
 import com.cchao.insomnia.ui.global.ImageShowActivity;
-import com.cchao.insomnia.util.ImageHelper;
 import com.cchao.insomnia.view.Dialogs;
-import com.cchao.insomnia.view.GridSpaceDividerDecoration;
 import com.cchao.insomnia.view.adapter.DataBindMultiQuickAdapter;
 import com.cchao.simplelib.core.GsonUtil;
 import com.cchao.simplelib.core.ImageLoader;
@@ -22,6 +21,7 @@ import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
+import com.cchao.simplelib.view.itemdecoration.GridOffsetsItemDecoration;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.loadmore.SimpleLoadMoreView;
 
@@ -33,7 +33,7 @@ import java.util.Map;
  * @author cchao
  * @version 2019-05-23.
  */
-public class WishListActivity extends BaseTitleBarActivity<CommonRecyclerBinding> {
+public class WishListActivity extends BaseTitleBarActivity<WishListActivityBinding> {
 
     Adapter mAdapter;
     int mCurPage = 1;
@@ -41,20 +41,23 @@ public class WishListActivity extends BaseTitleBarActivity<CommonRecyclerBinding
     @Override
 
     protected int getLayout() {
-        return R.layout.common_recycler;
+        return R.layout.wish_list_activity;
     }
 
     @Override
     protected void initEventAndData() {
         setTitleText("收藏列表");
         initAdapter();
-        mDataBind.refreshLayout.setEnabled(false);
         onLoadData();
     }
 
     private void initAdapter() {
-        mDataBind.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false));
-        mDataBind.recyclerView.addItemDecoration(new GridSpaceDividerDecoration(UiHelper.dp2px(10), 2));
+        mDataBind.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 3, GridLayoutManager.VERTICAL, false));
+
+        RecyclerView.ItemDecoration decoration = new GridOffsetsItemDecoration(GridOffsetsItemDecoration.GRID_OFFSETS_VERTICAL)
+            .setVerticalItemOffsets(UiHelper.dp2px(10))
+            .setHorizontalItemOffsets(UiHelper.dp2px(10));
+        mDataBind.recyclerView.addItemDecoration(decoration);
         mDataBind.recyclerView.setAdapter(mAdapter = new Adapter(null));
         mAdapter.setLoadMoreView(new SimpleLoadMoreView());
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -106,7 +109,7 @@ public class WishListActivity extends BaseTitleBarActivity<CommonRecyclerBinding
     }
 
     class Adapter extends DataBindMultiQuickAdapter<WishItem> {
-        int itemWidth = UiHelper.getScreenWidth() / 2;
+        int itemWidth = UiHelper.getScreenWidth() / 3;
 
         public Adapter(List<WishItem> data) {
             super(data);
@@ -115,7 +118,7 @@ public class WishListActivity extends BaseTitleBarActivity<CommonRecyclerBinding
         @Override
         public Map<Integer, Integer> getTypeLayoutMap() {
             Map<Integer, Integer> map = new HashMap<>(8);
-            map.put(1, R.layout.fall_image_item);
+            map.put(1, R.layout.wish_image_item);
             map.put(2, R.layout.fall_music_item);
             return map;
         }
@@ -125,9 +128,7 @@ public class WishListActivity extends BaseTitleBarActivity<CommonRecyclerBinding
             switch (wishItem.getType()) {
                 case Constants.Type.FALL_IMAGE:
                     FallImage item = GsonUtil.fromJson(GsonUtil.toJson(wishItem.getContent()), FallImage.class);
-                    helper.itemView.getLayoutParams().width = itemWidth;
-                    helper.itemView.getLayoutParams().height = ImageHelper
-                        .getScaleHeight(itemWidth, item.getWidth(), item.getHeight());
+                    helper.itemView.getLayoutParams().height = UiHelper.dp2px(145);
                     ImageLoader.loadImage(helper.getView(R.id.image), item.getSrc());
                     // click
                     helper.itemView.setOnClickListener(click -> {
@@ -136,6 +137,7 @@ public class WishListActivity extends BaseTitleBarActivity<CommonRecyclerBinding
                             .putExtra(Constants.Extra.ID, item.getId())
                             .start();
                     });
+                    helper.setText(R.id.text, "insomnia " + wishItem.getId());
                     break;
                 case Constants.Type.FALL_MUSIC:
                     FallMusic itemMusic = GsonUtil.fromJson(GsonUtil.toJson(wishItem.getContent()), FallMusic.class);

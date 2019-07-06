@@ -20,7 +20,6 @@ import com.cchao.insomnia.model.javabean.RespListBean;
 import com.cchao.insomnia.model.javabean.fall.FallImage;
 import com.cchao.insomnia.model.javabean.fall.FallMusic;
 import com.cchao.insomnia.ui.global.ImageShowActivity;
-import com.cchao.insomnia.util.AnimHelper;
 import com.cchao.insomnia.util.ImageHelper;
 import com.cchao.insomnia.view.Dialogs;
 import com.cchao.insomnia.view.GridSpaceDividerDecoration;
@@ -51,7 +50,6 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
     DataBindQuickAdapter<FallMusic> mMusicAdapter;
     PageAdapter<FallImage> mImageAdapter;
     FallHeadBinding mHeadBinding;
-    View mMusicDisk;
 
     @Override
     protected int getLayoutId() {
@@ -89,7 +87,6 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
         mRvNature = mHeadBinding.rvNature;
 
         mRvImage = mDataBind.rvImage;
-        mMusicDisk = mDataBind.musicDisk;
 
         mHeadBinding.setClicker(this);
         mDataBind.setClicker(this);
@@ -179,12 +176,6 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
                 .start();
         });
         mImageAdapter.addHeaderView(mHeadBinding.getRoot());
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        AnimHelper.cancel(mMusicDisk);
     }
 
     @Override

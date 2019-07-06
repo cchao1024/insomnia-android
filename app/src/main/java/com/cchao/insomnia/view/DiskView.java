@@ -1,5 +1,6 @@
 package com.cchao.insomnia.view;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class DiskView extends RelativeLayout implements View.OnClickListener {
     Context mContext;
     PlayListFragment mPlayListFragment;
     MusicDiscBinding mBinding;
+    ObjectAnimator mAnimator;
 
     public DiskView(Context context) {
         this(context, null, 0);
@@ -53,14 +55,24 @@ public class DiskView extends RelativeLayout implements View.OnClickListener {
                 return;
             }
             switch (event.getContent()) {
+                case MusicPlayer.State.Init:
+                    UiHelper.setVisibleElseGone(mBinding.controllerField, false);
+                    mBinding.controllerField.setTag(R.id.boolean_tag, false);
+                    setVisibility(GONE);
+                    AnimHelper.end(mAnimator);
+                    break;
                 case MusicPlayer.State.Pause:
                 case MusicPlayer.State.Prepare:
                     mBinding.playPause.setImageResource(R.drawable.music_play);
-                    AnimHelper.cancel(mBinding.disk);
+                    AnimHelper.pause(mAnimator);
                     break;
                 case MusicPlayer.State.Playing:
                     mBinding.playPause.setImageResource(R.drawable.music_pause);
-                    AnimHelper.startRotate(mBinding.disk);
+                    if (mAnimator == null) {
+                        AnimHelper.startRotate(mBinding.disk);
+                    } else {
+                        AnimHelper.resumeOrStart(mAnimator);
+                    }
                     break;
             }
 

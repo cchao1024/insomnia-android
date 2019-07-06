@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.databinding.MusicItemMenuListBinding;
 import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.manager.GlobalHelper;
+import com.cchao.insomnia.manager.MusicPlayer;
 import com.cchao.insomnia.manager.UserManager;
 import com.cchao.insomnia.model.javabean.fall.FallMusic;
 import com.cchao.simplelib.core.UiHelper;
@@ -32,7 +34,7 @@ public class Dialogs {
         binding.setClicker(click -> {
             switch (click.getId()) {
                 case R.id.next_play:
-                    UiHelper.showToast(R.string.developing);
+                    MusicPlayer.mPlayList.add(item);
                     dialog.dismiss();
                     break;
                 case R.id.wish:
@@ -44,7 +46,7 @@ public class Dialogs {
                     dialog.dismiss();
                     break;
                 case R.id.share:
-                    UiHelper.showToast(R.string.developing);
+                    GlobalHelper.shareMusic(layoutInflater.getContext(), item.getSrc());
                     dialog.dismiss();
                     break;
             }

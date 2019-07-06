@@ -11,7 +11,7 @@ import android.view.animation.LinearInterpolator;
  */
 public class AnimHelper {
 
-    public static void startRotate(View view) {
+    public static ObjectAnimator startRotate(View view) {
         ObjectAnimator rotation = ObjectAnimator.ofFloat(view
             , "rotation", 0f, 360f);
         rotation.setDuration(3600);
@@ -19,13 +19,30 @@ public class AnimHelper {
         rotation.setRepeatMode(ValueAnimator.RESTART);
         rotation.setRepeatCount(ValueAnimator.INFINITE);
         rotation.start();
+        return rotation;
     }
 
-    public static void cancel(View view) {
-        if (view == null || view.getAnimation() == null) {
+    public static void end(ObjectAnimator animator) {
+        if (animator == null) {
             return;
         }
-        view.getAnimation().cancel();
-        view.clearAnimation();
+        animator.end();
+    }
+
+    public static void pause(ObjectAnimator animator) {
+        if (animator == null) {
+            return;
+        }
+        animator.pause();
+    }
+
+    public static void resumeOrStart(ObjectAnimator animator) {
+        if (animator == null || animator.isRunning()) {
+            return;
+        }
+        if (animator.isPaused()) {
+            animator.resume();
+        }
+        animator.start();
     }
 }

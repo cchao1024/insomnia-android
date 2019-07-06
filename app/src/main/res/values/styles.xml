@@ -16,8 +16,8 @@
     </style>
 
     <style name="MusicController">
-        <item name="android:layout_height">@dimen/dp_36</item>
-        <item name="android:layout_width">@dimen/dp_36</item>
+        <item name="android:layout_height">@dimen/dp_26</item>
+        <item name="android:layout_width">@dimen/dp_26</item>
         <item name="android:clickable">true</item>
     </style>
 

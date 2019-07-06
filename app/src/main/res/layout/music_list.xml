@@ -23,13 +23,9 @@
                 android:layout_height="match_parent"/>
         </android.support.v4.widget.SwipeRefreshLayout>
 
-        <include
-            android:id="@+id/music_disk"
-            layout="@layout/disk"
-            android:layout_width="wrap_content"
+        <com.cchao.insomnia.view.DiskView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/dp_16"
-            android:onClick="@{clicker::onClick}"/>
+            android:layout_gravity="bottom"/>
     </FrameLayout>
 </layout>

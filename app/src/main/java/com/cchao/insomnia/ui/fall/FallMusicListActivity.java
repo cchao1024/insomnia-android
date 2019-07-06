@@ -3,7 +3,6 @@ package com.cchao.insomnia.ui.fall;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.cchao.insomnia.BR;
 import com.cchao.insomnia.R;
@@ -13,15 +12,11 @@ import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.manager.MusicPlayer;
 import com.cchao.insomnia.model.javabean.RespListBean;
 import com.cchao.insomnia.model.javabean.fall.FallMusic;
-import com.cchao.insomnia.ui.music.MusicPlayerActivity;
-import com.cchao.insomnia.util.AnimHelper;
 import com.cchao.insomnia.view.Dialogs;
 import com.cchao.insomnia.view.adapter.PageAdapter;
-import com.cchao.simplelib.core.Router;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
-import com.lzx.musiclibrary.manager.MusicManager;
 
 import io.reactivex.Observable;
 
@@ -45,48 +40,24 @@ public class FallMusicListActivity extends BaseTitleBarActivity<MusicListBinding
         initAdapter();
         initEvent();
         onLoadData();
-        mDataBind.setClicker(v -> {
-            switch (v.getId()) {
-                case R.id.music_disk:
-                    Router.turnTo(mContext, MusicPlayerActivity.class).start();
-                    break;
-
-            }
-        });
     }
 
     private void initEvent() {
         addSubscribe(RxBus.get().toObservable(event -> {
-            switch (event.getCode()) {
-                case Constants.Event.Update_Play_Status:
-                    updateDiskView();
-                    for (FallMusic music : mAdapter.getData()) {
-                        music.isPlaying.set(music.getId() == MusicPlayer.getCurPlayingId());
+            if (Constants.Event.Update_Play_Status != event.getCode()) {
+                return;
+            }
+            switch (event.getContent()) {
+                case MusicPlayer.State.Prepare:
+                    for (int i = 0; i < mAdapter.getData().size(); i++) {
+                        long id = mAdapter.getData().get(i).getId();
+                        if (id == MusicPlayer.getCurPlayingId() || id == MusicPlayer.getPrePlayingId()) {
+                            mAdapter.notifyItemChanged(i);
+                        }
                     }
                     break;
             }
         }));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateDiskView();
-    }
-
-    private void updateDiskView() {
-        if (MusicManager.get() == null) {
-            return;
-        }
-        if (MusicManager.isPlaying()) {
-            if (MusicManager.get().getCurrPlayingMusic() == null) {
-                return;
-            }
-            mDataBind.musicDisk.setVisibility(View.VISIBLE);
-            AnimHelper.startRotate(mDataBind.musicDisk);
-        } else {
-            mDataBind.musicDisk.setVisibility(View.GONE);
-        }
     }
 
     private void initAdapter() {
@@ -110,13 +81,9 @@ public class FallMusicListActivity extends BaseTitleBarActivity<MusicListBinding
             @Override
             protected void convert(DataBindViewHolder helper, FallMusic item) {
                 helper.getBinding().setVariable(BR.item, item);
-                helper.setText(R.id.order_num, helper.getLayoutPosition() + "");
+                helper.setText(R.id.order_num, helper.getLayoutPosition() + 1 + "");
 
-                // 是当前播放的音乐
-                if (MusicPlayer.getCurPlayingId() == item.getId()) {
-
-                }
-
+                UiHelper.setVisibleElseGone(helper.getView(R.id.playing), MusicPlayer.isCurPlaying(item));
                 // 弹出 menu对话框
                 helper.getView(R.id.more).setOnClickListener(v -> {
                     Dialogs.showMusicItemMenu(mLayoutInflater, item, FallMusicListActivity.this);
@@ -126,13 +93,7 @@ public class FallMusicListActivity extends BaseTitleBarActivity<MusicListBinding
 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             FallMusic item = mAdapter.getItem(position);
-
-            if (item.getId() == MusicPlayer.getCurPlayingId()) {
-                Router.turnTo(mContext, MusicPlayerActivity.class)
-                    .start();
-            } else {
-                MusicPlayer.playNow(item);
-            }
+            MusicPlayer.playNow(item);
         });
 //        mAdapter.disableLoadMoreIfNotFullPage();
     }
@@ -142,11 +103,5 @@ public class FallMusicListActivity extends BaseTitleBarActivity<MusicListBinding
         switchView(LOADING);
         mAdapter.onLoadData(1);
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        AnimHelper.cancel(mDataBind.musicDisk);
     }
 }

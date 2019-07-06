@@ -36,8 +36,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/dp_6"
-            android:paddingTop="@dimen/dp_12">
+            android:paddingTop="@dimen/dp_12"
+            android:paddingBottom="@dimen/dp_6">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -57,13 +57,13 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/play_now"
+            android:id="@+id/playing"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/dp_20"
-            android:visibility="@{item.isPlaying? View.GONE : View.VISIBLE}"
-            app:srcCompat="@drawable/ic_play_select"/>
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_music_playing"/>
 
         <ImageView
             android:id="@+id/more"

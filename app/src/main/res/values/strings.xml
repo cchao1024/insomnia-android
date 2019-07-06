@@ -71,5 +71,9 @@
     <string name="has_reply">回复了</string>
     <string name="upload_fail">上传失败，点击重试</string>
     <string name="add_play_list">加入播放列表</string>
+    <string name="play_list">播放列表</string>
+    <string name="clear_all">清空</string>
+    <string name="share_image_title">我在 Insomnia App上发现了一张很有趣的图片</string>
+    <string name="share_music_title">我在 Insomnia App上找到了一段动听的音乐</string>
 
 </resources>
