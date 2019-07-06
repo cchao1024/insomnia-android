@@ -30,7 +30,7 @@ public class Dialogs {
         BottomSheetDialog dialog = new BottomSheetDialog(layoutInflater.getContext());
         MusicItemMenuListBinding binding = DataBindingUtil.inflate(layoutInflater
             , R.layout.music_item_menu_list, null, false);
-        binding.name.setText("歌曲：" + item.getName());
+        binding.name.setText(UiHelper.getString(R.string.music_colon) + item.getName());
         binding.setClicker(click -> {
             switch (click.getId()) {
                 case R.id.next_play:
@@ -74,6 +74,5 @@ public class Dialogs {
             }
             options.get(which).second.run();
         });
-
     }
 }

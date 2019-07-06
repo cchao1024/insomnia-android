@@ -49,7 +49,7 @@ public class CountSheepActivity extends BaseTitleBarActivity<CountSheepActivityB
         long millisSecond = (System.currentTimeMillis() - mStartTimeStamp);
         int second = (int) (millisSecond / 1000);
         String averSecond = String.format(Locale.getDefault(), "%.2f", millisSecond * 1.0f / mCountNum / 1000f);
-        String msg = "你一共数了 " + mCountNum + " 只绵羊\n共耗时 " + second + " 秒" + "\n 平均每只耗时 " + averSecond + " 秒";
+        String msg = String.format(UiHelper.getString(R.string.count_result_text), mCountNum, second, averSecond);
         UiHelper.showConfirmDialog(mContext, msg, (dialogInterface, i) -> {
             dialogInterface.dismiss();
             super.onBackPressed();

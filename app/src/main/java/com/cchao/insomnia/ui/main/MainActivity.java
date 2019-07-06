@@ -395,7 +395,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mBinding.userName.setText(userInfoBean.getNickName());
         mBinding.userEmail.setText(userInfoBean.getEmail());
         int day = (int) ((System.currentTimeMillis() - PrefHelper.getLong(Constants.Prefs.INIT_TIME_STAMP)) / (1000 * 60 * 60 * 24L));
-        mBinding.hasRunning.setText(getString(R.string.app_name) + " 已经陪伴了你" + day + "个夜晚");
+        mBinding.hasRunning.setText(String.format(getString(R.string.has_run_day), day));
         if (UserManager.isVisitor()) {
             mBinding.userEmail.setText(R.string.no_bind_email);
         }

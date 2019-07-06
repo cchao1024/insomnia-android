@@ -1,5 +1,8 @@
 package com.cchao.insomnia.util;
 
+import com.cchao.insomnia.R;
+import com.cchao.simplelib.core.UiHelper;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -47,15 +50,15 @@ public class TimeHelper {
             long hours = (diff - days * (60 * 60 * 24)) / (60 * 60);
             long minutes = (diff - days * (60 * 60 * 24) - hours * (60 * 60)) / 60;
             if (months > 0) {
-                temp = months + "月前";
+                temp = months + UiHelper.getString(R.string.mouth_ago);
             } else if (days > 0) {
-                temp = days + "天前";
+                temp = days + UiHelper.getString(R.string.day_ago);
             } else if (hours > 0) {
-                temp = hours + "小时前";
+                temp = hours + UiHelper.getString(R.string.hour_ago);
             } else if (minutes > 1) {
-                temp = minutes + "分钟前";
+                temp = minutes + UiHelper.getString(R.string.minute_ago);
             } else {
-                temp = "刚刚";
+                temp = UiHelper.getString(R.string.now_ago);
             }
         } catch (Exception e) {
             e.printStackTrace();
