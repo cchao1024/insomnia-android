@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">insomnia</string>
-    <string name="drawer_open">open</string>
-    <string name="drawer_close">close</string>
     <string name="tab_name_0">睡不着</string>
     <string name="tab_name_1">说说</string>
     <string name="tab_name_2">数绵羊</string>
@@ -82,5 +80,12 @@
     <string name="hour_ago">小时前</string>
     <string name="minute_ago">分钟前</string>
     <string name="now_ago">刚刚</string>
+    <string name="playing_mode">播放顺序</string>
+    <string name="select_play_mode">选择播放顺序</string>
+    <string name="select_language">选择语言</string>
+    <string name="mode_single_loop">单曲循环</string>
+    <string name="mode_random">随机</string>
+    <string name="mode_loop">列表循环</string>
+    <string name="exist_play_list">已存在播放列表</string>
 
 </resources>

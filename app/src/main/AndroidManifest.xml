@@ -20,10 +20,6 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name="com.cchao.simplemusic.MusicService"
-            android:enabled="true"
-            android:exported="true"></service>
 
         <activity android:name=".ui.fall.FallImageActivity"/>
         <activity android:name=".ui.global.ImageShowActivity"/>
@@ -43,6 +39,7 @@
         <activity android:name=".ui.play.Play478Activity"/>
         <activity android:name=".ui.play.CountSheepActivity"/>
         <activity android:name=".ui.account.WishListActivity"/>
+        <activity android:name=".ui.main.SettingsActivity"/>
 
 
         <!-- Since JCore2.0.0 Required SDK核心功能-->

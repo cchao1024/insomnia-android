@@ -64,6 +64,7 @@ public class DiskView extends RelativeLayout implements View.OnClickListener {
                 case MusicPlayer.State.Pause:
                 case MusicPlayer.State.Prepare:
                     mBinding.playPause.setImageResource(R.drawable.music_play);
+                    setVisibility(VISIBLE);
                     AnimHelper.pause(mAnimator);
                     break;
                 case MusicPlayer.State.Playing:
@@ -110,6 +111,7 @@ public class DiskView extends RelativeLayout implements View.OnClickListener {
                     mPlayListFragment = new PlayListFragment().setActivity(((AppCompatActivity) (mContext)));
                 }
                 mPlayListFragment.show(((AppCompatActivity) (mContext)).getSupportFragmentManager(), "PlayListFragment");
+                mBinding.disk.performClick();
                 break;
         }
     }

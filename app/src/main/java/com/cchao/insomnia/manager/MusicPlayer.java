@@ -8,6 +8,7 @@ import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.model.javabean.fall.FallMusic;
 import com.cchao.simplelib.LibCore;
 import com.cchao.simplelib.core.Logs;
+import com.cchao.simplelib.core.PrefHelper;
 import com.cchao.simplelib.core.RxBus;
 import com.cchao.simplelib.core.RxHelper;
 import com.cchao.simplelib.core.UiHelper;
@@ -35,7 +36,7 @@ public class MusicPlayer {
     static Stack<FallMusic> mPlayHistory = new Stack<>();
     static int mPlayIndex = 0;
 
-    static String mPlayMode = Constants.Play_Mode.RANDOM;
+    static String mPlayMode = PrefHelper.getString(Constants.Prefs.Play_Mode, Constants.Play_Mode.RANDOM);
     public static String mCurState = State.Init;
 
     public interface State {
@@ -55,6 +56,7 @@ public class MusicPlayer {
         }
         return 0;
     }
+
     public static long getPrePlayingId() {
         if (mPreMusic != null) {
             return mPreMusic.getId();
@@ -138,6 +140,16 @@ public class MusicPlayer {
         } else {
             playNow(item);
         }
+    }
+
+    public static void addToPlayList(FallMusic item) {
+        for (FallMusic fallMusic : mPlayList) {
+            if (fallMusic.getId() == item.getId()) {
+                UiHelper.showToast(R.string.exist_play_list);
+                return;
+            }
+        }
+        mPlayList.add(item);
     }
 
     public static void clearAndStop() {

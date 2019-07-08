@@ -113,6 +113,7 @@ public class PlayListFragment extends DialogFragment implements View.OnClickList
         switch (v.getId()) {
             case R.id.clear_all:
                 MusicPlayer.clearAndStop();
+                dismiss();
                 break;
         }
     }

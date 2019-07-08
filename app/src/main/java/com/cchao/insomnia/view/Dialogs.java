@@ -34,7 +34,7 @@ public class Dialogs {
         binding.setClicker(click -> {
             switch (click.getId()) {
                 case R.id.next_play:
-                    MusicPlayer.mPlayList.add(item);
+                    MusicPlayer.addToPlayList(item);
                     dialog.dismiss();
                     break;
                 case R.id.wish:

@@ -4,6 +4,7 @@ import com.cchao.insomnia.global.Constants;
 import com.cchao.insomnia.manager.UserManager;
 import com.cchao.simplelib.core.AndroidHelper;
 import com.cchao.simplelib.http.OkHttpHelper;
+import com.cchao.simplelib.util.LanguageUtil;
 import com.cchao.simplelib.util.UrlUtil;
 
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class HttpClientManager {
     static {
         Req_Params.put(Constants.Api_Appand.Device_No, AndroidHelper.getDeviceNum());
         Req_Params.put(Constants.Api_Appand.App_Build, Constants.Config.API_BUILD);
+        Req_Params.put(Constants.Api_Appand.Lang, LanguageUtil.Cur_Language);
         Req_Params.put(Constants.Api_Appand.Page_Size, String.valueOf(Constants.Config.PAGE_SIZE));
     }
 

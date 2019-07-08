@@ -1,1 +1,1 @@
-include ':app', ':simplelib', ':simplemusic'
+include ':app', ':simplelib'

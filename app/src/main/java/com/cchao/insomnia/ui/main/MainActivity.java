@@ -54,12 +54,14 @@ import com.cchao.simplelib.core.UiHelper;
 import com.cchao.simplelib.ui.activity.BaseActivity;
 import com.cchao.simplelib.ui.fragment.BaseFragment;
 import com.cchao.simplelib.ui.web.WebViewActivity;
+import com.cchao.simplelib.util.LanguageUtil;
 import com.cchao.simplelib.util.StringHelper;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.disposables.Disposable;
 
@@ -205,8 +207,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         // divier
         menus.add(NavItem.of(Constants.Drawer.Divider, "", 0, NavItem.Margin.none));
 
-        menus.add(NavItem.of(Constants.Drawer.AboutUs, R.string.about_us, R.drawable.drawer_about, NavItem.Margin.top));
+        menus.add(NavItem.of(Constants.Drawer.Lang, R.string.select_language, R.drawable.ic_language, NavItem.Margin.top));
         menus.add(NavItem.of(Constants.Drawer.FeedBack, R.string.feed_back, R.drawable.drawer_feedback, NavItem.Margin.none));
+        menus.add(NavItem.of(Constants.Drawer.AboutUs, R.string.about_us, R.drawable.drawer_about, NavItem.Margin.none));
         menus.add(NavItem.of(Constants.Drawer.Settings, R.string.settings, R.drawable.drawer_settings, NavItem.Margin.bottom));
 
         // 加入到linearLayout
@@ -266,10 +269,38 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 showTimeDownDialog();
                 break;
             case Constants.Drawer.Settings:
-                showText(R.string.developing);
                 if (LibCore.getInfo().isDebug()) {
                     Dialogs.showDebug(mLayoutInflater);
                 }
+                Router.turnTo(mContext, SettingsActivity.class).start();
+                break;
+
+            case Constants.Drawer.Lang:
+                ArrayMap<String, Integer> map = new ArrayMap<>();
+                map.put(UiHelper.getString(R.string.lang_ZH), R.string.lang_abbr_ZH);
+                map.put(UiHelper.getString(R.string.lang_EN), R.string.lang_abbr_EN);
+                map.put(UiHelper.getString(R.string.lang_ES), R.string.lang_abbr_ES);
+                map.put(UiHelper.getString(R.string.lang_FR), R.string.lang_abbr_FR);
+                map.put(UiHelper.getString(R.string.lang_IT), R.string.lang_abbr_IT);
+                map.put(UiHelper.getString(R.string.lang_PT), R.string.lang_abbr_PT);
+                map.put(UiHelper.getString(R.string.lang_RU), R.string.lang_abbr_RU);
+
+                int curSelectIndex = 0;
+                for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                    if (UiHelper.getString(entry.getValue()).equals(LanguageUtil.Cur_Language)) {
+                        curSelectIndex = map.indexOfKey(entry.getKey());
+                        break;
+                    }
+                }
+
+                String[] array = map.keySet().toArray(new String[]{});
+                new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.select_language))
+                    .setSingleChoiceItems(array, curSelectIndex, (dialog, which) -> {
+                        LanguageUtil.changeLanguage(UiHelper.getString(map.get(array[which])));
+                        Router.turnTo(mContext, MainActivity.class).startInNewTask();
+                    }).show();
+
                 break;
             default:
                 break;

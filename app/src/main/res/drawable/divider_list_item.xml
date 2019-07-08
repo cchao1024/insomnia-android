@@ -3,5 +3,4 @@
 
     <solid android:color="@color/divider_e5"/>
     <size android:height="0.5dp"/>
-    <padding android:left="@dimen/dp_60"/>
 </shape>

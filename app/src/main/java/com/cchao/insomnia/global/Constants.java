@@ -1,6 +1,8 @@
 package com.cchao.insomnia.global;
 
 import com.cchao.insomnia.BuildConfig;
+import com.cchao.insomnia.R;
+import com.cchao.simplelib.core.UiHelper;
 
 /**
  * 常量
@@ -16,8 +18,8 @@ public class Constants {
 
     public interface Config {
 
-        //        String API_Host = "http://127.0.0.1:8080/";
-        String API_Host = "http://47.240.35.14:8080/";
+        String API_Host = "http://127.0.0.1:8080/";
+//        String API_Host = "http://47.240.35.14:8080/";
 
         // 接口API版本
         String API_BUILD = String.valueOf(BuildConfig.VERSION_CODE);
@@ -60,20 +62,20 @@ public class Constants {
         String MUSIC_PLAY_MODE = "music_play_mode";
         String INIT_TIME_STAMP = "INIT_TIME_STAMP";
         String WISH_LIST = "wish_list";
+        String Play_Mode = "play_mode";
     }
 
     // 后端响应Code
     public interface ApiResp {
         String CODE_SUC = "00";
         String CODE = "code";
-
     }
 
     // 播放模式
     public interface Play_Mode {
-        String SINGLE_LOOP = "单曲循环";
-        String RANDOM = "随机";
-        String LIST_LOOP = "列表循环";
+        String SINGLE_LOOP = UiHelper.getString(R.string.mode_single_loop);
+        String RANDOM = UiHelper.getString(R.string.mode_random);
+        String LIST_LOOP = UiHelper.getString(R.string.mode_loop);
 
     }
 
@@ -89,6 +91,7 @@ public class Constants {
         int AboutUs = 1003;
         int TimeDown = 1004;
         int Settings = 1005;
+        int Lang = 1006;
     }
 
     /**
@@ -98,5 +101,6 @@ public class Constants {
         String App_Build = "appBuild";
         String Device_No = "deviceNo";
         String Page_Size = "pageSize";
+        String Lang = "lang";
     }
 }
