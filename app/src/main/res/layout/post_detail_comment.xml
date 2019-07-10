@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="top"
-            android:hint="@string/I_think"
+            android:hint="@string/i_think"
             android:minLines="4"
             android:padding="@dimen/dp_16"/>
 

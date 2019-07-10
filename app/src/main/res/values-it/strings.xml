@@ -88,7 +88,7 @@
     <string name="exist_play_list">preesistenti playlist</string>
 
     <string name="collect_list">Elenco delle raccolte</string>
-    <string name="send_a_post">Mi viene in mente un'idea.</string>
+    <string name="send_a_post">Mi viene in mente un\'idea.</string>
     <string name="count_sleep">Contare le pecore</string>
     <string name="breath_step_1">Ispiratori 4S</string>
     <string name="breath_step_2">Trattieni il respiro per sette secondi</string>
@@ -96,6 +96,6 @@
     <string name="please_input_content">Inserisci il contenuto</string>
     <string name="image_no_upload">Immagini non caricate</string>
     <string name="i_think">Penso che...</string>
-    <string name="say_something">Di 'qualcosa.</string>
+    <string name="say_something">Di \'qualcosa.</string>
 
 </resources>

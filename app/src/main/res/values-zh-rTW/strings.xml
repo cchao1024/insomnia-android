@@ -17,7 +17,8 @@
     <string name="time_down">計時關閉</string>
     <string name="settings">設定</string>
     <string name="user_name">用戶名</string>
-    <string name="user_email">█</string>
+    <string name="user_email">email</string>
+    <string name="wish_list">收藏夹</string>
     <string name="login_pwd">登入密碼</string>
     <string name="man">男</string>
     <string name="woman">女</string>

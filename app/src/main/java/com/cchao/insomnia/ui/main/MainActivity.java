@@ -297,8 +297,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.select_language))
                     .setSingleChoiceItems(array, curSelectIndex, (dialog, which) -> {
+                        dialog.dismiss();
                         LanguageUtil.changeLanguage(UiHelper.getString(map.get(array[which])));
-                        Router.turnTo(mContext, MainActivity.class).startInNewTask();
+                        recreate();
                     }).show();
 
                 break;
