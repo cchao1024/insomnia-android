@@ -64,7 +64,7 @@ public class ImageHelper {
             // 返回图标ResId
             .backResId(R.drawable.ic_back)
             // 标题
-            .title("图片")
+            .title(UiHelper.getString(R.string.image))
             // 标题文字颜色
             .titleColor(Color.WHITE)
             // TitleBar背景色

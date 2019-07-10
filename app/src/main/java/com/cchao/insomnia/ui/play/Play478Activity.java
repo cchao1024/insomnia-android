@@ -82,17 +82,17 @@ public class Play478Activity extends BaseTitleBarActivity<Play478ActivityBinding
     }
 
     public void startTip() {
-        mDataBind.stepTips.setText("吸气 4s");
+        mDataBind.stepTips.setText(R.string.breath_step_1);
         RxHelper.timerConsumer(4000, new Consumer<Long>() {
             @Override
             public void accept(Long aLong) throws Exception {
-                mDataBind.stepTips.setText("屏住呼吸 7s");
+                mDataBind.stepTips.setText(R.string.breath_step_2);
             }
         });
         RxHelper.timerConsumer(4000 + 7000, new Consumer<Long>() {
             @Override
             public void accept(Long aLong) throws Exception {
-                mDataBind.stepTips.setText("呼气 8s");
+                mDataBind.stepTips.setText(R.string.breath_step_3);
             }
         });
     }

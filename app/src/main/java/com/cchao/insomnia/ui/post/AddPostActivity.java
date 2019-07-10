@@ -41,14 +41,14 @@ public class AddPostActivity extends BaseTitleBarActivity<PostAddActivityBinding
 
     @Override
     protected void initEventAndData() {
-        setTitleText("冒出个想法");
+        setTitleText(R.string.send_a_post);
         addTitleMenuItem(R.drawable.action_send, v -> onSendPost());
         mDataBind.setClicker(this);
     }
 
     private void onSendPost() {
         if (TextUtils.isEmpty(mDataBind.edit.getText().toString())) {
-            showText("请输入内容");
+            showText(getString(R.string.please_input_content));
             return;
         }
         // 加入 图片的相对路径
@@ -58,7 +58,7 @@ public class AddPostActivity extends BaseTitleBarActivity<PostAddActivityBinding
             if (child.getTag(R.id.bean_tag) != null) {
                 UploadImageBean bean = (UploadImageBean) child.getTag(R.id.bean_tag);
                 if (StringHelper.isEmpty(bean.getRelativeUrl())) {
-                    showText("图片未上传");
+                    showText(getString(R.string.image_no_upload));
                     return;
                 }
                 postImageList.add(bean.getRelativeUrl());

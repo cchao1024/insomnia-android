@@ -46,7 +46,7 @@ public class WishListActivity extends BaseTitleBarActivity<WishListActivityBindi
 
     @Override
     protected void initEventAndData() {
-        setTitleText("收藏列表");
+        setTitleText(R.string.collect_list);
         initAdapter();
         onLoadData();
     }

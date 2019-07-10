@@ -30,7 +30,7 @@ public class CountSheepActivity extends BaseTitleBarActivity<CountSheepActivityB
 
     @Override
     protected void initEventAndData() {
-        setTitleText("数绵羊");
+        setTitleText(R.string.count_sleep);
         mDataBind.setClick(this);
     }
 

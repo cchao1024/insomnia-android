@@ -278,11 +278,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case Constants.Drawer.Lang:
                 ArrayMap<String, Integer> map = new ArrayMap<>();
                 map.put(UiHelper.getString(R.string.lang_ZH), R.string.lang_abbr_ZH);
+                map.put(UiHelper.getString(R.string.lang_ZH_TW), R.string.lang_abbr_ZH_TW);
                 map.put(UiHelper.getString(R.string.lang_EN), R.string.lang_abbr_EN);
                 map.put(UiHelper.getString(R.string.lang_ES), R.string.lang_abbr_ES);
                 map.put(UiHelper.getString(R.string.lang_FR), R.string.lang_abbr_FR);
                 map.put(UiHelper.getString(R.string.lang_IT), R.string.lang_abbr_IT);
-                map.put(UiHelper.getString(R.string.lang_PT), R.string.lang_abbr_PT);
                 map.put(UiHelper.getString(R.string.lang_RU), R.string.lang_abbr_RU);
 
                 int curSelectIndex = 0;

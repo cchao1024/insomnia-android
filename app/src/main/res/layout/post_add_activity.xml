@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="top"
-            android:hint="这一刻的想法..."
+            android:hint="@string/say_something"
             android:minLines="5"
             android:padding="@dimen/common_margin"/>
 
