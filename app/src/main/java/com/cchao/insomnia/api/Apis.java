@@ -36,7 +36,7 @@ import retrofit2.http.Query;
 public interface Apis {
 
     String aboutUs = Constants.Config.API_Host + "app/about_us";
-    String sleep478 = Constants.Config.API_Host + "app/sleep_478";
+    String sleep478 = "https://www.healthline.com/health/4-7-8-breathing";
 
     @GET("/app/getLaunch")
     Observable<RespBean<AppLaunch>> appLaunch();

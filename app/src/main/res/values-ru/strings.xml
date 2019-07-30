@@ -7,7 +7,6 @@
     <string name="sleep_image">рисунок</string>
     <string name="sleep_music">музыка</string>
     <string name="sleep_nature">природа</string>
-    <string name="see_more">█</string>
     <string name="log_in">вход</string>
     <string name="sign_up">регистрация</string>
     <string name="forgot_your_password">забыть пароль</string>
@@ -18,9 +17,7 @@
     <string name="feed_back">обратная связь</string>
     <string name="about_us">о нас</string>
     <string name="time_down">временное закрытие</string>
-    <string name="settings">█</string>
     <string name="user_name">Имя пользователя</string>
-    <string name="user_email">█</string>
     <string name="login_pwd">пароль входа</string>
     <string name="man">мужчина</string>
     <string name="woman">женщина</string>
@@ -38,9 +35,8 @@
     <string name="cancel_count_down">отменить отсчет времени</string>
     <string name="feed_back_hint">Введите ваше предложение</string>
     <string name="submit">представление</string>
-    <string name="post_detail">帖子: 25</string>
     <string name="start">Начало</string>
-    <string name="play_478">4 - 7 - 8 дыхание</string>
+    <string name="play_478">4 – 7 – 8 дыхание</string>
     <string name="stop">остановить</string>
     <string name="age">возраст</string>
     <string name="desc">Примечание</string>
