@@ -45,6 +45,8 @@ public class Constants {
         int update_count_down = 1002;
         int update_post_like_count = 1003;
         int update_post_comment_count = 1004;
+        int play_audio = 2001;
+        int pause_audio = 2002;
     }
 
     public interface Token {

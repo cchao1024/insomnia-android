@@ -100,4 +100,48 @@
     <string name="i_think">I think</string>
     <string name="say_something">Say something</string>
 
+    <string name="rain_1">rain_1</string>
+    <string name="rain_2">rain_1</string>
+    <string name="rain_3">rain_1</string>
+    <string name="rain_4">rain_1</string>
+    <string name="rain_5">rain_1</string>
+    <string name="rain_6">rain_1</string>
+    <string name="rain_7">rain_1</string>
+    <string name="rain_8">rain_1</string>
+    <string name="rain_9">rain_1</string>
+
+    <string name="city_1">city_1</string>
+    <string name="city_2">city_1</string>
+    <string name="city_3">city_1</string>
+    <string name="city_4">city_1</string>
+    <string name="city_5">city_1</string>
+    <string name="city_6">city_1</string>
+    <string name="city_7">city_1</string>
+    <string name="city_8">city_1</string>
+    <string name="city_9">city_1</string>
+
+    <string name="forest_1">forest_1</string>
+    <string name="forest_2">forest_1</string>
+    <string name="forest_3">forest_1</string>
+    <string name="forest_4">forest_1</string>
+    <string name="forest_5">forest_1</string>
+    <string name="forest_6">forest_1</string>
+    <string name="forest_7">forest_1</string>
+    <string name="forest_8">forest_1</string>
+    <string name="forest_9">forest_1</string>
+
+    <string name="meditation_1">meditation_1</string>
+    <string name="meditation_2">meditation_1</string>
+    <string name="meditation_3">meditation_1</string>
+    <string name="meditation_4">meditation_1</string>
+    <string name="meditation_5">meditation_1</string>
+    <string name="meditation_6">meditation_1</string>
+    <string name="meditation_7">meditation_1</string>
+    <string name="meditation_8">meditation_1</string>
+    <string name="meditation_9">meditation_1</string>
+    <string name="tab_name_audio">Audio</string>
+    <string name="cur_play_audio">Current Play</string>
+    <string name="all_audio">All Audio</string>
+    <string name="click_audio_to_play">Click audio item to play</string>
+
 </resources>
