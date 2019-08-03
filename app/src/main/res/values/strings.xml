@@ -100,48 +100,49 @@
     <string name="i_think">I think</string>
     <string name="say_something">Say something</string>
 
-    <string name="rain_1">rain_1</string>
-    <string name="rain_2">rain_1</string>
-    <string name="rain_3">rain_1</string>
-    <string name="rain_4">rain_1</string>
-    <string name="rain_5">rain_1</string>
-    <string name="rain_6">rain_1</string>
-    <string name="rain_7">rain_1</string>
-    <string name="rain_8">rain_1</string>
-    <string name="rain_9">rain_1</string>
-
-    <string name="city_1">city_1</string>
-    <string name="city_2">city_1</string>
-    <string name="city_3">city_1</string>
-    <string name="city_4">city_1</string>
-    <string name="city_5">city_1</string>
-    <string name="city_6">city_1</string>
-    <string name="city_7">city_1</string>
-    <string name="city_8">city_1</string>
-    <string name="city_9">city_1</string>
-
-    <string name="forest_1">forest_1</string>
-    <string name="forest_2">forest_1</string>
-    <string name="forest_3">forest_1</string>
-    <string name="forest_4">forest_1</string>
-    <string name="forest_5">forest_1</string>
-    <string name="forest_6">forest_1</string>
-    <string name="forest_7">forest_1</string>
-    <string name="forest_8">forest_1</string>
-    <string name="forest_9">forest_1</string>
-
-    <string name="meditation_1">meditation_1</string>
-    <string name="meditation_2">meditation_1</string>
-    <string name="meditation_3">meditation_1</string>
-    <string name="meditation_4">meditation_1</string>
-    <string name="meditation_5">meditation_1</string>
-    <string name="meditation_6">meditation_1</string>
-    <string name="meditation_7">meditation_1</string>
-    <string name="meditation_8">meditation_1</string>
-    <string name="meditation_9">meditation_1</string>
     <string name="tab_name_audio">Audio</string>
     <string name="cur_play_audio">Current Play</string>
     <string name="all_audio">All Audio</string>
     <string name="click_audio_to_play">Click audio item to play</string>
+
+    <string name="rain_normal">Rain Normal</string>
+    <string name="rain_light">Rain Light</string>
+    <string name="rain_ocean">Rain Ocean</string>
+    <string name="rain_on_roof">Rain on Roof</string>
+    <string name="rain_on_windos">Rain on Window</string>
+    <string name="rain_thunders">Rain Thunders</string>
+    <string name="rain_under_umbrella">Umbrella</string>
+    <string name="rain_water">Rain Water</string>
+    <string name="rain_on_leaves">Rain On Leaves</string>
+
+    <string name="meditation_bells">Bells</string>
+    <string name="meditation_bowl">Bowl</string>
+    <string name="meditation_brown_noise">Brown Noise</string>
+    <string name="meditation_white_noise">White Noise</string>
+    <string name="meditation_pink_noise">Pink Noise</string>
+    <string name="meditation_stones">Stones</string>
+    <string name="meditation_flute">Flute</string>
+    <string name="meditation_piano">Piano</string>
+    <string name="meditation_wind_chimes">Wind Chimes</string>
+
+    <string name="forest_birds">Birds</string>
+    <string name="forest_creek">Creek</string>
+    <string name="forest_fire">Fire</string>
+    <string name="forest_forest">Forest</string>
+    <string name="forest_frogs">Frogs</string>
+    <string name="forest_grasshoppers">Grasshoppers</string>
+    <string name="forest_leaves">Leaves</string>
+    <string name="forest_waterfall">Waterfall</string>
+    <string name="forest_wind">Wind</string>
+
+    <string name="city_airplane">airplane</string>
+    <string name="city_car">Car</string>
+    <string name="city_fan">Fan</string>
+    <string name="city_keyboard">keyboard</string>
+    <string name="city_rails">Rails</string>
+    <string name="city_restaurant">Restaurant</string>
+    <string name="city_subway">Subway</string>
+    <string name="city_traffic">Traffic</string>
+    <string name="city_washing_machine">Washing Machine</string>
 
 </resources>

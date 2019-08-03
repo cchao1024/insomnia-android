@@ -1,10 +1,12 @@
 package com.cchao.insomnia.ui.compose;
 
+import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -107,13 +109,13 @@ public class ComposeFragment extends BaseStatefulFragment<ComposeFragmentBinding
             }
         });
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            int mSpace = UiHelper.dp2px(30);
+            int mSpace = UiHelper.dp2px(10);
 
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
-                outRect.bottom = mSpace / 2;
-                outRect.right = mSpace / 4;
+                outRect.bottom = mSpace;
+                outRect.right = 0;
                 outRect.top = 0;
                 outRect.left = mSpace / 2;
             }
@@ -130,6 +132,9 @@ public class ComposeFragment extends BaseStatefulFragment<ComposeFragmentBinding
         mAudioList = GlobalHelper.getAudioList();
     }
 
+    /**
+     * 将播放中的音频，显示到界面
+     */
     private void addItem(AudioBean bean) {
         AudioPlayItemBinding binding = DataBindingUtil.inflate(mLayoutInflater, R.layout.audio_play_item, mContainer, false);
         binding.setClick(v -> {
@@ -174,6 +179,12 @@ public class ComposeFragment extends BaseStatefulFragment<ComposeFragmentBinding
         toggleAudioPlay(false, bean);
     }
 
+    /**
+     * 音频播放状态切换时，修改显示样式
+     *
+     * @param toggle 开关
+     * @param bean   实体
+     */
     void toggleAudioPlay(boolean toggle, AudioBean bean) {
         if (mPlayAudioMap.get(bean) == null) {
             return;
@@ -181,9 +192,16 @@ public class ComposeFragment extends BaseStatefulFragment<ComposeFragmentBinding
         int drawable = toggle ? R.drawable.audio_item_play_bg : R.drawable.audio_item_def_bg;
 
         View view = mPlayAudioMap.get(bean).findViewById(R.id.audio_container);
-        // 添加到映射
+        // 修改背景，阴影
         view.setBackgroundResource(drawable);
         ViewCompat.setElevation(view, toggle ? 8 : 0);
         UiHelper.setVisibleElseGone(mDataBind.tip, mContainer.getChildCount() == 0);
+
+        // 着色
+        if (toggle) {
+            ImageViewCompat.setImageTintList(view.findViewById(R.id.image), ColorStateList.valueOf(UiHelper.getColor(R.color.green500)));
+        } else {
+            ImageViewCompat.setImageTintList(view.findViewById(R.id.image), null);
+        }
     }
 }

@@ -25,7 +25,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="@dimen/common_margin"
+                    android:paddingStart="@dimen/common_margin"
+                    android:paddingTop="@dimen/common_margin"
+                    android:paddingEnd="@dimen/common_margin"
+                    android:paddingBottom="@dimen/dp_5"
                     android:text="@string/cur_play_audio"/>
 
                 <ImageView
@@ -67,13 +70,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/common_margin"
+                android:paddingStart="@dimen/common_margin"
+                android:paddingBottom="@dimen/common_margin"
+                android:paddingEnd="@dimen/common_margin"
                 android:text="@string/all_audio"/>
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"/>
+                android:layout_height="320dp"/>
 
             <LinearLayout
                 android:id="@+id/indicator"
