@@ -38,7 +38,7 @@ import com.cchao.insomnia.model.javabean.user.UserBean;
 import com.cchao.insomnia.ui.account.EditUserInfoActivity;
 import com.cchao.insomnia.ui.account.UserInfoActivity;
 import com.cchao.insomnia.ui.account.WishListActivity;
-import com.cchao.insomnia.ui.compose.ComposeFragment;
+import com.cchao.insomnia.ui.audio.AudioFragment;
 import com.cchao.insomnia.ui.fall.FallFragment;
 import com.cchao.insomnia.ui.play.PlayFragment;
 import com.cchao.insomnia.ui.post.PostBoxFragment;
@@ -126,7 +126,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * tabLayout绑定ViewPager 懒加载Fragment
      */
     private void initTabLayout() {
-        mFragments.add(new ComposeFragment());
+        mFragments.add(new AudioFragment());
         mFragments.add(new FallFragment());
         mFragments.add(new PostBoxFragment());
         mFragments.add(new PlayFragment());
@@ -185,6 +185,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (item.getItemId()) {
             case R.id.action_count:
                 showTimeDownDialog();
+                break;
+            case R.id.action_game:
+                 Router.turnTo(mContext, container.class).start();
+
                 break;
         }
         return super.onOptionsItemSelected(item);

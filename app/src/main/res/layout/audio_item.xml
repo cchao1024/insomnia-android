@@ -34,6 +34,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
             android:text="@{bean.name}"
-            android:textSize="@dimen/sp_12"/>
+            android:textSize="@dimen/sp_11"/>
     </LinearLayout>
 </layout>

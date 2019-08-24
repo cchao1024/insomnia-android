@@ -1,4 +1,4 @@
-package com.cchao.insomnia.ui.compose;
+package com.cchao.insomnia.ui.audio;
 
 import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
@@ -41,7 +41,7 @@ import java.util.Map;
  * @author cchao
  * @version 2019-07-31.
  */
-public class ComposeFragment extends BaseStatefulFragment<ComposeFragmentBinding> {
+public class AudioFragment extends BaseStatefulFragment<ComposeFragmentBinding> {
     List<List<AudioBean>> mAudioList;
     Map<AudioBean, View> mPlayAudioMap = new HashMap<>();
     LinearLayout mContainer;
@@ -80,18 +80,16 @@ public class ComposeFragment extends BaseStatefulFragment<ComposeFragmentBinding
                 initAudioAdapter(convertView.findViewById(R.id.recycler_view), mAudioList.get(position));
             }
         });
-        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setOffscreenPageLimit(5);
 
         // init indicator
         CircleNavigator circleNavigator = new CircleNavigator(mContext);
         circleNavigator.setFollowTouch(false);
         circleNavigator.setCircleCount(mAudioList.size());
         circleNavigator.setCircleColor(Color.parseColor("#88229FFD"));
-        circleNavigator.setCircleClickListener(new CircleNavigator.OnCircleClickListener() {
-            @Override
-            public void onClick(int index) {
-                mViewPager.setCurrentItem(index);
-            }
+        circleNavigator.setCircleClickListener(index -> {
+            //
+            mViewPager.setCurrentItem(index);
         });
         mDataBind.magicIndicator.setNavigator(circleNavigator);
         ViewPagerHelper.bind(mDataBind.magicIndicator, mViewPager);
@@ -199,7 +197,7 @@ public class ComposeFragment extends BaseStatefulFragment<ComposeFragmentBinding
 
         // 着色
         if (toggle) {
-            ImageViewCompat.setImageTintList(view.findViewById(R.id.image), ColorStateList.valueOf(UiHelper.getColor(R.color.green500)));
+            ImageViewCompat.setImageTintList(view.findViewById(R.id.image), ColorStateList.valueOf(UiHelper.getColor(R.color.whit_bbbbbb)));
         } else {
             ImageViewCompat.setImageTintList(view.findViewById(R.id.image), null);
         }
