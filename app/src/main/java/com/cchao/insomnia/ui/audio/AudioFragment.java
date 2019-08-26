@@ -112,7 +112,7 @@ public class AudioFragment extends BaseStatefulFragment<ComposeFragmentBinding> 
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
-                outRect.bottom = mSpace;
+                outRect.bottom = mSpace * 3 / 2;
                 outRect.right = 0;
                 outRect.top = 0;
                 outRect.left = mSpace / 2;
@@ -197,7 +197,7 @@ public class AudioFragment extends BaseStatefulFragment<ComposeFragmentBinding> 
 
         // 着色
         if (toggle) {
-            ImageViewCompat.setImageTintList(view.findViewById(R.id.image), ColorStateList.valueOf(UiHelper.getColor(R.color.whit_bbbbbb)));
+            ImageViewCompat.setImageTintList(view.findViewById(R.id.image), ColorStateList.valueOf(UiHelper.getColor(R.color.eee_color)));
         } else {
             ImageViewCompat.setImageTintList(view.findViewById(R.id.image), null);
         }

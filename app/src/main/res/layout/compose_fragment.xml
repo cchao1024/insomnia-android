@@ -42,9 +42,9 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="@dimen/common_margin"
                     android:layout_marginEnd="@dimen/common_margin"
-                    android:minHeight="160dp"
+                    android:minHeight="158dp"
                     android:orientation="vertical"
-                    android:paddingTop="@dimen/dp_10">
+                    android:paddingTop="@dimen/common_margin">
                 </LinearLayout>
 
                 <TextView
