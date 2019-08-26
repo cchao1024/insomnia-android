@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.global.Constants;
+import com.cchao.insomnia.ui.play.PlayFragment;
 import com.cchao.simplelib.ui.activity.BaseTitleBarActivity;
 
 /**
@@ -24,11 +25,11 @@ public class FragmentContainerActivity extends BaseTitleBarActivity {
 
     @Override
     protected void initEventAndData() {
-        setTitleText(getIntent().getStringExtra(Constants.Extra.Title));
+        setTitleText(getIntent().getStringExtra(Constants.Extra.TITLE));
         Bundle bundle = new Bundle();
         switch (getIntent().getStringExtra(Constants.Extra.Fragment)) {
-            case Constants.Container.AppointHistory:
-                mFragment = new AppointHistoryListFragment();
+            case Constants.Container.PlayGame:
+                mFragment = new PlayFragment();
                 break;
         }
 

@@ -40,6 +40,7 @@ import com.cchao.insomnia.ui.account.UserInfoActivity;
 import com.cchao.insomnia.ui.account.WishListActivity;
 import com.cchao.insomnia.ui.audio.AudioFragment;
 import com.cchao.insomnia.ui.fall.FallFragment;
+import com.cchao.insomnia.ui.global.FragmentContainerActivity;
 import com.cchao.insomnia.ui.play.PlayFragment;
 import com.cchao.insomnia.ui.post.PostBoxFragment;
 import com.cchao.insomnia.view.Dialogs;
@@ -187,7 +188,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 showTimeDownDialog();
                 break;
             case R.id.action_game:
-                 Router.turnTo(mContext, container.class).start();
+                Router.turnTo(mContext, FragmentContainerActivity.class)
+                    .putExtra(Constants.Extra.TITLE, "Game")
+                    .putExtra(Constants.Extra.Fragment, Constants.Container.PlayGame)
+                    .start();
 
                 break;
         }

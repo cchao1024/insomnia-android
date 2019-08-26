@@ -84,6 +84,12 @@ public class Constants {
     public interface Extra {
         String IMAGE_URL = "image_url";
         String ID = "commentId";
+        String TITLE = "title";
+        String Fragment = "Fragment";
+    }
+
+    public interface Container {
+        String PlayGame = "PlayGame";
     }
 
     public interface Drawer {

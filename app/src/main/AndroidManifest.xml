@@ -40,6 +40,7 @@
         <activity android:name=".ui.play.CountSheepActivity"/>
         <activity android:name=".ui.account.WishListActivity"/>
         <activity android:name=".ui.main.SettingsActivity"/>
+        <activity android:name=".ui.global.FragmentContainerActivity"/>
 
 
         <!-- Since JCore2.0.0 Required SDK核心功能-->
