@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ImageView mUserPhotoImage;
     TextView mCountDownTextView;
 
-    final int[] mTabTitleArr = {R.string.tab_name_audio, R.string.tab_name_0, R.string.tab_name_1, R.string.tab_name_2};
+    final int[] mTabTitleArr = {R.string.tab_name_audio, R.string.tab_name_0, R.string.tab_name_1};
     List<BaseFragment> mFragments = new ArrayList<>();
     private MainActivityBinding mBinding;
 
@@ -130,7 +130,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mFragments.add(new AudioFragment());
         mFragments.add(new FallFragment());
         mFragments.add(new PostBoxFragment());
-        mFragments.add(new PlayFragment());
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
