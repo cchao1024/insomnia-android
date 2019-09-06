@@ -63,6 +63,7 @@
                     android:id="@+id/play_pre"
                     style="@style/MusicController"
                     android:onClick="@{click::onClick}"
+                    app:tint="@color/white"
                     app:srcCompat="@drawable/ic_play_last"/>
 
                 <android.support.v7.widget.AppCompatImageView

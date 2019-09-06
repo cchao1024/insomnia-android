@@ -92,13 +92,10 @@ public class MusicPlayer {
             UiHelper.showToast(UiHelper.getString(R.string.playing) + mCurMusic.getName());
         });
 
-        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                // 非单曲循环
-                if (!mPlayMode.equals(Constants.Play_Mode.SINGLE_LOOP)) {
-                    playNext();
-                }
+        mMediaPlayer.setOnCompletionListener(mp -> {
+            // 非单曲循环
+            if (!mPlayMode.equals(Constants.Play_Mode.SINGLE_LOOP)) {
+                playNext();
             }
         });
     }

@@ -42,7 +42,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="@dimen/common_margin"
                     android:layout_marginEnd="@dimen/common_margin"
-                    android:minHeight="158dp"
+                    android:minHeight="160dp"
                     android:orientation="vertical"
                     android:paddingTop="@dimen/common_margin">
                 </LinearLayout>

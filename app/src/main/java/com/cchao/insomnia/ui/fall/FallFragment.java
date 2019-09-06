@@ -47,6 +47,9 @@ public class FallFragment extends BaseStatefulFragment<FallFragmentBinding> impl
     RecyclerView mRvImage;
     RecyclerView mRvNature;
 
+    /**
+     * adapter
+     */
     DataBindQuickAdapter<FallMusic> mMusicAdapter;
     PageAdapter<FallImage> mImageAdapter;
     FallHeadBinding mHeadBinding;

@@ -19,6 +19,7 @@
         <item name="android:layout_height">@dimen/dp_26</item>
         <item name="android:layout_width">@dimen/dp_26</item>
         <item name="android:clickable">true</item>
+        <item name="android:tint">@color/white</item>
     </style>
 
     <style name="BottomDialog" parent="@style/AppTheme">

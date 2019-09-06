@@ -5,21 +5,22 @@ import android.view.View;
 import com.cchao.insomnia.R;
 import com.cchao.insomnia.databinding.PlayFragmentBinding;
 import com.cchao.simplelib.core.Router;
-import com.cchao.simplelib.ui.fragment.SimpleLazyFragment;
+import com.cchao.simplelib.ui.fragment.BaseStatefulFragment;
 
 /**
  * @author cchao
  * @version 2019-05-13.
  */
-public class PlayFragment extends SimpleLazyFragment<PlayFragmentBinding> implements View.OnClickListener {
-    @Override
-    public void onFirstUserVisible() {
-        mDataBind.setClick(this);
-    }
+public class PlayFragment extends BaseStatefulFragment<PlayFragmentBinding> implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {
         return R.layout.play_fragment;
+    }
+
+    @Override
+    protected void initEventAndData() {
+        mDataBind.setClick(this);
     }
 
     @Override
